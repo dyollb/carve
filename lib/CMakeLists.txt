@@ -1,6 +1,8 @@
 include_directories("${carve_SOURCE_DIR}/include")
 
-add_library(carve
+file(GLOB carve_HEADERS *.hpp)
+
+add_library(carve ${carve_HEADERS}
             aabb.cpp
             carve.cpp
             convex_hull.cpp

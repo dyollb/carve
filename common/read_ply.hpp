@@ -24,84 +24,85 @@
 
 #pragma once
 
+#include "carve_fileformats.hpp"
+
 #include <carve/carve.hpp>
 
 #include <carve/matrix.hpp>
 #include <carve/poly.hpp>
+#include <carve/input.hpp>
 
 #include <fstream>
 #include <istream>
 
-#include <carve/input.hpp>
-
-bool readPLY(
+CARVE_IO_API bool readPLY(
     std::istream& in, carve::input::Input& inputs,
     const carve::math::Matrix& transform = carve::math::Matrix::IDENT());
 
-bool readPLY(
+CARVE_IO_API bool readPLY(
     const std::string& in_file, carve::input::Input& inputs,
     const carve::math::Matrix& transform = carve::math::Matrix::IDENT());
 
-carve::poly::Polyhedron* readPLY(
+CARVE_IO_API carve::poly::Polyhedron* readPLY(
     std::istream& in,
     const carve::math::Matrix& transform = carve::math::Matrix::IDENT());
 
-carve::poly::Polyhedron* readPLY(
+CARVE_IO_API carve::poly::Polyhedron* readPLY(
     const std::string& in_file,
     const carve::math::Matrix& transform = carve::math::Matrix::IDENT());
 
-carve::mesh::MeshSet<3>* readPLYasMesh(
+CARVE_IO_API carve::mesh::MeshSet<3>* readPLYasMesh(
     std::istream& in,
     const carve::math::Matrix& transform = carve::math::Matrix::IDENT());
 
-carve::mesh::MeshSet<3>* readPLYasMesh(
+CARVE_IO_API carve::mesh::MeshSet<3>* readPLYasMesh(
     const std::string& in_file,
     const carve::math::Matrix& transform = carve::math::Matrix::IDENT());
 
-bool readOBJ(
+CARVE_IO_API bool readOBJ(
     std::istream& in, carve::input::Input& inputs,
     const carve::math::Matrix& transform = carve::math::Matrix::IDENT());
 
-bool readOBJ(
+CARVE_IO_API bool readOBJ(
     const std::string& in_file, carve::input::Input& inputs,
     const carve::math::Matrix& transform = carve::math::Matrix::IDENT());
 
-carve::poly::Polyhedron* readOBJ(
+CARVE_IO_API carve::poly::Polyhedron* readOBJ(
     std::istream& in,
     const carve::math::Matrix& transform = carve::math::Matrix::IDENT());
 
-carve::poly::Polyhedron* readOBJ(
+CARVE_IO_API carve::poly::Polyhedron* readOBJ(
     const std::string& in_file,
     const carve::math::Matrix& transform = carve::math::Matrix::IDENT());
 
-carve::mesh::MeshSet<3>* readOBJasMesh(
+CARVE_IO_API carve::mesh::MeshSet<3>* readOBJasMesh(
     std::istream& in,
     const carve::math::Matrix& transform = carve::math::Matrix::IDENT());
 
-carve::mesh::MeshSet<3>* readOBJasMesh(
+CARVE_IO_API carve::mesh::MeshSet<3>* readOBJasMesh(
     const std::string& in_file,
     const carve::math::Matrix& transform = carve::math::Matrix::IDENT());
 
-bool readVTK(
+CARVE_IO_API bool readVTK(
     std::istream& in, carve::input::Input& inputs,
     const carve::math::Matrix& transform = carve::math::Matrix::IDENT());
 
-bool readVTK(
+CARVE_IO_API bool readVTK(
     const std::string& in_file, carve::input::Input& inputs,
     const carve::math::Matrix& transform = carve::math::Matrix::IDENT());
 
-carve::poly::Polyhedron* readVTK(
+CARVE_IO_API carve::poly::Polyhedron* readVTK(
     std::istream& in,
     const carve::math::Matrix& transform = carve::math::Matrix::IDENT());
 
-carve::poly::Polyhedron* readVTK(
+CARVE_IO_API carve::poly::Polyhedron* readVTK(
     const std::string& in_file,
     const carve::math::Matrix& transform = carve::math::Matrix::IDENT());
 
-carve::mesh::MeshSet<3>* readVTKasMesh(
+CARVE_IO_API carve::mesh::MeshSet<3>* readVTKasMesh(
     std::istream& in,
     const carve::math::Matrix& transform = carve::math::Matrix::IDENT());
 
-carve::mesh::MeshSet<3>* readVTKasMesh(
+CARVE_IO_API carve::mesh::MeshSet<3>* readVTKasMesh(
     const std::string& in_file,
     const carve::math::Matrix& transform = carve::math::Matrix::IDENT());

@@ -50,7 +50,7 @@ struct vec_adapt_vertex_ptr {
   carve::geom3d::Vector& operator()(Vertex*& v) { return v->v; }
 };
 
-struct PointSet {
+struct CARVE_API PointSet {
   std::vector<Vertex> vertices;
   carve::geom3d::AABB aabb;
 

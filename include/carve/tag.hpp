@@ -28,7 +28,7 @@
 
 namespace carve {
 
-class tagable {
+class CARVE_API tagable {
  private:
   static int s_count;
 

@@ -38,6 +38,7 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include <functional>
 
 #include "write_ply.hpp"
 

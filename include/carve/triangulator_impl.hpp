@@ -183,7 +183,7 @@ static inline bool pointInTriangle(const vertex_info* a, const vertex_info* b,
  * during a triangulation operation.
  */
 
-struct vertex_info {
+struct CARVE_API vertex_info {
   vertex_info* prev;
   vertex_info* next;
   carve::geom2d::P2 p;
@@ -243,13 +243,13 @@ static inline bool pointInTriangle(const vertex_info* a, const vertex_info* b,
   return !isLeft(a, c, d) && !isLeft(b, a, d) && !isLeft(c, b, d);
 }
 
-size_t removeDegeneracies(vertex_info*& begin,
+CARVE_API size_t removeDegeneracies(vertex_info*& begin,
                           std::vector<carve::triangulate::tri_idx>& result);
 
-bool splitAndResume(vertex_info* begin,
+CARVE_API bool splitAndResume(vertex_info* begin,
                     std::vector<carve::triangulate::tri_idx>& result);
 
-bool doTriangulate(vertex_info* begin,
+CARVE_API bool doTriangulate(vertex_info* begin,
                    std::vector<carve::triangulate::tri_idx>& result);
 
 typedef std::pair<unsigned, unsigned> vert_edge_t;
@@ -266,7 +266,7 @@ static inline vert_edge_t ordered_vert_edge_t(unsigned a, unsigned b) {
   return (a < b) ? vert_edge_t(a, b) : vert_edge_t(b, a);
 }
 
-struct tri_pair_t {
+struct CARVE_API tri_pair_t {
   carve::triangulate::tri_idx *a, *b;
   double score;
   size_t idx;
@@ -387,7 +387,7 @@ struct max_score {
   }
 };
 
-struct tri_pairs_t {
+struct CARVE_API tri_pairs_t {
   typedef std::unordered_map<vert_edge_t, tri_pair_t*, hash_vert_edge_t>
       storage_t;
   storage_t storage;

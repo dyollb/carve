@@ -45,11 +45,11 @@ namespace poly {
 class Polyhedron;
 }
 
-poly::Polyhedron* polyhedronFromMesh(const mesh::MeshSet<3>*, int);
+CARVE_API poly::Polyhedron* polyhedronFromMesh(const mesh::MeshSet<3>*, int);
 
 namespace poly {
 
-class Polyhedron : public Geometry<3> {
+class CARVE_API Polyhedron : public Geometry<3> {
  private:
   friend Polyhedron* carve::polyhedronFromMesh(const mesh::MeshSet<3>*, int);
 

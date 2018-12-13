@@ -14,6 +14,13 @@
  *
  */
 
+#pragma once
+
+#if 1
+
+#include <cmath>
+
+#else
 /* Sometimes it's necessary to define __LITTLE_ENDIAN explicitly
    but these catch some common cases. */
 
@@ -91,3 +98,5 @@ inline double cbrt(double x) {
   __HI(t) |= sign;
   return(t);
 }
+
+#endif

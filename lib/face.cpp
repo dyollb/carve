@@ -104,6 +104,7 @@ static carve::geom3d::Vector (*unproject_tab[2][3])(
     {&_unproject_1, &_unproject_2, &_unproject_3},
     {&_unproject_4, &_unproject_5, &_unproject_6}};
 
+
 // only implemented for 3d.
 template <unsigned ndim>
 typename Face<ndim>::project_t Face<ndim>::getProjector(bool positive_facing,

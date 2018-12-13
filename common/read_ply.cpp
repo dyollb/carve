@@ -26,6 +26,8 @@
 #include <carve_config.h>
 #endif
 
+#include "read_ply.hpp"
+
 #include <carve/input.hpp>
 #include <gloop/model/obj_format.hpp>
 #include <gloop/model/ply_format.hpp>

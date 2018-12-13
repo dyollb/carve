@@ -30,6 +30,7 @@
 
 #include <deque>
 #include <iostream>
+#include <algorithm>
 
 namespace carve {
 namespace mesh {

@@ -34,6 +34,24 @@
 #include <carve/config.h>
 #endif
 
+#if defined(WIN32) && !defined(CARVE_STATIC)
+#  if defined(carve_EXPORTS)
+#    define CARVE_API __declspec(dllexport)
+#    define CARVE_EXP_TEMPLATE
+#  else
+#    define CARVE_API __declspec(dllimport)
+#    define CARVE_EXP_TEMPLATE extern
+#  endif
+#else
+#    define CARVE_API
+#    define CARVE_EXP_TEMPLATE
+#endif
+
+#if defined(WIN32)
+// Disable needs to have dll-interface to be used by clients warning
+#  pragma warning( disable : 4251 )
+#endif
+
 #if defined(WIN32)
 #include <carve/win32.h>
 #endif
@@ -163,8 +181,8 @@ enum IntersectionClass {
   INTERSECT_PLANE = 4,
 };
 
-extern double EPSILON;
-extern double EPSILON2;
+extern double CARVE_API EPSILON;
+extern double CARVE_API EPSILON2;
 
 static inline void setEpsilon(double ep) {
   EPSILON = ep;

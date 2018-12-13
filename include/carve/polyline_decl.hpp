@@ -129,7 +129,7 @@ struct Polyline {
   }
 };
 
-struct PolylineSet {
+struct CARVE_API PolylineSet {
   typedef std::list<Polyline*> line_list;
   typedef line_list::iterator line_iter;
   typedef line_list::const_iterator const_line_iter;

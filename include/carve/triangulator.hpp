@@ -65,7 +65,7 @@ static std::vector<vert_t> incorporateHolesIntoPolygon(
     const project_t& project, const std::vector<vert_t>& f_loop,
     const std::vector<std::vector<vert_t> >& h_loops);
 
-void incorporateHolesIntoPolygon(
+CARVE_API void incorporateHolesIntoPolygon(
     const std::vector<std::vector<carve::geom2d::P2> >& poly,
     std::vector<std::pair<size_t, size_t> >& result, size_t poly_loop,
     const std::vector<size_t>& hole_loops);
@@ -86,10 +86,10 @@ void incorporateHolesIntoPolygon(
  * @return A vector of pairs of <loop_number, index> that
  *         reference poly and define the result polygon loop.
  */
-std::vector<std::pair<size_t, size_t> > incorporateHolesIntoPolygon(
+CARVE_API std::vector<std::pair<size_t, size_t> > incorporateHolesIntoPolygon(
     const std::vector<std::vector<carve::geom2d::P2> >& poly);
 
-std::vector<std::vector<std::pair<size_t, size_t> > > mergePolygonsAndHoles(
+CARVE_API std::vector<std::vector<std::pair<size_t, size_t> > > mergePolygonsAndHoles(
     const std::vector<std::vector<carve::geom2d::P2> >& poly);
 
 struct tri_idx {
@@ -113,10 +113,10 @@ struct tri_idx {
  *
  * @param [in] poly A vector containing the input polygon.
  * @param [out] result A vector of triangles, represented as
- *                     indicies into poly.
+ *                     indices into poly.
  */
 
-void triangulate(const std::vector<carve::geom2d::P2>& poly,
+CARVE_API void triangulate(const std::vector<carve::geom2d::P2>& poly,
                  std::vector<tri_idx>& result);
 
 /**

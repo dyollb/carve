@@ -23,7 +23,7 @@ option(CARVE_USE_EXACT_PREDICATES        "Use Shewchuk's exact predicates, where
 option(CARVE_INTERSECT_GLU_TRIANGULATOR  "Include support for GLU triangulator in intersect" OFF)
 option(CARVE_GTEST_TESTS                 "Complie gtest, and dependent tests"                ON)
 
-if (MSVC)
+if (MSVC AND NOT BUILD_SHARED_LIBS)
   # For MSVC, CMake sets certain flags to defaults we want to override.
   # This replacement code is taken from sample in the CMake Wiki at
   # http://www.cmake.org/Wiki/CMake_FAQ#Dynamic_Replace.
@@ -53,7 +53,11 @@ if (BUILD_COVERAGE)
 endif(BUILD_COVERAGE)
 
 if(WIN32)
-  set(BUILD_SHARED_LIBS OFF) # until everything is exported
+  if(BUILD_SHARED_LIBS)
+    message(WARNING "BUILD_SHARED_LIBS=ON: not all symbols are exported yet")
+  else(BUILD_SHARED_LIBS)
+    add_definitions(-DCARVE_STATIC)
+  endif(BUILD_SHARED_LIBS)
   add_definitions(-D_USE_MATH_DEFINES)
   add_definitions(-DNOMINMAX)
 endif(WIN32)

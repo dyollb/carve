@@ -177,6 +177,7 @@ class Face : public tagable {
   void swap(Face<ndim>& other);
 };
 
+
 struct hash_face_ptr {
   template <unsigned ndim>
   size_t operator()(const Face<ndim>* const& f) const {

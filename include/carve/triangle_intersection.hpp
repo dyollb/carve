@@ -51,9 +51,9 @@ bool triangle_intersection_simple(const vector<2> tri_a[3],
 bool triangle_intersection_simple(const vector<3> tri_a[3],
                                   const vector<3> tri_b[3]);
 
-TriangleIntType triangle_intersection_exact(const vector<2> tri_a[3],
+CARVE_API TriangleIntType triangle_intersection_exact(const vector<2> tri_a[3],
                                             const vector<2> tri_b[3]);
-TriangleIntType triangle_intersection_exact(const vector<3> tri_a[3],
+CARVE_API TriangleIntType triangle_intersection_exact(const vector<3> tri_a[3],
                                             const vector<3> tri_b[3]);
 
 TriangleIntType triangle_linesegment_intersection_exact(

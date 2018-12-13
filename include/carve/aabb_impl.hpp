@@ -28,9 +28,9 @@
 
 #include <carve/geom3d.hpp>
 #include <carve/vector.hpp>
-
 #include <carve/geom.hpp>
 
+#include <algorithm>
 #include <vector>
 
 namespace carve {

@@ -24,10 +24,6 @@
 
 #pragma once
 
-#include <algorithm>
-#include <list>
-#include <vector>
-
 #include <carve/carve.hpp>
 
 #include <carve/geom3d.hpp>
@@ -40,6 +36,10 @@
 #include <carve/intersection.hpp>
 #include <carve/iobj.hpp>
 #include <carve/rtree.hpp>
+
+#include <algorithm>
+#include <list>
+#include <vector>
 
 namespace carve {
 namespace csg {
@@ -70,12 +70,12 @@ class LoopEdges;
  * \brief The class responsible for the computation of CSG operations.
  *
  */
-class CSG {
+class CARVE_API CSG {
  private:
  public:
   typedef carve::mesh::MeshSet<3> meshset_t;
 
-  struct Hook {
+  struct CARVE_API Hook {
     /**
      * \class Hook
      * \brief Provides API access to intermediate steps in CSG calculation.
@@ -102,7 +102,7 @@ class CSG {
    * \brief Management of API hooks.
    *
    */
-  class Hooks {
+  class CARVE_API Hooks {
    public:
     enum {
       RESULT_FACE_HOOK = 0,
@@ -149,7 +149,7 @@ class CSG {
    * form the result polyhedron.
    *
    */
-  class Collector {
+  class CARVE_API Collector {
     Collector(const Collector&);
     Collector& operator=(const Collector&);
 

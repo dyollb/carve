@@ -47,8 +47,11 @@
 #include <string>
 #include <utility>
 
-#include <sys/time.h>
-#include <time.h>
+#ifdef _WIN32
+# include <carve/win32.h>
+#else
+# include <sys/time.h>
+#endif
 
 typedef carve::mesh::MeshSet<3> meshset_t;
 typedef carve::mesh::Mesh<3> mesh_t;

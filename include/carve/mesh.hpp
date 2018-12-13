@@ -318,8 +318,8 @@ class Face : public tagable {
         project(other.project),
         unproject(other.unproject) {}
 
-  project_t getProjector(bool positive_facing, int axis) const;
-  unproject_t getUnprojector(bool positive_facing, int axis) const;
+  CARVE_API project_t getProjector(bool positive_facing, int axis) const;
+  CARVE_API unproject_t getUnprojector(bool positive_facing, int axis) const;
 
  public:
   typedef detail::list_iter_t<Edge<ndim> > edge_iter_t;
@@ -387,7 +387,7 @@ class Face : public tagable {
 
   vector_t centroid() const;
 
-  static Face* closeLoop(edge_t* open_edge);
+  CARVE_API static Face* closeLoop(edge_t* open_edge);
 
   Face(edge_t* e) : edge(e), n_edges(0), mesh(nullptr) {
     do {
@@ -485,7 +485,7 @@ struct MeshOptions {
 };
 
 namespace detail {
-class FaceStitcher {
+class CARVE_API FaceStitcher {
   FaceStitcher();
   FaceStitcher(const FaceStitcher&);
   FaceStitcher& operator=(const FaceStitcher&);
@@ -866,7 +866,7 @@ class MeshSet {
   void separateMeshes();
 };
 
-carve::PointClass classifyPoint(
+CARVE_API carve::PointClass classifyPoint(
     const carve::mesh::MeshSet<3>* meshset,
     const carve::geom::RTreeNode<3, carve::mesh::Face<3>*>* face_rtree,
     const carve::geom::vector<3>& v, bool even_odd = false,
@@ -874,8 +874,8 @@ carve::PointClass classifyPoint(
     const carve::mesh::Face<3>** hit_face = nullptr);
 }  // namespace mesh
 
-mesh::MeshSet<3>* meshFromPolyhedron(const poly::Polyhedron*, int manifold_id);
-poly::Polyhedron* polyhedronFromMesh(const mesh::MeshSet<3>*, int manifold_id);
+CARVE_API mesh::MeshSet<3>* meshFromPolyhedron(const poly::Polyhedron*, int manifold_id);
+CARVE_API poly::Polyhedron* polyhedronFromMesh(const mesh::MeshSet<3>*, int manifold_id);
 }  // namespace carve
 
 #include <carve/mesh_impl.hpp>
