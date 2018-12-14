@@ -74,32 +74,32 @@ struct polyline_vertex_iter
   }
 };
 
-static inline std::int64_t operator-(const polyline_vertex_iter& a,
+inline std::int64_t operator-(const polyline_vertex_iter& a,
                                 const polyline_vertex_iter& b) {
   return a.idx - b.idx;
 }
 
-static inline bool operator==(const polyline_vertex_iter& a,
+inline bool operator==(const polyline_vertex_iter& a,
                               const polyline_vertex_iter& b) {
   return a.idx == b.idx;
 }
-static inline bool operator!=(const polyline_vertex_iter& a,
+inline bool operator!=(const polyline_vertex_iter& a,
                               const polyline_vertex_iter& b) {
   return a.idx != b.idx;
 }
-static inline bool operator<(const polyline_vertex_iter& a,
+inline bool operator<(const polyline_vertex_iter& a,
                              const polyline_vertex_iter& b) {
   return a.idx < b.idx;
 }
-static inline bool operator>(const polyline_vertex_iter& a,
+inline bool operator>(const polyline_vertex_iter& a,
                              const polyline_vertex_iter& b) {
   return a.idx > b.idx;
 }
-static inline bool operator<=(const polyline_vertex_iter& a,
+inline bool operator<=(const polyline_vertex_iter& a,
                               const polyline_vertex_iter& b) {
   return a.idx <= b.idx;
 }
-static inline bool operator>=(const polyline_vertex_iter& a,
+inline bool operator>=(const polyline_vertex_iter& a,
                               const polyline_vertex_iter& b) {
   return a.idx >= b.idx;
 }
@@ -144,32 +144,32 @@ struct polyline_vertex_const_iter
   }
 };
 
-static inline std::int64_t operator-(const polyline_vertex_const_iter& a,
+inline std::int64_t operator-(const polyline_vertex_const_iter& a,
                                 const polyline_vertex_const_iter& b) {
   return a.idx - b.idx;
 }
 
-static inline bool operator==(const polyline_vertex_const_iter& a,
+inline bool operator==(const polyline_vertex_const_iter& a,
                               const polyline_vertex_const_iter& b) {
   return a.idx == b.idx;
 }
-static inline bool operator!=(const polyline_vertex_const_iter& a,
+inline bool operator!=(const polyline_vertex_const_iter& a,
                               const polyline_vertex_const_iter& b) {
   return a.idx != b.idx;
 }
-static inline bool operator<(const polyline_vertex_const_iter& a,
+inline bool operator<(const polyline_vertex_const_iter& a,
                              const polyline_vertex_const_iter& b) {
   return a.idx < b.idx;
 }
-static inline bool operator>(const polyline_vertex_const_iter& a,
+inline bool operator>(const polyline_vertex_const_iter& a,
                              const polyline_vertex_const_iter& b) {
   return a.idx > b.idx;
 }
-static inline bool operator<=(const polyline_vertex_const_iter& a,
+inline bool operator<=(const polyline_vertex_const_iter& a,
                               const polyline_vertex_const_iter& b) {
   return a.idx <= b.idx;
 }
-static inline bool operator>=(const polyline_vertex_const_iter& a,
+inline bool operator>=(const polyline_vertex_const_iter& a,
                               const polyline_vertex_const_iter& b) {
   return a.idx >= b.idx;
 }
@@ -222,32 +222,32 @@ struct polyline_edge_iter
   }
 };
 
-static inline std::int64_t operator-(const polyline_edge_iter& a,
+inline std::int64_t operator-(const polyline_edge_iter& a,
                                 const polyline_edge_iter& b) {
   return a.idx - b.idx;
 }
 
-static inline bool operator==(const polyline_edge_iter& a,
+inline bool operator==(const polyline_edge_iter& a,
                               const polyline_edge_iter& b) {
   return a.idx == b.idx;
 }
-static inline bool operator!=(const polyline_edge_iter& a,
+inline bool operator!=(const polyline_edge_iter& a,
                               const polyline_edge_iter& b) {
   return a.idx != b.idx;
 }
-static inline bool operator<(const polyline_edge_iter& a,
+inline bool operator<(const polyline_edge_iter& a,
                              const polyline_edge_iter& b) {
   return a.idx < b.idx;
 }
-static inline bool operator>(const polyline_edge_iter& a,
+inline bool operator>(const polyline_edge_iter& a,
                              const polyline_edge_iter& b) {
   return a.idx > b.idx;
 }
-static inline bool operator<=(const polyline_edge_iter& a,
+inline bool operator<=(const polyline_edge_iter& a,
                               const polyline_edge_iter& b) {
   return a.idx <= b.idx;
 }
-static inline bool operator>=(const polyline_edge_iter& a,
+inline bool operator>=(const polyline_edge_iter& a,
                               const polyline_edge_iter& b) {
   return a.idx >= b.idx;
 }
@@ -292,32 +292,32 @@ struct polyline_edge_const_iter
   }
 };
 
-static inline std::int64_t operator-(const polyline_edge_const_iter& a,
+inline std::int64_t operator-(const polyline_edge_const_iter& a,
                                 const polyline_edge_const_iter& b) {
   return a.idx - b.idx;
 }
 
-static inline bool operator==(const polyline_edge_const_iter& a,
+inline bool operator==(const polyline_edge_const_iter& a,
                               const polyline_edge_const_iter& b) {
   return a.idx == b.idx;
 }
-static inline bool operator!=(const polyline_edge_const_iter& a,
+inline bool operator!=(const polyline_edge_const_iter& a,
                               const polyline_edge_const_iter& b) {
   return a.idx != b.idx;
 }
-static inline bool operator<(const polyline_edge_const_iter& a,
+inline bool operator<(const polyline_edge_const_iter& a,
                              const polyline_edge_const_iter& b) {
   return a.idx < b.idx;
 }
-static inline bool operator>(const polyline_edge_const_iter& a,
+inline bool operator>(const polyline_edge_const_iter& a,
                              const polyline_edge_const_iter& b) {
   return a.idx > b.idx;
 }
-static inline bool operator<=(const polyline_edge_const_iter& a,
+inline bool operator<=(const polyline_edge_const_iter& a,
                               const polyline_edge_const_iter& b) {
   return a.idx <= b.idx;
 }
-static inline bool operator>=(const polyline_edge_const_iter& a,
+inline bool operator>=(const polyline_edge_const_iter& a,
                               const polyline_edge_const_iter& b) {
   return a.idx >= b.idx;
 }
