@@ -31,7 +31,15 @@ add_library(carve ${carve_HEADERS}
             timing.cpp
             triangulator.cpp
             triangle_intersection.cpp
-            shewchuk_predicates.cpp)
+			shewchuk_predicates.cpp
+)
+
+# set compile properties for predicates, to avoid bad behavior
+if(MSVC)
+	set_source_files_properties(shewchuk_predicates.cpp PROPERTIES COMPILE_FLAGS "/Od /fp:strict")
+else(MSVC)
+	set_source_files_properties(shewchuk_predicates.cpp PROPERTIES COMPILE_FLAGS -O0)
+endif(MSVC)
 
 set_target_properties(carve PROPERTIES
                       VERSION   "${carve_VERSION_MAJOR}.${carve_VERSION_MINOR}.${carve_VERSION_PATCH}"
