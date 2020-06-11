@@ -403,7 +403,7 @@ void FaceStitcher::extractPath(std::vector<const vertex_t*>& path) {
   while ((*iter).second.size() == 2) {
     prev =
         *std::find_if((*iter).second.begin(), (*iter).second.end(),
-                      std::bind2nd(std::not_equal_to<const vertex_t*>(), next));
+                      [&next](const vertex_t* v){ return v != next; });
     next = vert;
     vert = prev;
     iter = edge_graph.find(vert);
