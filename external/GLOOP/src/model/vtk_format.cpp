@@ -33,7 +33,7 @@
 #include <iterator>
 #include <iostream>
 #include <iomanip>
-#include <stdio.h>
+#include <cstdio>
 
 namespace {
 

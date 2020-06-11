@@ -205,7 +205,7 @@ typedef _W64 int ptrdiff_t;
 #if (defined(__sgi) || defined(__sun)) && !defined(__GNUC__)
 #include <inttypes.h>
 #else
-#include <stdint.h>
+#include <cstdint>
 #endif
 
 #define GLEW_APIENTRY_DEFINED

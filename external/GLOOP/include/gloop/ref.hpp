@@ -30,7 +30,7 @@
 #pragma once
 
 #include <iostream>
-#include <stdlib.h>
+#include <cstdlib>
 
 namespace gloop {
 

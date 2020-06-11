@@ -33,7 +33,7 @@
 
 #include <iostream>
 #include <cstring>
-#include <stdio.h>
+#include <cstdio>
 
 namespace gloop {
 

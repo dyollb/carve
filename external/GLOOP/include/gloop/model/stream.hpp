@@ -32,9 +32,9 @@
 #include <gloop/exceptions.hpp>
 #include <gloop/ref.hpp>
 
-#include <stdint.h>
+#include <cstdint>
 
-#include <stdlib.h>
+#include <cstdlib>
 
 #include <string>
 #include <list>

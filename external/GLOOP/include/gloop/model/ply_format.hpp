@@ -31,7 +31,7 @@
 
 #include <gloop/model/stream.hpp>
 
-#include <stdlib.h>
+#include <cstdlib>
 
 #include <iostream>
 #include <list>

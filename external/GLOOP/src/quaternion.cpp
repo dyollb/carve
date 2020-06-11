@@ -30,7 +30,7 @@
 #include <gloop/gloop.hpp>
 #include <gloop/gloop-math.hpp>
 
-#include <math.h>
+#include <cmath>
 #include <float.h>
 
 namespace gloop {

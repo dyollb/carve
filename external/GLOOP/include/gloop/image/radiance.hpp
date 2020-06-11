@@ -29,7 +29,7 @@
 
 #pragma once
 
-#include <stdint.h>
+#include <cstdint>
 #include <algorithm>
 #include <istream>
 #include <vector>

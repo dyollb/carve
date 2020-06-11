@@ -67,8 +67,8 @@
 
 #if defined(__sgi) || defined (__sun) || defined(GLEW_APPLE_GLX)
 #include <dlfcn.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdlib>
 
 void* dlGetProcAddress (const GLubyte* name)
 {
@@ -89,7 +89,7 @@ void* dlGetProcAddress (const GLubyte* name)
 #endif /* __sgi || __sun || GLEW_APPLE_GLX */
 
 #if defined(__APPLE__)
-#include <stdlib.h>
+#include <cstdlib>
 #include <string.h>
 #include <AvailabilityMacros.h>
 

@@ -32,8 +32,8 @@
 
 #include <iostream>
 #include <stdarg.h>
-#include <stdio.h>
-#include <stdint.h>
+#include <cstdio>
+#include <cstdint>
 #include <cstring>
 
 namespace {
