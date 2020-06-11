@@ -445,6 +445,7 @@ TriangleInt triangle_intersection(const vec2 tri_a[3], const vec2 tri_b[3]) {
     }
     case 1: {
       // shared vertex (ia, ib) [but not shared edge]
+      // TODO BL: sat_edge returns a boo, so <0 is always false !!
       if (sat_edge(tri_a, tri_b, (ia + 2) % 3, ib) < 0) {
         return TR_INT_VERT;
       }
@@ -502,6 +503,7 @@ TriangleInt triangle_intersection(const vec3 tri_a[3], const vec3 tri_b[3]) {
     return TR_INT_NONE;
   }
 
+  // TODO BL: identical condition to the one above, this one is always false
   if (norm1 == SAT_COPLANAR) {
     return triangle_intersection_coplanar(tri_a, tri_b);
   }
