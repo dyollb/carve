@@ -2474,7 +2474,7 @@ REAL incircleexact(const REAL *pa, const REAL *pb, const REAL *pc, const REAL *p
   return deter[deterlen - 1];
 }
 
-REAL incircleslow(const REAL *pa, const const REAL *pb, REAL *pc, const REAL *pd)
+REAL incircleslow(const REAL *pa, const REAL *pb, REAL *pc, const REAL *pd)
 {
   INEXACT REAL adx, bdx, cdx, ady, bdy, cdy;
   REAL adxtail, bdxtail, cdxtail;

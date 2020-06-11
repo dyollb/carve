@@ -83,7 +83,7 @@ class Vertex : public tagable {
 
   carve::geom::vector<ndim> v;
 
-  Vertex(const vector_t& _v) : tagable(), v(_v) {}
+  explicit Vertex(const vector_t& _v) : tagable(), v(_v) {}
 
   Vertex() : tagable(), v() {}
 
@@ -272,7 +272,7 @@ class Face : public tagable {
   struct projection_mapping {
     typedef carve::geom::vector<2> value_type;
     project_t proj;
-    projection_mapping(project_t _proj) : proj(_proj) {}
+    explicit projection_mapping(project_t _proj) : proj(_proj) {}
     value_type operator()(const carve::geom::vector<ndim>& v) const {
       return proj(v);
     }
@@ -389,7 +389,7 @@ class Face : public tagable {
 
   CARVE_API static Face* closeLoop(edge_t* open_edge);
 
-  Face(edge_t* e) : edge(e), n_edges(0), mesh(nullptr) {
+  explicit Face(edge_t* e) : edge(e), n_edges(0), mesh(nullptr) {
     do {
       e->face = this;
       n_edges++;
@@ -594,7 +594,7 @@ class CARVE_API FaceStitcher {
   void build(iter_t begin, iter_t end, std::vector<Mesh<3>*>& meshes);
 
  public:
-  FaceStitcher(const MeshOptions& _opts);
+  explicit FaceStitcher(const MeshOptions& _opts);
 
   template <typename iter_t>
   void create(iter_t begin, iter_t end, std::vector<Mesh<3>*>& meshes);
@@ -640,7 +640,7 @@ class Mesh {
        std::vector<edge_t*>& _closed_edges, bool _is_negative);
 
  public:
-  Mesh(std::vector<face_t*>& _faces);
+  explicit Mesh(std::vector<face_t*>& _faces);
 
   ~Mesh();
 
@@ -829,16 +829,16 @@ class MeshSet {
 
   // Construct a mesh set from a set of disconnected faces. Takes
   // posession of the face pointers.
-  MeshSet(std::vector<face_t*>& faces, const MeshOptions& opts = MeshOptions());
+  explicit MeshSet(std::vector<face_t*>& faces, const MeshOptions& opts = MeshOptions());
 
-  MeshSet(std::list<face_t*>& faces, const MeshOptions& opts = MeshOptions());
+  explicit MeshSet(std::list<face_t*>& faces, const MeshOptions& opts = MeshOptions());
 
   MeshSet(std::vector<vertex_t>& _vertex_storage,
           std::vector<mesh_t*>& _meshes);
 
   // This constructor consolidates and rewrites vertex pointers in
   // each mesh, repointing them to local storage.
-  MeshSet(std::vector<mesh_t*>& _meshes);
+  explicit MeshSet(std::vector<mesh_t*>& _meshes);
 
   MeshSet* clone() const;
 
