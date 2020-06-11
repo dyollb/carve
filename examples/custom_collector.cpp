@@ -48,8 +48,7 @@
 #include <set>
 #include <string>
 #include <utility>
-
-#include <time.h>
+#include <ctime>
 
 struct TestScene : public Scene {
   GLuint draw_list_base;

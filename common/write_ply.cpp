@@ -32,12 +32,12 @@
 #include <gloop/model/ply_format.hpp>
 #include <gloop/model/vtk_format.hpp>
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdlib>
 #include <iomanip>
 
 #ifndef WIN32
-#include <stdint.h>
+#include <cstdint>
 #endif
 
 namespace {

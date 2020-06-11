@@ -34,8 +34,7 @@
 #include <set>
 #include <string>
 #include <utility>
-
-#include <time.h>
+#include <ctime>
 
 #include "geom_draw.hpp"
 #include "geometry.hpp"

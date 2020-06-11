@@ -27,7 +27,7 @@
 #endif
 
 #if defined(HAVE_STDINT_H)
-#include <stdint.h>
+#include <cstdint>
 #endif
 
 #include <carve/colour.hpp>

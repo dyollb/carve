@@ -114,9 +114,9 @@
 /*****************************************************************************/
 #include <carve/shewchuk_predicates.hpp>
 
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <cmath>
+#include <cstdio>
+#include <cstdlib>
 #ifdef _WIN32
 # include <carve/win32.h>
 #else

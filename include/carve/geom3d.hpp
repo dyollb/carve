@@ -27,7 +27,7 @@
 #include <carve/carve.hpp>
 #include <carve/geom.hpp>
 
-#include <math.h>
+#include <cmath>
 #include <carve/math_constants.hpp>
 
 #include <list>

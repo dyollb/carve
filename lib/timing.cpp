@@ -43,7 +43,7 @@
 #include <windows.h>
 #else
 #include <sys/time.h>
-#include <time.h>
+#include <ctime>
 #endif
 
 #ifndef CARVE_USE_GLOBAL_NEW_DELETE
@@ -80,7 +80,7 @@ void remBlk(unsigned size) {
 #if defined(__APPLE__)
 
 #include <malloc/malloc.h>
-#include <stdlib.h>
+#include <cstdlib>
 
 void* carve_alloc(size_t size) {
   void* p = malloc(size);

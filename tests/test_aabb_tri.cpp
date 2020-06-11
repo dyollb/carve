@@ -49,8 +49,8 @@
 /* suggestions and discussions on how to optimize code. */
 /* Thanks to David Hunt for finding a ">="-bug!         */
 /********************************************************/
-#include <math.h>
-#include <stdio.h>
+#include <cmath>
+#include <cstdio>
 
 #define X 0
 #define Y 1

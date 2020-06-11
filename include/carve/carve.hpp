@@ -56,7 +56,7 @@
 #include <carve/win32.h>
 #endif
 
-#include <math.h>
+#include <cmath>
 
 #include <iomanip>
 #include <list>

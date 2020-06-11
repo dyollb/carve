@@ -48,8 +48,8 @@
 #include <set>
 #include <string>
 #include <utility>
+#include <ctime>
 
-#include <time.h>
 typedef std::vector<std::string>::iterator TOK;
 
 struct Options : public opt::Parser {

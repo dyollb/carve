@@ -6,7 +6,7 @@
 #pragma warning (disable : 4786)
 
 #include <string.h>
-#include <stdlib.h>
+#include <cstdlib>
 
 inline int strcasecmp(const char *a, const char *b) {
   return _stricmp(a,b);
@@ -43,6 +43,6 @@ typedef unsigned long uint32_t;
 typedef __int64 int64_t;
 typedef unsigned __int64 uint64_t;
 #  else
-#    include <stdint.h>
+#    include <cstdint>
 #  endif
 #endif

@@ -32,7 +32,7 @@
 #include <carve/octree_decl.hpp>
 #include <carve/polyhedron_base.hpp>
 
-#include <assert.h>
+#include <cassert>
 #include <list>
 
 namespace carve {

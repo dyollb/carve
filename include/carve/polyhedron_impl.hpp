@@ -26,7 +26,7 @@
 
 #include <carve/timing.hpp>
 
-#include <assert.h>
+#include <cassert>
 #include <list>
 
 namespace carve {

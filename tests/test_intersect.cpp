@@ -49,9 +49,8 @@
 #include <set>
 #include <string>
 #include <utility>
-
-#include <assert.h>
-#include <time.h>
+#include <cassert>
+#include <ctime>
 
 #ifdef WIN32
 #undef min

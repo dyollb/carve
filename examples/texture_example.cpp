@@ -51,8 +51,7 @@
 #include <set>
 #include <string>
 #include <utility>
-
-#include <time.h>
+#include <ctime>
 
 #if defined(__GNUC__)
 #define __stdcall

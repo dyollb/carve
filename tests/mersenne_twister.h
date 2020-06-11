@@ -60,11 +60,11 @@
 // its own MTRand object)
 
 #include <iostream>
-#include <limits.h>
-#include <stdio.h>
-#include <time.h>
-#include <math.h>
-#include <stdint.h>
+#include <limits>
+#include <cstdio>
+#include <ctime>
+#include <cmath>
+#include <cstdint>
 
 class MTRand {
   // Data

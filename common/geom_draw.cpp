@@ -37,8 +37,7 @@
 
 #include <fstream>
 #include <string>
-
-#include <time.h>
+#include <ctime>
 
 #if defined(__GNUC__)
 #define __stdcall

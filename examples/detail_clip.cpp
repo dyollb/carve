@@ -38,8 +38,7 @@
 #include <set>
 #include <string>
 #include <utility>
-
-#include <time.h>
+#include <ctime>
 
 class DetailClip : public carve::csg::CSG::Collector {
   DetailClip();

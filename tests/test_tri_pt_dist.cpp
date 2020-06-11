@@ -42,9 +42,7 @@
 #include <set>
 #include <string>
 #include <utility>
-
-#include <time.h>
-
+#include <ctime>
 #include <random>
 
 struct TestScene : public Scene {
