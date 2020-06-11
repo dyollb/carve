@@ -437,7 +437,7 @@ void FaceStitcher::extractPath(std::vector<const vertex_t*>& path) {
   while (vert != init && (*iter).second.size() == 2) {
     next =
         *std::find_if((*iter).second.begin(), (*iter).second.end(),
-                      std::bind2nd(std::not_equal_to<const vertex_t*>(), prev));
+                      [&prev](const vertex_t* v){ return v != prev; });
 
     edgeiter = complex_edges.find(vpair_t(vert, next));
     if ((*edgeiter).second.size() != efwd.size()) {
