@@ -30,7 +30,6 @@
 #include <carve/geom2d.hpp>
 #include <carve/math.hpp>
 
-#include <algorithm>
 #include <iostream>
 
 namespace carve {
@@ -118,9 +117,8 @@ LineIntersectionInfo lineSegmentIntersection(const P2& l1v1, const P2& l1v2,
     double d3 = distance2(p, l2v1);
     double d4 = distance2(p, l2v2);
 
-    int n = -1;
-
     if (std::min(d1, d2) < EPSILON2) {
+      int n = -1;
       if (d1 < d2) {
         p = l1v1;
         n = 0;

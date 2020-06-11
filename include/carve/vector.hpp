@@ -30,9 +30,9 @@
 #include <carve/geom3d.hpp>
 #include <carve/math_constants.hpp>
 
+#include <algorithm>
 #include <sstream>
-
-#include <math.h>
+#include <cmath>
 
 namespace carve {
 namespace geom3d {

@@ -95,7 +95,7 @@ struct exception {
   mutable std::ostringstream accum;
 
  public:
-  exception(const std::string& e) : err(e), accum() {}
+  explicit exception(const std::string& e) : err(e), accum() {}
   exception() : err(), accum() {}
   exception(const exception& e) : err(e.str()), accum() {}
   exception& operator=(const exception& e) {
@@ -127,7 +127,7 @@ template <typename iter_t,
 struct index_sort {
   iter_t base;
   order_t order;
-  index_sort(const iter_t& _base) : base(_base), order() {}
+  explicit index_sort(const iter_t& _base) : base(_base), order() {}
   index_sort(const iter_t& _base, const order_t& _order)
       : base(_base), order(_order) {}
   template <typename U>

@@ -62,7 +62,7 @@ class MeshSimplifier {
 
     double c[4];
     double l[2], t1[2], t2[2];
-    size_t heap_idx;
+    size_t heap_idx = 0;
 
     void update() {
       const vertex_t* v1 = edge->vert;
@@ -93,7 +93,7 @@ class MeshSimplifier {
       }
     }
 
-    EdgeInfo(edge_t* e) : edge(e) { update(); }
+    explicit EdgeInfo(edge_t* e) : edge(e) { update(); }
 
     EdgeInfo() : edge(nullptr) {
       delta_v = 0.0;
@@ -163,7 +163,7 @@ class MeshSimplifier {
       const FlippableBase& flip;
 
      public:
-      Priority(const FlippableBase& _flip) : flip(_flip) {}
+      explicit Priority(const FlippableBase& _flip) : flip(_flip) {}
       bool operator()(const EdgeInfo* a, const EdgeInfo* b) const {
         return flip.score(a) > flip.score(b);
       }
@@ -252,7 +252,7 @@ class MeshSimplifier {
       return e->l[0] <= min_edgelen;
     }
 
-    EdgeMerger(double _min_edgelen) : min_edgelen(_min_edgelen) {}
+    explicit EdgeMerger(double _min_edgelen) : min_edgelen(_min_edgelen) {}
 
     double score(const EdgeInfo* e) const { return min_edgelen - e->l[0]; }
 
@@ -261,7 +261,7 @@ class MeshSimplifier {
 
      public:
       const EdgeMerger& merger;
-      Priority(const EdgeMerger& _merger) : merger(_merger) {}
+      explicit Priority(const EdgeMerger& _merger) : merger(_merger) {}
       bool operator()(const EdgeInfo* a, const EdgeInfo* b) const {
         // collapse edges in order from shortest to longest.
         return merger.score(a) < merger.score(b);
@@ -700,11 +700,11 @@ class MeshSimplifier {
       //           }
       carve::heap::pop_heap(edge_heap.begin(), edge_heap.end(),
                             merger.priority(), EdgeInfo::NotifyPos());
-      EdgeInfo* e = edge_heap.back();
+      EdgeInfo* e_current = edge_heap.back();
       edge_heap.pop_back();
-      e->heap_idx = ~0U;
+      e_current->heap_idx = ~0U;
 
-      edge_t* edge = e->edge;
+      edge_t* edge = e_current->edge;
       vertex_t* v1 = edge->v1();
       vertex_t* v2 = edge->v2();
 
@@ -789,7 +789,7 @@ class MeshSimplifier {
         }
       }
 
-      std::cerr << "collapse " << e << std::endl;
+      std::cerr << "collapse " << e_current << std::endl;
 
       v2->v = merge;
       ++n_mods;
@@ -1049,7 +1049,7 @@ class MeshSimplifier {
     return d;
   }
 
-  double minimize(carve::geom::vector<3>& vert,
+  double minimize(const carve::geom::vector<3>& vert,
                   const std::list<carve::geom::plane<3> >& planes, int axis) {
     double num = 0.0;
     double den = 0.0;
@@ -1311,17 +1311,19 @@ class MeshSimplifier {
         continue;
       }
 
-      double d = summedError(vert->v, planes);
-      for (size_t N = 0;; N = (N + 1) % 3) {
-        if (constraint & (1 << N)) {
-          continue;
+      {
+        double d = summedError(vert->v, planes);
+        for (size_t N = 0;; N = (N + 1) % 3) {
+          if (constraint & (1 << N)) {
+            continue;
+          }
+          vert->v[N] = minimize(vert->v, planes, N);
+          double d_next = summedError(vert->v, planes);
+          if (d - d_next < 1e-20) {
+            break;
+          }
+          d = d_next;
         }
-        vert->v[N] = minimize(vert->v, planes, N);
-        double d_next = summedError(vert->v, planes);
-        if (d - d_next < 1e-20) {
-          break;
-        }
-        d = d_next;
       }
 
       if (grid) {
@@ -1356,7 +1358,7 @@ class MeshSimplifier {
                   double min_delta_v, double min_normal_angle,
                   double min_length) {
     size_t modifications = 0;
-    size_t n, n_flip, n_merge;
+    size_t n_flip, n_merge;
 
     initEdgeInfo(meshset);
 
@@ -1372,7 +1374,7 @@ class MeshSimplifier {
       // n_flip = n;
 
       std::cerr << "flip conservative";
-      n = flipEdges(meshset, FlippableConservative());
+      size_t n = flipEdges(meshset, FlippableConservative());
       std::cerr << " " << n << std::endl;
       n_flip += n;
 
@@ -1421,7 +1423,7 @@ class MeshSimplifier {
   }
 
   size_t removeLowVolumeManifolds(meshset_t* meshset, double min_abs_volume) {
-    size_t n_removed;
+    size_t n_removed = 0;
     for (size_t i = 0; i < meshset->meshes.size(); ++i) {
       if (fabs(meshset->meshes[i]->volume()) < min_abs_volume) {
         delete meshset->meshes[i];
@@ -1432,7 +1434,7 @@ class MeshSimplifier {
     meshset->meshes.erase(
         std::remove_if(
             meshset->meshes.begin(), meshset->meshes.end(),
-            std::bind2nd(std::equal_to<mesh_t*>(), (mesh_t*)nullptr)),
+            [](mesh_t* m){ return m == nullptr; }),
         meshset->meshes.end());
     return n_removed;
   }

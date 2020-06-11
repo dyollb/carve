@@ -31,9 +31,9 @@
 
 #include <carve/geom.hpp>
 
+#include <algorithm>
 #include <vector>
-
-#include <math.h>
+#include <cmath>
 
 #if defined(CARVE_DEBUG)
 #include <iostream>
@@ -231,7 +231,7 @@ struct LineIntersectionInfo {
   P2 ipoint;
   int p1, p2;
 
-  LineIntersectionInfo(LineIntersectionClass _iclass, P2 _ipoint = P2::ZERO(),
+  explicit LineIntersectionInfo(LineIntersectionClass _iclass, P2 _ipoint = P2::ZERO(),
                        int _p1 = -1, int _p2 = -1)
       : iclass(_iclass), ipoint(_ipoint), p1(_p1), p2(_p2) {}
 };
@@ -240,7 +240,7 @@ struct PolyInclusionInfo {
   PointClass iclass;
   int iobjnum;
 
-  PolyInclusionInfo(PointClass _iclass, int _iobjnum = -1)
+  explicit PolyInclusionInfo(PointClass _iclass, int _iobjnum = -1)
       : iclass(_iclass), iobjnum(_iobjnum) {}
 };
 
@@ -323,7 +323,7 @@ double signedArea(const std::vector<T>& points, adapt_t adapt) {
 template <typename iter_t, typename adapt_t>
 double signedArea(iter_t begin, iter_t end, adapt_t adapt) {
   double A = 0.0;
-  P2 p, n;
+  P2 p;
 
   if (begin == end) {
     return 0.0;
@@ -335,7 +335,7 @@ double signedArea(iter_t begin, iter_t end, adapt_t adapt) {
     A += (n.y + p.y) * (n.x - p.x);
     p = n;
   }
-  n = adapt(*begin);
+  P2 n = adapt(*begin);
   A += (n.y + p.y) * (n.x - p.x);
 
   return A / 2.0;
