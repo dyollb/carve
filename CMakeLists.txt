@@ -6,8 +6,8 @@ set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 set(carve_VERSION_MAJOR 2)
-set(carve_VERSION_MINOR 0)
-set(carve_VERSION_PATCH 0a)
+set(carve_VERSION_MINOR 1)
+set(carve_VERSION_PATCH 0)
 
 set(CARVE_VERSION ${carve_VERSION_MAJOR}.${carve_VERSION_MINOR}.${carve_VERSION_PATCH})
 
@@ -132,7 +132,9 @@ add_subdirectory(include)
 add_subdirectory(common) 
 add_subdirectory(src) 
 add_subdirectory(examples) 
-add_subdirectory(tests) 
+add_subdirectory(tests)
+
+add_subdirectory(usecase)
 
 include(CTest)
 
