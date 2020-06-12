@@ -101,7 +101,7 @@ template<unsigned n_dim, typename nodedata_t>
 class SpatialSubdivTree
 {
 	typedef carve::geom::aabb<n_dim> aabb_t;
-	typedef carve::geom::vector<n_dim> vector_t;
+	using vector_t = carve::geom::vector<n_dim>;
 
 public:
 	class Node

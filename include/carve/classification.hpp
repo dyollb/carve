@@ -135,12 +135,8 @@ struct PC2
 	}
 };
 
-typedef std::unordered_map<std::pair<const carve::mesh::MeshSet<3>::vertex_t*,
-															 const carve::mesh::MeshSet<3>::vertex_t*>,
-		EC2, hash_pair>
-		EdgeClassification;
+using EdgeClassification = std::unordered_map<std::pair<const carve::mesh::MeshSet<3>::vertex_t *, const carve::mesh::MeshSet<3>::vertex_t *>, EC2, hash_pair>;
 
-typedef std::unordered_map<const carve::mesh::Vertex<3>*, PC2>
-		VertexClassification;
+using VertexClassification = std::unordered_map<const carve::mesh::Vertex<3> *, PC2>;
 }
 } // namespace carve::csg

@@ -53,7 +53,7 @@ class cubic_bezier
 {
 public:
 	typedef carve::geom::vector<ndim> vec_t;
-	typedef cubic_bezier<ndim> cubic_bezier_t;
+	using cubic_bezier_t = cubic_bezier<ndim>;
 
 	vec_t p[4];
 
@@ -525,7 +525,7 @@ carve::poly::Polyhedron* extrude(
 
 int main(int argc, char** argv)
 {
-	typedef std::vector<carve::geom2d::P2> loop_t;
+	using loop_t = std::vector<carve::geom2d::P2>;
 
 	std::ifstream in(argv[1]);
 	unsigned file_num = 0;

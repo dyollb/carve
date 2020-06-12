@@ -40,10 +40,10 @@ struct Intersections
 		: public std::unordered_map<IObj, IObjVMapSmall, IObj_hash>
 {
 	typedef carve::mesh::MeshSet<3>::vertex_t vertex_t;
-	typedef carve::mesh::MeshSet<3>::edge_t edge_t;
-	typedef carve::mesh::MeshSet<3>::face_t face_t;
+	using edge_t = carve::mesh::MeshSet<3>::edge_t;
+	using face_t = carve::mesh::MeshSet<3>::face_t;
 
-	typedef std::unordered_map<IObj, IObjVMapSmall, IObj_hash> super;
+	using super = std::unordered_map<IObj, IObjVMapSmall, IObj_hash>;
 
 	~Intersections() {}
 

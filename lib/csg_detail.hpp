@@ -36,35 +36,27 @@ typedef std::map<
     std::set<std::pair<carve::mesh::MeshSet<3>::face_t*, double> > >
     EdgeIntInfo;
 
-typedef std::unordered_set<carve::mesh::MeshSet<3>::vertex_t*> VSet;
-typedef std::unordered_set<carve::mesh::MeshSet<3>::face_t*> FSet;
+using VSet = std::unordered_set<carve::mesh::MeshSet<3>::vertex_t *>;
+using FSet = std::unordered_set<carve::mesh::MeshSet<3>::face_t *>;
 
-typedef std::set<carve::mesh::MeshSet<3>::vertex_t*> VSetSmall;
-typedef std::set<csg::V2> V2SetSmall;
-typedef std::set<carve::mesh::MeshSet<3>::face_t*> FSetSmall;
+using VSetSmall = std::set<carve::mesh::MeshSet<3>::vertex_t *>;
+using V2SetSmall = std::set<csg::V2>;
+using FSetSmall = std::set<carve::mesh::MeshSet<3>::face_t *>;
 
-typedef std::unordered_map<carve::mesh::MeshSet<3>::vertex_t*, VSetSmall>
-    VVSMap;
-typedef std::unordered_map<carve::mesh::MeshSet<3>::edge_t*, EdgeIntInfo>
-    EIntMap;
-typedef std::unordered_map<carve::mesh::MeshSet<3>::face_t*, VSetSmall> FVSMap;
+using VVSMap = std::unordered_map<carve::mesh::MeshSet<3>::vertex_t *, VSetSmall>;
+using EIntMap = std::unordered_map<carve::mesh::MeshSet<3>::edge_t *, EdgeIntInfo>;
+using FVSMap = std::unordered_map<carve::mesh::MeshSet<3>::face_t *, VSetSmall>;
 
-typedef std::unordered_map<carve::mesh::MeshSet<3>::vertex_t*, FSetSmall>
-    VFSMap;
-typedef std::unordered_map<carve::mesh::MeshSet<3>::face_t*, V2SetSmall>
-    FV2SMap;
+using VFSMap = std::unordered_map<carve::mesh::MeshSet<3>::vertex_t *, FSetSmall>;
+using FV2SMap = std::unordered_map<carve::mesh::MeshSet<3>::face_t *, V2SetSmall>;
 
-typedef std::unordered_map<carve::mesh::MeshSet<3>::edge_t*,
-                           std::vector<carve::mesh::MeshSet<3>::vertex_t*> >
-    EVVMap;
+using EVVMap = std::unordered_map<carve::mesh::MeshSet<3>::edge_t *, std::vector<carve::mesh::MeshSet<3>::vertex_t *> >;
 
-typedef std::unordered_map<carve::mesh::MeshSet<3>::vertex_t*,
-                           std::vector<carve::mesh::MeshSet<3>::edge_t*> >
-    VEVecMap;
+using VEVecMap = std::unordered_map<carve::mesh::MeshSet<3>::vertex_t *, std::vector<carve::mesh::MeshSet<3>::edge_t *> >;
 
 class LoopEdges
     : public std::unordered_map<V2, std::list<FaceLoop*>, hash_pair> {
-  typedef std::unordered_map<V2, std::list<FaceLoop*>, hash_pair> super;
+  using super = std::unordered_map<V2, std::list<FaceLoop *>, hash_pair>;
 
  public:
   void addFaceLoop(FaceLoop* fl);

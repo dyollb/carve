@@ -45,10 +45,10 @@
 namespace carve {
 namespace geom3d {
 
-typedef carve::geom::plane<3> Plane;
-typedef carve::geom::ray<3> Ray;
-typedef carve::geom::linesegment<3> LineSegment;
-typedef carve::geom::vector<3> Vector;
+using Plane = carve::geom::plane<3>;
+using Ray = carve::geom::ray<3>;
+using LineSegment = carve::geom::linesegment<3>;
+using Vector = carve::geom::vector<3>;
 
 template<typename iter_t, typename adapt_t>
 bool fitPlane(iter_t begin, iter_t end, adapt_t adapt, Plane& plane)

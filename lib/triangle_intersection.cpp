@@ -37,7 +37,7 @@
 #include <iostream>
 
 typedef carve::geom::vector<3> vec3;
-typedef carve::geom::vector<2> vec2;
+using vec2 = carve::geom::vector<2>;
 
 namespace {
 enum sat_t {

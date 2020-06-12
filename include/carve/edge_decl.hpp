@@ -44,9 +44,9 @@ template<unsigned ndim>
 class Edge : public tagable
 {
 public:
-	typedef Vertex<ndim> vertex_t;
-	typedef typename Vertex<ndim>::vector_t vector_t;
-	typedef Object obj_t;
+	using vertex_t = Vertex<ndim>;
+	using vector_t = typename Vertex<ndim>::vector_t;
+	using obj_t = Object;
 
 	const vertex_t *v1, *v2;
 	const obj_t* owner;

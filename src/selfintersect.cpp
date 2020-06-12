@@ -132,7 +132,7 @@ static bool endswith(const std::string& a, const std::string& b)
 }
 
 typedef carve::geom::vector<3> vec3;
-typedef carve::geom::vector<2> vec2;
+using vec2 = carve::geom::vector<2>;
 
 inline void add_to_bbox(vec3& lo, vec3& hi, const vec3& p)
 {
@@ -810,7 +810,7 @@ int main(int argc, char** argv)
 		exit(1);
 	}
 
-	typedef carve::geom::RTreeNode<3, carve::mesh::Face<3>*> face_rtree_t;
+	using face_rtree_t = carve::geom::RTreeNode<3, carve::mesh::Face<3> *>;
 	face_rtree_t* tree =
 			face_rtree_t::construct_STR(poly->faceBegin(), poly->faceEnd(), 4, 4);
 

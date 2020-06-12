@@ -36,8 +36,8 @@ namespace gloop {
 
   template<typename T>
   struct RefCounter {
-    typedef T *ptr_type;
-    typedef T ref_type;
+    using ptr_type = T *;
+    using ref_type = T;
 
     static void incref(T * const &t) { t->incref(); }
     static void decref(T * const &t) { t->decref(); }

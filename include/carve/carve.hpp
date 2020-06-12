@@ -205,7 +205,7 @@ template<typename T>
 struct identity_t
 {
 	typedef T argument_type;
-	typedef T result_type;
+	using result_type = T;
 	const T& operator()(const T& t) const { return t; }
 };
 

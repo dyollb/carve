@@ -61,12 +61,10 @@ struct IObj_hash
 	}
 };
 
-typedef std::unordered_set<std::pair<const IObj, const IObj>, IObj_hash>
-		IObjPairSet;
+using IObjPairSet = std::unordered_set<std::pair<const IObj, const IObj>, IObj_hash>;
 
-typedef std::unordered_map<IObj, carve::mesh::MeshSet<3>::vertex_t*, IObj_hash>
-		IObjVMap;
-typedef std::map<IObj, carve::mesh::MeshSet<3>::vertex_t*> IObjVMapSmall;
+using IObjVMap = std::unordered_map<IObj, carve::mesh::MeshSet<3>::vertex_t *, IObj_hash>;
+using IObjVMapSmall = std::map<IObj, carve::mesh::MeshSet<3>::vertex_t *>;
 
 class VertexIntersections
 		: public std::unordered_map<carve::mesh::MeshSet<3>::vertex_t*,

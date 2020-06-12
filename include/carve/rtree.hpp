@@ -41,9 +41,9 @@ template<unsigned ndim, typename data_t,
 		typename aabb_calc_t = carve::geom::get_aabb<ndim, data_t>>
 struct RTreeNode
 {
-	typedef aabb<ndim> aabb_t;
-	typedef vector<ndim> vector_t;
-	typedef RTreeNode<ndim, data_t, aabb_calc_t> node_t;
+	using aabb_t = aabb<ndim>;
+	using vector_t = vector<ndim>;
+	using node_t = RTreeNode<ndim, data_t, aabb_calc_t>;
 
 	aabb_t bbox;
 	node_t* child;

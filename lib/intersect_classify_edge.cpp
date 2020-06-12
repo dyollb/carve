@@ -69,8 +69,7 @@ struct EdgeSurface {
 typedef std::map<const carve::mesh::MeshSet<3>::mesh_t*, EdgeSurface>
     GrpEdgeSurfMap;
 
-typedef std::pair<FaceLoopGroup*, const carve::mesh::MeshSet<3>::mesh_t*>
-    ClassificationKey;
+using ClassificationKey = std::pair<FaceLoopGroup *, const carve::mesh::MeshSet<3>::mesh_t *>;
 
 struct ClassificationData {
   uint32_t class_bits : 5;
@@ -91,15 +90,13 @@ struct hash_classification {
   }
 };
 
-typedef std::unordered_map<ClassificationKey, ClassificationData,
-                           hash_classification>
-    Classification;
+using Classification = std::unordered_map<ClassificationKey, ClassificationData, hash_classification>;
 
 struct hash_group_ptr {
   size_t operator()(const FaceLoopGroup* const& f) const { return (size_t)f; }
 };
 
-typedef std::pair<size_t, const carve::mesh::MeshSet<3>::vertex_t*> PerimKey;
+using PerimKey = std::pair<size_t, const carve::mesh::MeshSet<3>::vertex_t *>;
 
 struct hash_perim_key {
   size_t operator()(const PerimKey& v) const {
@@ -107,10 +104,7 @@ struct hash_perim_key {
   }
 };
 
-typedef std::unordered_map<
-    std::pair<size_t, const carve::mesh::MeshSet<3>::vertex_t*>,
-    std::unordered_set<FaceLoopGroup*, hash_group_ptr>, hash_perim_key>
-    PerimMap;
+using PerimMap = std::unordered_map<std::pair<size_t, const carve::mesh::MeshSet<3>::vertex_t *>, std::unordered_set<FaceLoopGroup *, hash_group_ptr>, hash_perim_key>;
 
 struct hash_group_pair {
   size_t operator()(const std::pair<int, const FaceLoopGroup*>& v) const {
@@ -118,11 +112,7 @@ struct hash_group_pair {
   }
 };
 
-typedef std::unordered_map<
-    const FaceLoopGroup*,
-    std::unordered_set<std::pair<int, const FaceLoopGroup*>, hash_group_pair>,
-    hash_group_ptr>
-    CandidateOnMap;
+using CandidateOnMap = std::unordered_map<const FaceLoopGroup *, std::unordered_set<std::pair<int, const FaceLoopGroup *>, hash_group_pair>, hash_group_ptr>;
 
 static inline void remove(carve::mesh::MeshSet<3>::vertex_t* a,
                           carve::mesh::MeshSet<3>::vertex_t* b,

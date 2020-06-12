@@ -814,12 +814,12 @@ FaceStitcher::FaceStitcher(const MeshOptions& _opts) : opts(_opts) {}
 // connectivity information in the Polyhedron.
 mesh::MeshSet<3>* meshFromPolyhedron(const poly::Polyhedron* poly,
                                      int manifold_id) {
-  typedef mesh::Vertex<3> vertex_t;
-  typedef mesh::Vertex<3>::vector_t vector_t;
-  typedef mesh::Edge<3> edge_t;
-  typedef mesh::Face<3> face_t;
-  typedef mesh::Mesh<3> mesh_t;
-  typedef mesh::MeshSet<3> meshset_t;
+  using vertex_t = mesh::Vertex<3>;
+  using vector_t = mesh::Vertex<3>::vector_t;
+  using edge_t = mesh::Edge<3>;
+  using face_t = mesh::Face<3>;
+  using mesh_t = mesh::Mesh<3>;
+  using meshset_t = mesh::MeshSet<3>;
 
   std::vector<vertex_t> vertex_storage;
   vertex_storage.reserve(poly->vertices.size());
@@ -941,10 +941,10 @@ static void copyMeshFaces(
 // construct a Polyhedron from a MeshSet
 poly::Polyhedron* polyhedronFromMesh(const mesh::MeshSet<3>* mesh,
                                      int manifold_id) {
-  typedef poly::Polyhedron poly_t;
-  typedef poly::Polyhedron::vertex_t vertex_t;
-  typedef poly::Polyhedron::edge_t edge_t;
-  typedef poly::Polyhedron::face_t face_t;
+  using poly_t = poly::Polyhedron;
+  using vertex_t = poly::Polyhedron::vertex_t;
+  using edge_t = poly::Polyhedron::edge_t;
+  using face_t = poly::Polyhedron::face_t;
 
   poly::Polyhedron* poly = new poly::Polyhedron();
   const mesh::Vertex<3>* Vbase = &mesh->vertex_storage[0];

@@ -43,10 +43,10 @@
 #include <utility>
 
 typedef carve::mesh::MeshSet<3> meshset_t;
-typedef carve::mesh::Mesh<3> mesh_t;
-typedef mesh_t::vertex_t vertex_t;
-typedef mesh_t::edge_t edge_t;
-typedef mesh_t::face_t face_t;
+using mesh_t = carve::mesh::Mesh<3>;
+using vertex_t = mesh_t::vertex_t;
+using edge_t = mesh_t::edge_t;
+using face_t = mesh_t::face_t;
 
 #include "read_ply.hpp"
 #include "write_ply.hpp"

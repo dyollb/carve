@@ -1311,7 +1311,7 @@ void composeEdgesIntoPaths(
   detail::VSet endpoints;
   detail::VSet cut_endpoints;
 
-  typedef std::vector<carve::mesh::MeshSet<3>::vertex_t*> vvec_t;
+  using vvec_t = std::vector<carve::mesh::MeshSet<3>::vertex_t *>;
   vvec_t path;
 
   std::list<vvec_t> path_list, cut_list, loop_list;

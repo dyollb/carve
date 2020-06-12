@@ -79,8 +79,8 @@ class Vertex : public tagable
 {
 public:
 	typedef carve::geom::vector<ndim> vector_t;
-	typedef MeshSet<ndim> owner_t;
-	typedef carve::geom::aabb<ndim> aabb_t;
+	using owner_t = MeshSet<ndim>;
+	using aabb_t = carve::geom::aabb<ndim>;
 
 	carve::geom::vector<ndim> v;
 
@@ -143,8 +143,8 @@ template<unsigned ndim>
 class Edge : public tagable
 {
 public:
-	typedef Vertex<ndim> vertex_t;
-	typedef Face<ndim> face_t;
+	using vertex_t = Vertex<ndim>;
+	using face_t = Face<ndim>;
 
 	vertex_t* vert;
 	face_t* face;
@@ -262,20 +262,19 @@ template<unsigned ndim>
 class Face : public tagable
 {
 public:
-	typedef Vertex<ndim> vertex_t;
-	typedef Edge<ndim> edge_t;
-	typedef Mesh<ndim> mesh_t;
+	using vertex_t = Vertex<ndim>;
+	using edge_t = Edge<ndim>;
+	using mesh_t = Mesh<ndim>;
 
-	typedef typename Vertex<ndim>::vector_t vector_t;
-	typedef carve::geom::aabb<ndim> aabb_t;
-	typedef carve::geom::plane<ndim> plane_t;
-	typedef carve::geom::vector<2> (*project_t)(const vector_t&);
-	typedef vector_t (*unproject_t)(const carve::geom::vector<2>&,
-			const plane_t&);
+	using vector_t = typename Vertex<ndim>::vector_t;
+	using aabb_t = carve::geom::aabb<ndim>;
+	using plane_t = carve::geom::plane<ndim>;
+	using project_t = carve::geom::vector<2> (*)(const vector_t &);
+	using unproject_t = vector_t (*)(const carve::geom::vector<2> &, const plane_t &);
 
 	struct vector_mapping
 	{
-		typedef typename vertex_t::vector_t value_type;
+		using value_type = typename vertex_t::vector_t;
 
 		value_type operator()(const carve::geom::vector<ndim>& v) const
 		{
@@ -293,7 +292,7 @@ public:
 
 	struct projection_mapping
 	{
-		typedef carve::geom::vector<2> value_type;
+		using value_type = carve::geom::vector<2>;
 		project_t proj;
 		explicit projection_mapping(project_t _proj) : proj(_proj) {}
 		value_type operator()(const carve::geom::vector<ndim>& v) const
@@ -348,8 +347,8 @@ protected:
 	CARVE_API unproject_t getUnprojector(bool positive_facing, int axis) const;
 
 public:
-	typedef detail::list_iter_t<Edge<ndim>> edge_iter_t;
-	typedef detail::list_iter_t<const Edge<ndim>> const_edge_iter_t;
+	using edge_iter_t = detail::list_iter_t<Edge<ndim> >;
+	using const_edge_iter_t = detail::list_iter_t<const Edge<ndim> >;
 
 	edge_iter_t begin() { return edge_iter_t(edge, 0); }
 	edge_iter_t end() { return edge_iter_t(edge, n_edges); }
@@ -532,16 +531,14 @@ class CARVE_API FaceStitcher
 	FaceStitcher(const FaceStitcher&);
 	FaceStitcher& operator=(const FaceStitcher&);
 
-	typedef Vertex<3> vertex_t;
-	typedef Edge<3> edge_t;
-	typedef Face<3> face_t;
+	using vertex_t = Vertex<3>;
+	using edge_t = Edge<3>;
+	using face_t = Face<3>;
 
-	typedef std::pair<const vertex_t*, const vertex_t*> vpair_t;
-	typedef std::list<edge_t*> edgelist_t;
-	typedef std::unordered_map<vpair_t, edgelist_t, carve::mesh::hash_vertex_pair>
-			edge_map_t;
-	typedef std::unordered_map<const vertex_t*, std::set<const vertex_t*>>
-			edge_graph_t;
+	using vpair_t = std::pair<const vertex_t *, const vertex_t *>;
+	using edgelist_t = std::list<edge_t *>;
+	using edge_map_t = std::unordered_map<vpair_t, edgelist_t, carve::mesh::hash_vertex_pair>;
+	using edge_graph_t = std::unordered_map<const vertex_t *, std::set<const vertex_t *> >;
 
 	MeshOptions opts;
 
@@ -663,11 +660,11 @@ template<unsigned ndim>
 class Mesh
 {
 public:
-	typedef Vertex<ndim> vertex_t;
-	typedef Edge<ndim> edge_t;
-	typedef Face<ndim> face_t;
-	typedef carve::geom::aabb<ndim> aabb_t;
-	typedef MeshSet<ndim> meshset_t;
+	using vertex_t = Vertex<ndim>;
+	using edge_t = Edge<ndim>;
+	using face_t = Face<ndim>;
+	using aabb_t = carve::geom::aabb<ndim>;
+	using meshset_t = MeshSet<ndim>;
 
 	std::vector<face_t*> faces;
 
@@ -783,11 +780,11 @@ class MeshSet
 	void _init_from_faces(iter_t begin, iter_t end, const MeshOptions& opts);
 
 public:
-	typedef Vertex<ndim> vertex_t;
-	typedef Edge<ndim> edge_t;
-	typedef Face<ndim> face_t;
-	typedef Mesh<ndim> mesh_t;
-	typedef carve::geom::aabb<ndim> aabb_t;
+	using vertex_t = Vertex<ndim>;
+	using edge_t = Edge<ndim>;
+	using face_t = Face<ndim>;
+	using mesh_t = Mesh<ndim>;
+	using aabb_t = carve::geom::aabb<ndim>;
 
 	std::vector<vertex_t> vertex_storage;
 	std::vector<mesh_t*> meshes;
@@ -797,8 +794,8 @@ public:
 	struct FaceIter
 			: public std::iterator<std::random_access_iterator_tag, face_type>
 	{
-		typedef std::iterator<std::random_access_iterator_tag, face_type> super;
-		typedef typename super::difference_type difference_type;
+		using super = std::iterator<std::random_access_iterator_tag, face_type>;
+		using difference_type = typename super::difference_type;
 
 		const MeshSet<ndim>* obj;
 		size_t mesh, face;
@@ -874,8 +871,8 @@ public:
 		face_type operator*() const { return obj->meshes[mesh]->faces[face]; }
 	};
 
-	typedef FaceIter<const face_t*> const_face_iter;
-	typedef FaceIter<face_t*> face_iter;
+	using const_face_iter = FaceIter<const face_t *>;
+	using face_iter = FaceIter<face_t *>;
 
 	face_iter faceBegin() { return face_iter(this, 0, 0); }
 	face_iter faceEnd() { return face_iter(this, meshes.size(), 0); }

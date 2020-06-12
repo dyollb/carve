@@ -100,8 +100,7 @@ void _remove_heap(random_access_iter_t begin, distance_t pos, distance_t len,
 	--len;
 	if (pos != len)
 	{
-		typedef
-				typename std::iterator_traits<random_access_iter_t>::value_type value_t;
+		using value_t = typename std::iterator_traits<random_access_iter_t>::value_type;
 		value_t removed = begin[pos];
 		_adjust_heap(begin, pos, len, begin[len], pred, notify);
 		begin[len] = removed;
@@ -166,8 +165,7 @@ template<typename random_access_iter_t>
 void adjust_heap(random_access_iter_t begin, random_access_iter_t end,
 		random_access_iter_t pos)
 {
-	typedef
-			typename std::iterator_traits<random_access_iter_t>::value_type value_t;
+	using value_t = typename std::iterator_traits<random_access_iter_t>::value_type;
 
 	detail::_adjust_heap(begin, pos - begin, end - begin, *pos,
 			std::less<value_t>());
@@ -192,8 +190,7 @@ template<typename random_access_iter_t>
 void remove_heap(random_access_iter_t begin, random_access_iter_t end,
 		random_access_iter_t pos)
 {
-	typedef
-			typename std::iterator_traits<random_access_iter_t>::value_type value_t;
+	using value_t = typename std::iterator_traits<random_access_iter_t>::value_type;
 
 	detail::_remove_heap(begin, pos - begin, end - begin, std::less<value_t>(),
 			detail::ignore_position_t());
@@ -218,10 +215,8 @@ void remove_heap(random_access_iter_t begin, random_access_iter_t end,
 template<typename random_access_iter_t>
 void pop_heap(random_access_iter_t begin, random_access_iter_t end)
 {
-	typedef
-			typename std::iterator_traits<random_access_iter_t>::value_type value_t;
-	typedef typename std::iterator_traits<random_access_iter_t>::difference_type
-			distance_t;
+	using value_t = typename std::iterator_traits<random_access_iter_t>::value_type;
+	using distance_t = typename std::iterator_traits<random_access_iter_t>::difference_type;
 
 	detail::_remove_heap(begin, distance_t(0), end - begin, std::less<value_t>(),
 			detail::ignore_position_t());
@@ -231,8 +226,7 @@ template<typename random_access_iter_t, typename pred_t>
 void pop_heap(random_access_iter_t begin, random_access_iter_t end,
 		pred_t pred)
 {
-	typedef typename std::iterator_traits<random_access_iter_t>::difference_type
-			distance_t;
+	using distance_t = typename std::iterator_traits<random_access_iter_t>::difference_type;
 
 	detail::_remove_heap(begin, distance_t(0), end - begin, pred,
 			detail::ignore_position_t());
@@ -243,8 +237,7 @@ template<typename random_access_iter_t, typename pred_t,
 void pop_heap(random_access_iter_t begin, random_access_iter_t end, pred_t pred,
 		pos_notifier_t notify)
 {
-	typedef typename std::iterator_traits<random_access_iter_t>::difference_type
-			distance_t;
+	using distance_t = typename std::iterator_traits<random_access_iter_t>::difference_type;
 
 	detail::_remove_heap(begin, distance_t(0), end - begin, pred, notify);
 }
@@ -252,10 +245,8 @@ void pop_heap(random_access_iter_t begin, random_access_iter_t end, pred_t pred,
 template<typename random_access_iter_t>
 void push_heap(random_access_iter_t begin, random_access_iter_t end)
 {
-	typedef
-			typename std::iterator_traits<random_access_iter_t>::value_type value_t;
-	typedef typename std::iterator_traits<random_access_iter_t>::difference_type
-			distance_t;
+	using value_t = typename std::iterator_traits<random_access_iter_t>::value_type;
+	using distance_t = typename std::iterator_traits<random_access_iter_t>::difference_type;
 
 	distance_t pos = end - begin - 1;
 	detail::_push_heap(begin, pos, begin[pos], std::less<value_t>(),
@@ -266,8 +257,7 @@ template<typename random_access_iter_t, typename pred_t>
 void push_heap(random_access_iter_t begin, random_access_iter_t end,
 		pred_t pred)
 {
-	typedef typename std::iterator_traits<random_access_iter_t>::difference_type
-			distance_t;
+	using distance_t = typename std::iterator_traits<random_access_iter_t>::difference_type;
 
 	distance_t pos = end - begin - 1;
 	detail::_push_heap(begin, pos, begin[pos], pred, detail::ignore_position_t());
@@ -278,8 +268,7 @@ template<typename random_access_iter_t, typename pred_t,
 void push_heap(random_access_iter_t begin, random_access_iter_t end,
 		pred_t pred, pos_notifier_t notify)
 {
-	typedef typename std::iterator_traits<random_access_iter_t>::difference_type
-			distance_t;
+	using distance_t = typename std::iterator_traits<random_access_iter_t>::difference_type;
 
 	distance_t pos = end - begin - 1;
 	detail::_push_heap(begin, pos, begin[pos], pred, notify);
@@ -288,8 +277,7 @@ void push_heap(random_access_iter_t begin, random_access_iter_t end,
 template<typename random_access_iter_t>
 void make_heap(random_access_iter_t begin, random_access_iter_t end)
 {
-	typedef
-			typename std::iterator_traits<random_access_iter_t>::value_type value_t;
+	using value_t = typename std::iterator_traits<random_access_iter_t>::value_type;
 
 	detail::_make_heap(begin, end - begin, std::less<value_t>(),
 			detail::ignore_position_t());
@@ -313,8 +301,7 @@ void make_heap(random_access_iter_t begin, random_access_iter_t end,
 template<typename random_access_iter_t>
 bool is_heap(random_access_iter_t begin, random_access_iter_t end)
 {
-	typedef
-			typename std::iterator_traits<random_access_iter_t>::value_type value_t;
+	using value_t = typename std::iterator_traits<random_access_iter_t>::value_type;
 
 	return detail::_is_heap(begin, end - begin, std::less<value_t>());
 }
@@ -329,10 +316,8 @@ bool is_heap(random_access_iter_t begin, random_access_iter_t end,
 template<typename random_access_iter_t>
 void sort_heap(random_access_iter_t begin, random_access_iter_t end)
 {
-	typedef typename std::iterator_traits<random_access_iter_t>::difference_type
-			distance_t;
-	typedef
-			typename std::iterator_traits<random_access_iter_t>::value_type value_t;
+	using distance_t = typename std::iterator_traits<random_access_iter_t>::difference_type;
+	using value_t = typename std::iterator_traits<random_access_iter_t>::value_type;
 
 	for (distance_t len = end - begin; len > 1; --len)
 	{
@@ -345,8 +330,7 @@ template<typename random_access_iter_t, typename pred_t>
 void sort_heap(random_access_iter_t begin, random_access_iter_t end,
 		pred_t pred)
 {
-	typedef typename std::iterator_traits<random_access_iter_t>::difference_type
-			distance_t;
+	using distance_t = typename std::iterator_traits<random_access_iter_t>::difference_type;
 
 	for (distance_t len = end - begin; len > 1; --len)
 	{
@@ -360,8 +344,7 @@ template<typename random_access_iter_t, typename pred_t,
 void sort_heap(random_access_iter_t begin, random_access_iter_t end,
 		pred_t pred, pos_notifier_t notify)
 {
-	typedef typename std::iterator_traits<random_access_iter_t>::difference_type
-			distance_t;
+	using distance_t = typename std::iterator_traits<random_access_iter_t>::difference_type;
 
 	for (distance_t len = end - begin; len > 1; --len)
 	{

@@ -98,7 +98,7 @@ public:
 } // namespace detail
 
 typedef detail::CarveTriangulator<false> CarveTriangulator;
-typedef detail::CarveTriangulator<true> CarveTriangulatorWithImprovement;
+using CarveTriangulatorWithImprovement = detail::CarveTriangulator<true>;
 
 class CarveTriangulationImprover : public csg::CSG::Hook
 {
@@ -119,7 +119,7 @@ public:
 		// doing improvement as a separate hook is much messier than
 		// just incorporating it into the triangulation hook.
 
-		typedef std::map<carve::mesh::MeshSet<3>::vertex_t*, size_t> vert_map_t;
+		using vert_map_t = std::map<carve::mesh::MeshSet<3>::vertex_t *, size_t>;
 		std::vector<carve::mesh::MeshSet<3>::face_t*> out_faces;
 		vert_map_t vert_map;
 
@@ -188,7 +188,7 @@ public:
 class CarveTriangulationQuadMerger : public csg::CSG::Hook
 {
 	// this code is incomplete.
-	typedef std::map<V2, F2> edge_map_t;
+	using edge_map_t = std::map<V2, F2>;
 
 public:
 	CarveTriangulationQuadMerger() {}

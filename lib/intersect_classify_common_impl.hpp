@@ -26,9 +26,7 @@
 
 namespace carve {
 namespace csg {
-typedef std::unordered_map<carve::mesh::MeshSet<3>::vertex_t*,
-                           std::list<FLGroupList::iterator> >
-    GroupLookup;
+using GroupLookup = std::unordered_map<carve::mesh::MeshSet<3>::vertex_t *, std::list<FLGroupList::iterator> >;
 
 inline bool isSameFwd(const V2Set& a, const V2Set& b) {
   if (a.size() != b.size()) {

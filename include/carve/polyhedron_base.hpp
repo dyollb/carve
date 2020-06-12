@@ -68,7 +68,7 @@ template<>
 struct CARVE_API Geometry<2> : public Object
 {
 	typedef Vertex<2> vertex_t;
-	typedef Edge<2> edge_t;
+	using edge_t = Edge<2>;
 
 	struct Connectivity
 	{
@@ -102,9 +102,9 @@ struct CARVE_API Geometry<2> : public Object
 template<>
 struct CARVE_API Geometry<3> : public Object
 {
-	typedef Vertex<3> vertex_t;
-	typedef Edge<3> edge_t;
-	typedef Face<3> face_t;
+	using vertex_t = Vertex<3>;
+	using edge_t = Edge<3>;
+	using face_t = Face<3>;
 
 	struct Connectivity
 	{

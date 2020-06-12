@@ -34,7 +34,7 @@ namespace exact {
 
 class exact_t : public std::vector<double>
 {
-	typedef std::vector<double> super;
+	using super = std::vector<double>;
 
 public:
 	exact_t() : super() {}

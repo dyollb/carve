@@ -149,9 +149,7 @@ void orderEdgeIntersectionVertices(
     const carve::mesh::MeshSet<3>::vertex_t::vector_t& dir,
     const carve::mesh::MeshSet<3>::vertex_t::vector_t& base,
     std::vector<carve::mesh::MeshSet<3>::vertex_t*>& out) {
-  typedef std::vector<
-      std::pair<std::pair<double, double>, carve::mesh::MeshSet<3>::vertex_t*> >
-      DVVector;
+  using DVVector = std::vector<std::pair<std::pair<double, double>, carve::mesh::MeshSet<3>::vertex_t *> >;
   DVVector ordered_vertices;
 
   ordered_vertices.reserve(std::distance(beg, end));
@@ -1444,8 +1442,7 @@ void returnSharedEdges(carve::csg::V2Set& shared_edges,
                        std::list<carve::mesh::MeshSet<3>*>& result_list,
                        carve::csg::V2Set* shared_edge_ptr) {
   // need to convert shared edges to point into result
-  typedef std::map<carve::geom3d::Vector, carve::mesh::MeshSet<3>::vertex_t*>
-      remap_type;
+  using remap_type = std::map<carve::geom3d::Vector, carve::mesh::MeshSet<3>::vertex_t *>;
   remap_type remap;
   for (std::list<carve::mesh::MeshSet<3>*>::iterator list_it =
            result_list.begin();

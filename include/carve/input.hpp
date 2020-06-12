@@ -36,7 +36,7 @@
 namespace carve {
 namespace input {
 
-typedef std::map<std::string, std::string> Options;
+using Options = std::map<std::string, std::string>;
 
 static inline Options opts()
 {
@@ -206,7 +206,7 @@ struct PolyhedronData : public VertexData
 
 struct PolylineSetData : public VertexData
 {
-	typedef std::pair<bool, std::vector<int>> polyline_data_t;
+	using polyline_data_t = std::pair<bool, std::vector<int> >;
 	std::list<polyline_data_t> polylines;
 
 	PolylineSetData() : VertexData(), polylines() {}

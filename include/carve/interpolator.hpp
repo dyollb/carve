@@ -175,7 +175,7 @@ val_t interp(const std::vector<carve::geom2d::P2>& poly,
 class Interpolator
 {
 public:
-	typedef carve::mesh::MeshSet<3> meshset_t;
+	using meshset_t = carve::mesh::MeshSet<3>;
 
 protected:
 	friend struct Hook;
@@ -245,11 +245,11 @@ template<typename attr_t>
 class FaceVertexAttr : public Interpolator
 {
 public:
-	typedef std::pair<const meshset_t::face_t*, unsigned> key_t;
+	using key_t = std::pair<const meshset_t::face_t *, unsigned int>;
 
 protected:
-	typedef std::unordered_map<const meshset_t::vertex_t*, attr_t> attrvmap_t;
-	typedef std::unordered_map<key_t, attr_t, carve::hash_pair> attrmap_t;
+	using attrvmap_t = std::unordered_map<const meshset_t::vertex_t *, attr_t>;
+	using attrmap_t = std::unordered_map<key_t, attr_t, carve::hash_pair>;
 
 	attrmap_t attrs;
 
@@ -324,14 +324,13 @@ template<typename attr_t>
 class FaceEdgeAttr : public Interpolator
 {
 public:
-	typedef std::pair<const meshset_t::face_t*, unsigned> key_t;
+	using key_t = std::pair<const meshset_t::face_t *, unsigned int>;
 
 protected:
-	typedef std::pair<const meshset_t::vertex_t*, const meshset_t::vertex_t*>
-			vpair_t;
+	using vpair_t = std::pair<const meshset_t::vertex_t *, const meshset_t::vertex_t *>;
 
-	typedef std::unordered_map<key_t, attr_t, carve::hash_pair> attrmap_t;
-	typedef std::unordered_map<vpair_t, key_t, carve::hash_pair> edgedivmap_t;
+	using attrmap_t = std::unordered_map<key_t, attr_t, carve::hash_pair>;
+	using edgedivmap_t = std::unordered_map<vpair_t, key_t, carve::hash_pair>;
 
 	attrmap_t attrs;
 	edgedivmap_t edgediv;
@@ -452,7 +451,7 @@ template<typename attr_t>
 class FaceAttr : public Interpolator
 {
 public:
-	typedef const meshset_t::face_t* key_t;
+	using key_t = const meshset_t::face_t *;
 
 protected:
 	struct key_hash
@@ -460,7 +459,7 @@ protected:
 		size_t operator()(const key_t& f) const { return size_t(f); }
 	};
 
-	typedef std::unordered_map<key_t, attr_t, key_hash> attrmap_t;
+	using attrmap_t = std::unordered_map<key_t, attr_t, key_hash>;
 
 	attrmap_t attrs;
 

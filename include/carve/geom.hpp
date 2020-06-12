@@ -308,7 +308,7 @@ bool operator!=(const vector<ndim>& a, const axis_pos& b);
 template<unsigned ndim>
 struct ray
 {
-	typedef vector<ndim> vector_t;
+	using vector_t = vector<ndim>;
 
 	vector_t D, v;
 
@@ -333,7 +333,7 @@ static inline double distance(const ray<2>& r, const vector<2>& v);
 template<unsigned ndim>
 struct linesegment
 {
-	typedef vector<ndim> vector_t;
+	using vector_t = vector<ndim>;
 
 	vector_t v1;
 	vector_t v2;
@@ -359,7 +359,7 @@ double distance(const linesegment<ndim>& l, const vector<ndim>& v);
 template<unsigned ndim>
 struct plane
 {
-	typedef vector<ndim> vector_t;
+	using vector_t = vector<ndim>;
 
 	vector_t N;
 	double d;
@@ -388,7 +388,7 @@ static inline vector<ndim> closestPoint(const plane<ndim>& p,
 template<unsigned ndim>
 struct sphere
 {
-	typedef vector<ndim> vector_t;
+	using vector_t = vector<ndim>;
 
 	vector_t C;
 	double r;
@@ -413,7 +413,7 @@ static inline vector<ndim> closestPoint(const sphere<ndim>& sphere,
 template<unsigned ndim>
 struct tri
 {
-	typedef vector<ndim> vector_t;
+	using vector_t = vector<ndim>;
 
 	vector_t v[3];
 
@@ -479,7 +479,7 @@ struct __pow__<base, 0>
 template<unsigned base, unsigned ndigits>
 struct quantize
 {
-	typedef __pow__<base, ndigits> fac;
+	using fac = __pow__<base, ndigits>;
 
 	double operator()(double in) { return round(in * fac::val) / fac::val; }
 

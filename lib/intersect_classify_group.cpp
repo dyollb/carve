@@ -106,7 +106,7 @@ class FaceMaker {
   }
 };
 typedef FaceMaker<0> FaceMaker0;
-typedef FaceMaker<1> FaceMaker1;
+using FaceMaker1 = FaceMaker<1>;
 #endif
 class ClassifyFaceGroups {
   ClassifyFaceGroups& operator=(const ClassifyFaceGroups&);

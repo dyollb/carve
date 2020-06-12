@@ -31,7 +31,7 @@ namespace XCore { namespace Modeling
 		}
 		
 		// Typedef(s)
-		typedef carve::mesh::MeshSet<3>::vertex_t::vector_t vec3;
+		using vec3 = carve::mesh::MeshSet<3>::vertex_t::vector_t;
 
 		// Scope variables
 		std::vector<int>	face_ids;

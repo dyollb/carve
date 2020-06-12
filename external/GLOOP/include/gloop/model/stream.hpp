@@ -235,7 +235,7 @@ namespace gloop {
       named_prop_t &findOrCreateProp(const std::string &n);
     };
 
-    typedef std::list<named_element_t> named_element_list_t;
+    using named_element_list_t = std::list<named_element_t>;
 
     struct block_t {
       std::string name;
@@ -250,7 +250,7 @@ namespace gloop {
       named_element_t &findOrCreateElem(const std::string &n);
     };
 
-    typedef std::list<block_t> block_list_t;
+    using block_list_t = std::list<block_t>;
 
 
     class model_reader {

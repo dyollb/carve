@@ -58,9 +58,9 @@ struct vertex : public vertex_base
 };
 
 typedef vertex<std::vector<carve::point::Vertex>> pointset_vertex;
-typedef vertex<std::vector<carve::poly::Vertex<3>>> poly_vertex;
-typedef vertex<std::vector<carve::mesh::Vertex<3>>> mesh_vertex;
-typedef vertex<std::vector<carve::line::Vertex>> line_vertex;
+using poly_vertex = vertex<std::vector<carve::poly::Vertex<3> > >;
+using mesh_vertex = vertex<std::vector<carve::mesh::Vertex<3> > >;
+using line_vertex = vertex<std::vector<carve::line::Vertex> >;
 
 template<int idx>
 struct vertex_component : public gloop::stream::writer<double>

@@ -46,9 +46,9 @@
 namespace carve {
 namespace geom2d {
 
-typedef carve::geom::vector<2> P2;
-typedef carve::geom::ray<2> Ray2;
-typedef carve::geom::linesegment<2> LineSegment2;
+using P2 = carve::geom::vector<2>;
+using Ray2 = carve::geom::ray<2>;
+using LineSegment2 = carve::geom::linesegment<2>;
 
 struct p2_adapt_ident
 {
@@ -56,7 +56,7 @@ struct p2_adapt_ident
 	const P2& operator()(const P2& p) const { return p; }
 };
 
-typedef std::vector<P2> P2Vector;
+using P2Vector = std::vector<P2>;
 
 /**
  * \brief Return the orientation of c with respect to the ray defined by a->b.

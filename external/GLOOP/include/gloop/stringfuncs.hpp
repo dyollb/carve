@@ -28,7 +28,7 @@ namespace gloop {
     static inline bool startswith(
         const std::basic_string<_CharT, _Traits, _Alloc> &a,
         const std::basic_string<_CharT, _Traits, _Alloc> &b) {
-      typedef std::basic_string<_CharT, _Traits, _Alloc> str_t;
+      using str_t = std::basic_string<_CharT, _Traits, _Alloc>;
       if (b.size() > a.size()) return false;
       return a.compare(0, b.size(), b) == 0;
     }
@@ -44,7 +44,7 @@ namespace gloop {
     static inline bool endswith(
         const std::basic_string<_CharT, _Traits, _Alloc> &a,
         const std::basic_string<_CharT, _Traits, _Alloc> &b) {
-      typedef std::basic_string<_CharT, _Traits, _Alloc> str_t;
+      using str_t = std::basic_string<_CharT, _Traits, _Alloc>;
       if (b.size() > a.size()) return false;
       return a.compare(a.size() - b.size(), b.size(), b) == 0;
     }
@@ -60,7 +60,7 @@ namespace gloop {
     static inline std::basic_string<_CharT, _Traits, _Alloc> rstrip(
         const std::basic_string<_CharT, _Traits, _Alloc> &a,
         const strip_t stripchars) {
-      typedef std::basic_string<_CharT, _Traits, _Alloc> str_t;
+      using str_t = std::basic_string<_CharT, _Traits, _Alloc>;
       typename str_t::size_type p = a.find_last_not_of(stripchars);
       if (p == str_t::npos) return "";
       return a.substr(0, p + 1);
@@ -69,7 +69,7 @@ namespace gloop {
     template<typename _CharT, typename _Traits, typename _Alloc>
     static inline std::basic_string<_CharT, _Traits, _Alloc> rstrip(
         const std::basic_string<_CharT, _Traits, _Alloc> &a) {
-      typedef std::basic_string<_CharT, _Traits, _Alloc> str_t;
+      using str_t = std::basic_string<_CharT, _Traits, _Alloc>;
       typename str_t::size_type p = a.size();
       std::locale loc;
       while (p && std::isspace(a[p-1], loc)) p--;
@@ -81,7 +81,7 @@ namespace gloop {
     static inline std::basic_string<_CharT, _Traits, _Alloc> lstrip(
         const std::basic_string<_CharT, _Traits, _Alloc> &a,
         const strip_t stripchars) {
-      typedef std::basic_string<_CharT, _Traits, _Alloc> str_t;
+      using str_t = std::basic_string<_CharT, _Traits, _Alloc>;
       typename str_t::size_type p = a.find_first_not_of(stripchars);
       if (p == str_t::npos) return "";
       return a.substr(p);
@@ -90,7 +90,7 @@ namespace gloop {
     template<typename _CharT, typename _Traits, typename _Alloc>
     static inline std::basic_string<_CharT, _Traits, _Alloc> lstrip(
         const std::basic_string<_CharT, _Traits, _Alloc> &a) {
-      typedef std::basic_string<_CharT, _Traits, _Alloc> str_t;
+      using str_t = std::basic_string<_CharT, _Traits, _Alloc>;
       typename str_t::size_type p = 0;
       std::locale loc;
       while (p < a.size() && std::isspace(a[p], loc)) p++;
@@ -102,7 +102,7 @@ namespace gloop {
     static inline std::basic_string<_CharT, _Traits, _Alloc> strip(
         const std::basic_string<_CharT, _Traits, _Alloc> &a,
         const strip_t stripchars) {
-      typedef std::basic_string<_CharT, _Traits, _Alloc> str_t;
+      using str_t = std::basic_string<_CharT, _Traits, _Alloc>;
       typename str_t::size_type p = a.find_first_not_of(stripchars);
       if (p == str_t::npos) return "";
       typename str_t::size_type q = a.find_last_not_of(stripchars);
@@ -112,7 +112,7 @@ namespace gloop {
     template<typename _CharT, typename _Traits, typename _Alloc>
     static inline std::basic_string<_CharT, _Traits, _Alloc> strip(
         const std::basic_string<_CharT, _Traits, _Alloc> &a) {
-      typedef std::basic_string<_CharT, _Traits, _Alloc> str_t;
+      using str_t = std::basic_string<_CharT, _Traits, _Alloc>;
       typename str_t::size_type p = 0;
       std::locale loc;
       while (p < a.size() && std::isspace(a[p], loc)) p++;
@@ -128,7 +128,7 @@ namespace gloop {
         const std::basic_string<_CharT, _Traits, _Alloc> &s,
         _CharT split,
         int nsplits = -1) {
-      typedef std::basic_string<_CharT, _Traits, _Alloc> str_t;
+      using str_t = std::basic_string<_CharT, _Traits, _Alloc>;
 
       int x = 0, rx = 0;
       while (x < (int)s.size()) {
@@ -153,7 +153,7 @@ namespace gloop {
         const std::basic_string<_CharT, _Traits, _Alloc> &s,
         int nsplits = -1) {
       std::locale loc;
-      typedef std::basic_string<_CharT, _Traits, _Alloc> str_t;
+      using str_t = std::basic_string<_CharT, _Traits, _Alloc>;
 
       int x = 0, rx = 0;
 

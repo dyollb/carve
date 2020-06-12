@@ -975,9 +975,9 @@ namespace XCore { namespace Modeling
 
 		// Typedef(s)
 		typedef carve::mesh::MeshSet<3>::vertex_t::vector_t	vec3;
-		typedef std::vector< vec3 >					VertexList;
-		typedef std::vector< int >					FaceList;
-		typedef std::unordered_map< int, int >		VertexIDMap;
+		using VertexList = std::vector<vec3>;
+		using FaceList = std::vector<int>;
+		using VertexIDMap = std::unordered_map<int, int>;
 
 		// Scope variables
 		VertexList		verts;
@@ -1526,10 +1526,8 @@ namespace XCore { namespace Modeling
 	bool CMultiDomainPreprocessor::AssignPrioritiesBaseOnTopology()
 	{
 		// Typedef(s)
-		typedef carve::geom::aabb<3>
-			AABB;
-		typedef std::vector< AABB >
-			AABBList;
+		using AABB = carve::geom::aabb<3>;
+		using AABBList = std::vector<AABB>;
 
 		// Scope variables
 		size_t				nDomains = m_domains.size();
@@ -1653,7 +1651,7 @@ namespace XCore { namespace Modeling
 		}
 
 		// Typedef(s)
-		typedef carve::mesh::MeshSet<3>::vertex_t::vector_t vec3;
+		using vec3 = carve::mesh::MeshSet<3>::vertex_t::vector_t;
 
 		// Scope variables
 		std::vector<vec3>	verts;
@@ -1824,7 +1822,7 @@ namespace XCore { namespace Modeling
 					// <<<<<<<<<<<< use XCore CVertexLoopMesher >>>>>> //
 					{
 						// Typedefs
-						typedef std::array<double, 3> vert_t;
+						using vert_t = std::array<double, 3>;
 
 						// Scope variables
 						std::vector< carve::mesh::MeshSet<3>::vertex_t * > vloop;
@@ -1929,7 +1927,7 @@ namespace XCore { namespace Modeling
 		}
 		
 		// Typedef(s)
-		typedef carve::mesh::MeshSet<3>::vertex_t::vector_t vec3;
+		using vec3 = carve::mesh::MeshSet<3>::vertex_t::vector_t;
 		
 		// Scope variables
 		std::vector< vec3 > verts;
@@ -2046,7 +2044,7 @@ namespace XCore { namespace Modeling
 					// <<<<<<<<<<<< use XCore CVertexLoopMesher >>>>>> //
 					{
 						// Typedefs
-						typedef std::array<double, 3> vert_t;
+						using vert_t = std::array<double, 3>;
 
 						// Scope variables
 						std::vector< carve::mesh::MeshSet<3>::vertex_t * > vloop;
@@ -2182,7 +2180,7 @@ namespace XCore { namespace Modeling
 					// <<<<<<<<<<<< use XCore CVertexLoopMesher >>>>>> //
 					{
 						// Typedefs
-						typedef std::array<double, 3> vert_t;
+						using vert_t = std::array<double, 3>;
 
 						// Scope variables
 						std::vector< carve::mesh::MeshSet<3>::vertex_t * > vloop;
@@ -2263,14 +2261,10 @@ namespace XCore { namespace Modeling
 		// Symmetric imprint
 		{
 			// Typedef(s)
-			typedef CMultiDomainPreprocessor::DomainDescriptorList
-				DomainDescriptorList;
-			typedef CMultiDomainCollector
-				Collector;
-			typedef CMultiDomainPreprocessor::TagSysType
-				TagSysType;
-			typedef CMultiDomainPreprocessor::FlagSysType
-				FlagSysType;
+			using DomainDescriptorList = CMultiDomainPreprocessor::DomainDescriptorList;
+			using Collector = CMultiDomainCollector;
+			using TagSysType = CMultiDomainPreprocessor::TagSysType;
+			using FlagSysType = CMultiDomainPreprocessor::FlagSysType;
 
 			// Scope variables
 			DomainDescriptorList	descriptors(2);

@@ -139,6 +139,6 @@ struct FaceLoopGroup
 			const carve::mesh::MeshSet<3>::mesh_t* mesh) const;
 };
 
-typedef std::list<FaceLoopGroup> FLGroupList;
+using FLGroupList = std::list<FaceLoopGroup>;
 }
 } // namespace carve::csg

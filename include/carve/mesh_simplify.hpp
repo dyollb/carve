@@ -48,14 +48,14 @@ namespace mesh {
 class MeshSimplifier
 {
 	typedef carve::mesh::MeshSet<3> meshset_t;
-	typedef carve::mesh::Mesh<3> mesh_t;
-	typedef mesh_t::vertex_t vertex_t;
-	typedef vertex_t::vector_t vector_t;
-	typedef mesh_t::edge_t edge_t;
-	typedef mesh_t::face_t face_t;
-	typedef face_t::aabb_t aabb_t;
+	using mesh_t = carve::mesh::Mesh<3>;
+	using vertex_t = mesh_t::vertex_t;
+	using vector_t = vertex_t::vector_t;
+	using edge_t = mesh_t::edge_t;
+	using face_t = mesh_t::face_t;
+	using aabb_t = face_t::aabb_t;
 
-	typedef carve::geom::RTreeNode<3, carve::mesh::Face<3>*> face_rtree_t;
+	using face_rtree_t = carve::geom::RTreeNode<3, carve::mesh::Face<3> *>;
 
 	struct EdgeInfo
 	{
@@ -307,7 +307,7 @@ class MeshSimplifier
 		Priority priority() const { return Priority(*this); }
 	};
 
-	typedef std::unordered_map<edge_t*, EdgeInfo*> edge_info_map_t;
+	using edge_info_map_t = std::unordered_map<edge_t *, EdgeInfo *>;
 	std::unordered_map<edge_t*, EdgeInfo*> edge_info;
 
 	void initEdgeInfo(mesh_t* mesh)
@@ -1415,10 +1415,10 @@ public:
 			grid = pow(2.0, (double)log2_grid);
 		}
 
-		typedef std::unordered_map<face_t*, uint8_t> axis_influence_map_t;
+		using axis_influence_map_t = std::unordered_map<face_t *, uint8_t>;
 		axis_influence_map_t axis_influence;
 
-		typedef std::unordered_map<face_t*, std::set<face_t*>> interaction_graph_t;
+		using interaction_graph_t = std::unordered_map<face_t *, std::set<face_t *> >;
 		interaction_graph_t interacting_faces;
 
 		for (size_t m = 0; m < meshset->meshes.size(); ++m)
@@ -1791,7 +1791,7 @@ public:
 
 	void selfIntersectionAwareQuantize(meshset_t* meshset, int base, int n_dp)
 	{
-		typedef std::unordered_map<vertex_t*, quantization_info_t> vfsmap_t;
+		using vfsmap_t = std::unordered_map<vertex_t *, quantization_info_t>;
 
 		vfsmap_t vertex_qinfo;
 

@@ -49,7 +49,7 @@ class VertexPool
 	typedef carve::mesh::MeshSet<3>::vertex_t vertex_t;
 
 	const static unsigned blocksize = 1024;
-	typedef std::list<std::vector<vertex_t>> pool_t;
+	using pool_t = std::list<std::vector<vertex_t> >;
 	pool_t pool;
 
 public:
@@ -75,7 +75,7 @@ class CARVE_API CSG
 {
 private:
 public:
-	typedef carve::mesh::MeshSet<3> meshset_t;
+	using meshset_t = carve::mesh::MeshSet<3>;
 
 	struct CARVE_API Hook
 	{
@@ -168,10 +168,8 @@ public:
 	};
 
 private:
-	typedef carve::geom::RTreeNode<3, carve::mesh::Face<3>*> face_rtree_t;
-	typedef std::unordered_map<carve::mesh::Face<3>*,
-			std::vector<carve::mesh::Face<3>*>>
-			face_pairs_t;
+	using face_rtree_t = carve::geom::RTreeNode<3, carve::mesh::Face<3> *>;
+	using face_pairs_t = std::unordered_map<carve::mesh::Face<3> *, std::vector<carve::mesh::Face<3> *> >;
 
 	/// The computed intersection data.
 	Intersections intersections;

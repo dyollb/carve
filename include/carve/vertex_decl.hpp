@@ -46,8 +46,8 @@ template<unsigned ndim>
 class Vertex : public tagable
 {
 public:
-	typedef carve::geom::vector<ndim> vector_t;
-	typedef Object obj_t;
+	using vector_t = carve::geom::vector<ndim>;
+	using obj_t = Object;
 
 	vector_t v;
 	obj_t* owner;

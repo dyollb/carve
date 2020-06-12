@@ -207,7 +207,7 @@ struct TriangulationData
 		}
 	};
 
-	typedef std::pair<VertexInfo*, VertexInfo*> diag_t;
+	using diag_t = std::pair<VertexInfo *, VertexInfo *>;
 
 	proj_t proj;
 
@@ -424,7 +424,7 @@ struct TriangulationData
 
 	diag_t findHighScoringDiagonal(VertexInfo* vert) const
 	{
-		typedef std::pair<double, diag_t> heap_entry_t;
+		using heap_entry_t = std::pair<double, diag_t>;
 		VertexInfo *v1, *v2;
 		std::vector<heap_entry_t> heap;
 		size_t loop_len = 0;
@@ -1127,8 +1127,8 @@ void flipTriEdge(Edge<ndim>* edge)
 	CARVE_ASSERT(edge->rev->prev != edge->rev);
 	CARVE_ASSERT(edge->rev->next != edge->rev);
 
-	typedef Edge<ndim> edge_t;
-	typedef Face<ndim> face_t;
+	using edge_t = Edge<ndim>;
+	using face_t = Face<ndim>;
 
 	edge_t *t1[3], *t2[3];
 	face_t *f1, *f2;

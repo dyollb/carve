@@ -37,8 +37,8 @@ namespace geom {
 template<unsigned ndim>
 struct aabb
 {
-	typedef vector<ndim> vector_t;
-	typedef aabb<ndim> aabb_t;
+	using vector_t = vector<ndim>;
+	using aabb_t = aabb<ndim>;
 
 	vector_t pos;		 // the centre of the AABB
 	vector_t extent; // the extent of the AABB - the vector from the centre to
@@ -151,7 +151,7 @@ struct get_aabb<ndim, obj_t*>
 
 namespace carve {
 namespace geom3d {
-typedef carve::geom::aabb<3> AABB;
+using AABB = carve::geom::aabb<3>;
 }
 } // namespace carve::geom3d
 

@@ -279,7 +279,7 @@ CARVE_API bool splitAndResume(vertex_info* begin,
 CARVE_API bool doTriangulate(vertex_info* begin,
 		std::vector<carve::triangulate::tri_idx>& result);
 
-typedef std::pair<unsigned, unsigned> vert_edge_t;
+using vert_edge_t = std::pair<unsigned int, unsigned int>;
 
 struct hash_vert_edge_t
 {
@@ -444,8 +444,7 @@ struct max_score
 
 struct CARVE_API tri_pairs_t
 {
-	typedef std::unordered_map<vert_edge_t, tri_pair_t*, hash_vert_edge_t>
-			storage_t;
+	using storage_t = std::unordered_map<vert_edge_t, tri_pair_t *, hash_vert_edge_t>;
 	storage_t storage;
 
 	tri_pairs_t() : storage(){};
@@ -710,9 +709,9 @@ static std::vector<vert_t> incorporateHolesIntoPolygon(
 		const project_t& project, const std::vector<vert_t>& f_loop,
 		const std::vector<std::vector<vert_t>>& h_loops)
 {
-	typedef std::vector<vert_t> hole_t;
-	typedef typename std::vector<vert_t>::const_iterator vert_iter;
-	typedef typename std::vector<std::vector<vert_t>>::const_iterator hole_iter;
+	using hole_t = std::vector<vert_t>;
+	using vert_iter = typename std::vector<vert_t>::const_iterator;
+	using hole_iter = typename std::vector<std::vector<vert_t> >::const_iterator;
 
 	size_t N = f_loop.size();
 
