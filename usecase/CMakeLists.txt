@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 2.8)
 SET(CMAKE_CXX_STANDARD 11)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin/)
 
-set(VTK_DIR /Users/lloyd/Code/builds/vtk-8.2)
+#set(VTK_DIR /Users/lloyd/Code/builds/vtk-8.2)
 find_package(VTK REQUIRED)
 include(${VTK_USE_FILE})
 

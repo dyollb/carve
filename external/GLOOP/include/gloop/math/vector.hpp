@@ -37,13 +37,14 @@ namespace gloop {
 
   struct V2 {
     union {
-      struct { float x{0.0f}, y{0.0f}; };
+      struct { float x, y; };
       struct { float r, g; };
       struct { float s, t; };
       float v[2];
     };
     
-    V2(float _x, float _y) : x(_x), y(_y) { }
+    V2() : x(0.0), y(0.0) { }
+	V2(float _x, float _y) : x(_x), y(_y) { }
     explicit V2(const float *_v) { memcpy(v, _v, sizeof(v)); }
   };
 

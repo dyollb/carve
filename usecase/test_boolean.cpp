@@ -45,8 +45,13 @@ QGenTriangleMesh load_mesh(const std::string& fname)
 int main(int argc, char** argv)
 {
 	// load meshes t1, t2
+#if !defined(WIN32)
 	std::string fname1 = "/Users/lloyd/Code/carve/usecase/_block.vtk";
 	std::string fname2 = "/Users/lloyd/Code/carve/usecase/_helix.vtk";
+#else
+	std::string fname1 = "F:/Temp/_block.vtk";
+	std::string fname2 = "F:/Temp/_helix.vtk";
+#endif
 
 	auto t1 = load_mesh(fname1);
 	auto t2 = load_mesh(fname2);
