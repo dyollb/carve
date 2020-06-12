@@ -114,7 +114,7 @@ struct hash_group_pair {
 
 using CandidateOnMap = std::unordered_map<const FaceLoopGroup *, std::unordered_set<std::pair<int, const FaceLoopGroup *>, hash_group_pair>, hash_group_ptr>;
 
-static inline void remove(carve::mesh::MeshSet<3>::vertex_t* a,
+inline void remove(carve::mesh::MeshSet<3>::vertex_t* a,
                           carve::mesh::MeshSet<3>::vertex_t* b,
                           carve::csg::detail::VVSMap& shared_edge_graph) {
   carve::csg::detail::VVSMap::iterator i = shared_edge_graph.find(a);
@@ -126,13 +126,13 @@ static inline void remove(carve::mesh::MeshSet<3>::vertex_t* a,
   }
 }
 
-static inline void remove(V2 edge,
+inline void remove(V2 edge,
                           carve::csg::detail::VVSMap& shared_edge_graph) {
   remove(edge.first, edge.second, shared_edge_graph);
   remove(edge.second, edge.first, shared_edge_graph);
 }
 
-static void walkGraphSegment(
+void walkGraphSegment(
     carve::csg::detail::VVSMap& shared_edge_graph,
     const carve::csg::detail::VSet& branch_points, V2 initial,
     const carve::csg::detail::LoopEdges& /* a_edge_map */,
@@ -210,7 +210,7 @@ static void walkGraphSegment(
 #endif
 }
 
-static carve::geom3d::Vector perpendicular(const carve::geom3d::Vector& v) {
+carve::geom3d::Vector perpendicular(const carve::geom3d::Vector& v) {
   if (fabs(v.x) < fabs(v.y)) {
     if (fabs(v.x) < fabs(v.z)) {
       return cross(v, carve::geom::VECTOR(1.0, 0.0, 0.0)).normalized();
@@ -226,7 +226,7 @@ static carve::geom3d::Vector perpendicular(const carve::geom3d::Vector& v) {
   }
 }
 
-static void classifyAB(const GrpEdgeSurfMap& a_edge_surfaces,
+void classifyAB(const GrpEdgeSurfMap& a_edge_surfaces,
                        const GrpEdgeSurfMap& b_edge_surfaces,
                        Classification& classifications) {
   // two faces in the a surface
@@ -329,7 +329,7 @@ static void classifyAB(const GrpEdgeSurfMap& a_edge_surfaces,
   }
 }
 
-static bool processForwardEdgeSurfaces(
+bool processForwardEdgeSurfaces(
     GrpEdgeSurfMap& edge_surfaces, const std::list<FaceLoop*>& fwd,
     const carve::geom3d::Vector& edge_vector,
     const carve::geom3d::Vector& base_vector) {
@@ -346,7 +346,7 @@ static bool processForwardEdgeSurfaces(
   return true;
 }
 
-static bool processReverseEdgeSurfaces(
+bool processReverseEdgeSurfaces(
     GrpEdgeSurfMap& edge_surfaces, const std::list<FaceLoop*>& rev,
     const carve::geom3d::Vector& edge_vector,
     const carve::geom3d::Vector& base_vector) {
@@ -363,7 +363,7 @@ static bool processReverseEdgeSurfaces(
   return true;
 }
 
-static void processOneEdge(const V2& edge,
+void processOneEdge(const V2& edge,
                            const carve::csg::detail::LoopEdges& a_edge_map,
                            const carve::csg::detail::LoopEdges& b_edge_map,
                            Classification& a_classification,
@@ -410,7 +410,7 @@ static void processOneEdge(const V2& edge,
   classifyAB(b_edge_surfaces, a_edge_surfaces, a_classification);
 }
 
-static void traceIntersectionGraph(
+void traceIntersectionGraph(
     const V2Set& shared_edges, const FLGroupList& /* a_loops_grouped */,
     const FLGroupList& /* b_loops_grouped */,
     const carve::csg::detail::LoopEdges& a_edge_map,

@@ -84,7 +84,7 @@ class heap_ordering_2d {
   }
 };
 
-static inline void patchHoleIntoPolygon_2d(
+inline void patchHoleIntoPolygon_2d(
     std::vector<std::pair<size_t, size_t> >& f_loop, size_t f_loop_attach,
     size_t h_loop, size_t h_loop_attach, size_t h_loop_size) {
   f_loop.insert(f_loop.begin() + f_loop_attach + 1, h_loop_size + 2,
@@ -102,7 +102,7 @@ static inline void patchHoleIntoPolygon_2d(
   f_loop[f] = f_loop[f_loop_attach];
 }
 
-static inline const carve::geom2d::P2& pvert(
+inline const carve::geom2d::P2& pvert(
     const std::vector<std::vector<carve::geom2d::P2> >& poly,
     const std::pair<size_t, size_t>& idx) {
   return poly[idx.first][idx.second];

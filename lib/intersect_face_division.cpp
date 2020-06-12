@@ -288,7 +288,7 @@ struct Graph {
  * @param[out] hole_loops Output list of hole loops
  * @param vi
  */
-static void splitFace(
+void splitFace(
     carve::mesh::MeshSet<3>::face_t* face, const carve::csg::V2Set& edges,
     std::list<std::vector<carve::mesh::MeshSet<3>::vertex_t*> >& face_loops,
     std::list<std::vector<carve::mesh::MeshSet<3>::vertex_t*> >& hole_loops,
@@ -404,7 +404,7 @@ static void splitFace(
  * @param[out] shares_edge Boolean indicating that the face and the hole share
  * an edge.
  */
-static void compareFaceLoopAndHoleLoop(
+void compareFaceLoopAndHoleLoop(
     const std::vector<carve::mesh::MeshSet<3>::vertex_t*>& f,
     const std::vector<unsigned>& f_sort,
     const std::vector<carve::mesh::MeshSet<3>::vertex_t*>& h,
@@ -461,7 +461,7 @@ static void compareFaceLoopAndHoleLoop(
  * @param[out] hole_shared_vertices A map from a face,hole pair to
  *                                  a shared vertex pair.
  */
-static void computeContainment(
+void computeContainment(
     carve::mesh::MeshSet<3>::face_t* face,
     std::vector<std::vector<carve::mesh::MeshSet<3>::vertex_t*> >& face_loops,
     std::vector<std::vector<carve::mesh::MeshSet<3>::vertex_t*> >& hole_loops,
@@ -630,7 +630,7 @@ static void computeContainment(
  * @param[in,out] f_loops A list of face loops.
  * @param[in] h_loops A list of hole loops to be incorporated into face loops.
  */
-static void mergeFacesAndHoles(
+void mergeFacesAndHoles(
     carve::mesh::MeshSet<3>::face_t* face,
     std::list<std::vector<carve::mesh::MeshSet<3>::vertex_t*> >& f_loops,
     std::list<std::vector<carve::mesh::MeshSet<3>::vertex_t*> >& h_loops,
@@ -822,7 +822,7 @@ static void mergeFacesAndHoles(
  *            on that edge.
  * @param[out] base_loop A vector of the vertices of the base loop.
  */
-static bool assembleBaseLoop(
+bool assembleBaseLoop(
     carve::mesh::MeshSet<3>::face_t* face, const carve::csg::detail::Data& data,
     std::vector<carve::mesh::MeshSet<3>::vertex_t*>& base_loop,
     carve::csg::CSG::Hooks& hooks) {

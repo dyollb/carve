@@ -98,11 +98,11 @@ carve::geom::vector<3> _unproject_6(const carve::geom::vector<2>& p,
   return carve::geom::VECTOR(p.x, p.y, CALC_Z(plane, p.x, p.y));
 }
 
-static carve::geom::vector<2> (*project_tab[2][3])(
+carve::geom::vector<2> (*project_tab[2][3])(
     const carve::geom::vector<3>&) = {{&_project_1, &_project_2, &_project_3},
                                       {&_project_4, &_project_5, &_project_6}};
 
-static carve::geom::vector<3> (*unproject_tab[2][3])(
+carve::geom::vector<3> (*unproject_tab[2][3])(
     const carve::geom::vector<2>&, const carve::geom3d::Plane&) = {
     {&_unproject_1, &_unproject_2, &_unproject_3},
     {&_unproject_4, &_unproject_5, &_unproject_6}};
