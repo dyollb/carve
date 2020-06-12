@@ -125,7 +125,7 @@ namespace gloop {
       uint32_t val;
     };
 
-    packed_colour() { }
+    packed_colour() = default;
     packed_colour(uint8_t _r, uint8_t _g, uint8_t _b, uint8_t _e) { r = _r; g = _g; b = _b; e = _e; }
     packed_colour(uint32_t _val) { val = _val; }
     packed_colour(const void *mem) { memcpy(&v, mem, 4); }
@@ -180,8 +180,7 @@ namespace gloop {
     virtual void scanline(int scan_axis,
                           int X, int Y, int Z,
                           std::vector<packed_colour> &scanline) = 0;
-    virtual ~radiance_reader() {
-    }
+    virtual ~radiance_reader() = default;
   };
 
   struct floatbuf_radiance_reader : public radiance_reader {

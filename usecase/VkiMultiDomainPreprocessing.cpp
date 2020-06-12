@@ -329,7 +329,7 @@ namespace XCore { namespace Modeling
 
 	// ---------------------------------------------------------------------------- //
 	CMultiDomainCollector::~CMultiDomainCollector( ) 
-	{ }
+	= default;
 
 	// Method(s) ================================================================== //
 

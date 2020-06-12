@@ -39,7 +39,7 @@ namespace gloop {
   struct QUAT {
     float x, y, z, w;
 
-    QUAT() { }
+    QUAT() = default;
     QUAT(const V3 &axis, float angle);
     QUAT(float _x, float _y, float _z, float _w) : x(_x), y(_y), z(_z), w(_w) { }
 

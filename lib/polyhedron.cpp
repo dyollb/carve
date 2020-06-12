@@ -701,7 +701,7 @@ void Polyhedron::commonFaceInit(bool _recalc) {
   }
 }
 
-Polyhedron::~Polyhedron() {}
+Polyhedron::~Polyhedron() = default;
 
 void Polyhedron::testVertexAgainstClosedManifolds(
     const carve::geom3d::Vector& v, std::map<int, PointClass>& result,

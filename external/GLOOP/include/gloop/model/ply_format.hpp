@@ -44,8 +44,7 @@ namespace gloop {
       PlyReader() : stream::model_reader() {
       }
 
-      virtual ~PlyReader() {
-      }
+      virtual ~PlyReader() = default;
 
       virtual bool read(std::istream &in);
     };
@@ -58,8 +57,7 @@ namespace gloop {
       PlyWriter(bool _binary, bool _byteswap) : stream::model_writer(), binary(_binary), byteswap(_byteswap) {
       }
 
-      virtual ~PlyWriter() {
-      }
+      virtual ~PlyWriter() = default;
 
       virtual bool write(std::ostream &in);
     };

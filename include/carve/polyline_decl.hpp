@@ -147,7 +147,7 @@ struct CARVE_API PolylineSet
 	carve::geom3d::AABB aabb;
 
 	PolylineSet(const std::vector<carve::geom3d::Vector>& points);
-	PolylineSet() {}
+	PolylineSet() = default;
 	~PolylineSet()
 	{
 		for (line_iter i = lines.begin(); i != lines.end(); ++i)

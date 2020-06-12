@@ -314,7 +314,7 @@ struct ray
 
 	bool OK() const;
 
-	ray() {}
+	ray() = default;
 	ray(vector_t _D, vector_t _v) : D(_D), v(_v) {}
 };
 
@@ -419,7 +419,7 @@ struct tri
 
 	aabb<ndim> getAABB() const;
 
-	tri() {}
+	tri() = default;
 	tri(vector_t _v[3]);
 	tri(const vector_t& a, const vector_t& b, const vector_t& c);
 

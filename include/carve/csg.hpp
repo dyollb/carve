@@ -97,7 +97,7 @@ public:
 				const meshset_t::vertex_t* /* v1 */,
 				const meshset_t::vertex_t* /* v2 */) {}
 
-		virtual ~Hook() {}
+		virtual ~Hook() = default;
 	};
 
 	/**
@@ -163,8 +163,8 @@ public:
 		virtual void collect(FaceLoopGroup* group, CSG::Hooks&) = 0;
 		virtual meshset_t* done(CSG::Hooks&) = 0;
 
-		Collector() {}
-		virtual ~Collector() {}
+		Collector() = default;
+		virtual ~Collector() = default;
 	};
 
 private:

@@ -51,8 +51,7 @@ namespace gloop {
     RefObj &operator=(const RefObj &);
 
   protected:
-    virtual ~RefObj() {
-    }
+    virtual ~RefObj() = default;
 
   public:
     void incref() const {
@@ -84,8 +83,7 @@ namespace gloop {
     virtual void refcountDecreased(int /* refcount */) const {
     }
 
-    virtual ~MonitoredRefObj() {
-    }
+    virtual ~MonitoredRefObj() = default;
 
   public:
     void incref() const {

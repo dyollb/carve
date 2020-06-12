@@ -57,7 +57,7 @@ public:
 
 	vec_t p[4];
 
-	cubic_bezier() {}
+	cubic_bezier() = default;
 
 	cubic_bezier(const vec_t& p1, const vec_t& p2, const vec_t& p3,
 			const vec_t& p4)

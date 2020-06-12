@@ -54,7 +54,7 @@ public:
 	Edge(const vertex_t* _v1, const vertex_t* _v2, const obj_t* _owner)
 			: tagable(), v1(_v1), v2(_v2), owner(_owner) {}
 
-	~Edge() {}
+	~Edge() = default;
 };
 
 struct hash_edge_ptr

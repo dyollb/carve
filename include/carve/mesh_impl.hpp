@@ -48,7 +48,7 @@ struct list_iter_t
 	list_t* curr;
 	int pos;
 
-	list_iter_t() {}
+	list_iter_t() = default;
 	list_iter_t(list_t* _curr, int _pos) : curr(_curr), pos(_pos) {}
 
 	list_iter_t operator++(int)
@@ -336,7 +336,7 @@ Edge<ndim>::Edge(vertex_t* _vert, face_t* _face)
 }
 
 template<unsigned ndim>
-Edge<ndim>::~Edge() {}
+Edge<ndim>::~Edge() = default;
 
 template<unsigned ndim>
 typename Face<ndim>::aabb_t Face<ndim>::getAABB() const

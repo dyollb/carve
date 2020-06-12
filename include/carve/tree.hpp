@@ -41,9 +41,9 @@ class CSG_TreeNode
 
 protected:
 public:
-	CSG_TreeNode() {}
+	CSG_TreeNode() = default;
 
-	virtual ~CSG_TreeNode() {}
+	virtual ~CSG_TreeNode() = default;
 
 	virtual carve::mesh::MeshSet<3>* eval(bool& is_temp, CSG& csg) = 0;
 

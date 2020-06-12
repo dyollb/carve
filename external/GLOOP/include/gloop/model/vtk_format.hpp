@@ -52,8 +52,7 @@ namespace gloop {
       VtkReader() : stream::model_reader() {
       }
 
-      virtual ~VtkReader() {
-      }
+      virtual ~VtkReader() = default;
 
       virtual bool read(std::istream &in);
     };
@@ -69,8 +68,7 @@ namespace gloop {
       VtkWriter(Fmt _fmt) : stream::model_writer(), fmt(_fmt) {
       }
 
-      virtual ~VtkWriter() {
-      }
+      virtual ~VtkWriter() = default;
 
       virtual bool write(std::ostream &in);
     };

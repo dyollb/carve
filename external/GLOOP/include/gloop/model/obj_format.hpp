@@ -60,8 +60,7 @@ namespace gloop {
       ObjReader() : stream::model_reader() {
       }
 
-      virtual ~ObjReader() {
-      }
+      virtual ~ObjReader() = default;
 
       virtual bool read(std::istream &in);
     };
@@ -73,8 +72,7 @@ namespace gloop {
       ObjWriter() : stream::model_writer() {
       }
 
-      virtual ~ObjWriter() {
-      }
+      virtual ~ObjWriter() = default;
 
       virtual bool write(std::ostream &in);
     };

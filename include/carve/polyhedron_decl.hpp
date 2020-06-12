@@ -54,7 +54,7 @@ class CARVE_API Polyhedron : public Geometry<3>
 private:
 	friend Polyhedron* carve::polyhedronFromMesh(const mesh::MeshSet<3>*, int);
 
-	Polyhedron() {}
+	Polyhedron() = default;
 
 	Polyhedron& operator=(const Polyhedron&); // not implemented
 

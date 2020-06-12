@@ -279,11 +279,9 @@ namespace gloop {
         return nullptr;
       }
 
-      model_reader() {
-      }
+      model_reader() = default;
 
-      virtual ~model_reader() {
-      }
+      virtual ~model_reader() = default;
 
       bool addReader(const std::string &spec, reader_base *rd);
 
@@ -294,11 +292,9 @@ namespace gloop {
     struct model_writer {
       std::list<std::pair<std::string, block_t> > blocks;
     public:
-      model_writer() {
-      }
+      model_writer() = default;
 
-      virtual ~model_writer() {
-      }
+      virtual ~model_writer() = default;
 
       bool newBlock(const std::string &name);
       bool addWriter(const std::string &spec, writer_base *wt);

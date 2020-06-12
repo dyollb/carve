@@ -95,9 +95,9 @@ static inline bool _bool(const std::string& str, bool _default = false)
 
 struct Data
 {
-	Data() {}
+	Data() = default;
 
-	virtual ~Data() {}
+	virtual ~Data() = default;
 
 	virtual void transform(const carve::math::Matrix& /* transform */) {}
 };
@@ -108,7 +108,7 @@ struct VertexData : public Data
 
 	VertexData() : Data() {}
 
-	~VertexData() override {}
+	~VertexData() override = default;
 
 	void transform(const carve::math::Matrix& transform) override
 	{
@@ -142,7 +142,7 @@ struct PolyhedronData : public VertexData
 
 	PolyhedronData() : VertexData(), faceIndices(), faceCount(0) {}
 
-	~PolyhedronData() override {}
+	~PolyhedronData() override = default;
 
 	void reserveFaces(int count, int avgFaceSize)
 	{
@@ -211,7 +211,7 @@ struct PolylineSetData : public VertexData
 
 	PolylineSetData() : VertexData(), polylines() {}
 
-	~PolylineSetData() override {}
+	~PolylineSetData() override = default;
 
 	void beginPolyline(bool closed = false)
 	{
@@ -239,7 +239,7 @@ struct PointSetData : public VertexData
 {
 	PointSetData() : VertexData() {}
 
-	~PointSetData() override {}
+	~PointSetData() override = default;
 
 	carve::point::PointSet* create(const Options& options) const
 	{
@@ -253,7 +253,7 @@ class Input
 public:
 	std::list<Data*> input;
 
-	Input() {}
+	Input() = default;
 
 	~Input()
 	{

@@ -37,7 +37,7 @@ protected:
 	{
 		size_t parent, rank;
 		elem(size_t p, size_t r) : parent(p), rank(r) {}
-		elem() {}
+		elem() = default;
 	};
 
 	std::vector<elem> set;

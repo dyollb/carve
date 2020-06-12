@@ -50,9 +50,9 @@
 
 #include <memory>
 
-carve::csg::VertexPool::VertexPool() {}
+carve::csg::VertexPool::VertexPool() = default;
 
-carve::csg::VertexPool::~VertexPool() {}
+carve::csg::VertexPool::~VertexPool() = default;
 
 void carve::csg::VertexPool::reset() {
   pool.clear();
@@ -1053,7 +1053,7 @@ void carve::csg::CSG::generateIntersections(meshset_t* a,
   static_cast<Intersections::super>(intersections).clear();
 }
 
-carve::csg::CSG::CSG() {}
+carve::csg::CSG::CSG() = default;
 
 /**
  * \brief For each intersected edge, decompose into a set of vertex pairs
@@ -1078,7 +1078,7 @@ void carve::csg::CSG::divideIntersectedEdges(detail::Data& data) {
   }
 }
 
-carve::csg::CSG::~CSG() {}
+carve::csg::CSG::~CSG() = default;
 
 void carve::csg::CSG::makeFaceEdges(carve::csg::EdgeClassification& eclass,
                                     detail::Data& data) {

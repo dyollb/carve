@@ -138,7 +138,7 @@ class EarQueue {
   }
 
  public:
-  EarQueue() {}
+  EarQueue() = default;
 
   size_t size() const { return queue.size(); }
 

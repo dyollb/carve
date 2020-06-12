@@ -92,7 +92,7 @@ public:
 			float /* gB */, float /* bB */, float /* aB */, bool /* offset */ = true,
 			bool /* lit */ = true) {}
 
-	virtual ~IntersectDebugHooks() {}
+	virtual ~IntersectDebugHooks() = default;
 };
 
 IntersectDebugHooks* intersect_installDebugHooks(IntersectDebugHooks* hooks);

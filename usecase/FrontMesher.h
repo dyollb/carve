@@ -54,7 +54,7 @@ namespace  XCore { namespace Modeling
 			 *	@brief Initialize a empty vertex loop
 			*/
 			CVertexLoop()
-			{ }
+			= default;
 			/*!
 			 *	@brief Initialize a loop from the list of vertex pointers.
 			*/
@@ -486,7 +486,7 @@ namespace  XCore { namespace Modeling
 			 *	Initialize a empty mesher for a vertex loop.
 			*/
 			CConvexLoopMesher( )
-			{}
+			= default;
 			/*!
 			 *	@brief Initialize a mesher for the input vertex loop.
 			*/
@@ -593,7 +593,7 @@ namespace  XCore { namespace Modeling
 			 *	@brief Initialize a empty mesher.
 			*/
 			CVertexLoopMesher()
-			{ }
+			= default;
 			/*!
 			 *	@brief Initialize a mesher for the input loop
 			*/

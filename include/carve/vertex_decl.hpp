@@ -54,7 +54,7 @@ public:
 
 	Vertex() : tagable(), v() {}
 
-	~Vertex() {}
+	~Vertex() = default;
 
 	Vertex(const vector_t& _v) : tagable(), v(_v) {}
 };

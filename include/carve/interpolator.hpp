@@ -210,7 +210,7 @@ protected:
 		Hook(Interpolator* _interpolator, const carve::csg::CSG& _csg)
 				: interpolator(_interpolator), csg(_csg) {}
 
-		~Hook() override {}
+		~Hook() override = default;
 	};
 
 	virtual Hook* makeHook(carve::csg::CSG& csg) { return new Hook(this, csg); }
@@ -230,9 +230,9 @@ protected:
 			const meshset_t::vertex_t* v2) {}
 
 public:
-	Interpolator() {}
+	Interpolator() = default;
 
-	virtual ~Interpolator() {}
+	virtual ~Interpolator() = default;
 
 	void installHooks(carve::csg::CSG& csg)
 	{
@@ -317,7 +317,7 @@ public:
 
 	FaceVertexAttr() : Interpolator() {}
 
-	~FaceVertexAttr() override {}
+	~FaceVertexAttr() override = default;
 };
 
 template<typename attr_t>
@@ -345,7 +345,7 @@ protected:
 		}
 		Hook(Interpolator* _interpolator, const carve::csg::CSG& _csg)
 				: Interpolator::Hook(_interpolator, _csg) {}
-		~Hook() override {}
+		~Hook() override = default;
 	};
 
 	Interpolator::Hook* makeHook(carve::csg::CSG& csg) override
@@ -444,7 +444,7 @@ public:
 
 	FaceEdgeAttr() : Interpolator() {}
 
-	~FaceEdgeAttr() override {}
+	~FaceEdgeAttr() override = default;
 };
 
 template<typename attr_t>
@@ -497,7 +497,7 @@ public:
 
 	FaceAttr() : Interpolator() {}
 
-	~FaceAttr() override {}
+	~FaceAttr() override = default;
 };
 }
 } // namespace carve::interpolate

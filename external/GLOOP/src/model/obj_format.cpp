@@ -233,7 +233,7 @@ namespace {
   struct prop {
     virtual bool setup(const gloop::stream::named_element_t *) const =0;
     virtual std::string next() const =0;
-    virtual ~prop() {}
+    virtual ~prop() = default;
   };
 
   struct dbl : public prop {
@@ -248,7 +248,7 @@ namespace {
         has_default = true;
       }
     }
-    virtual ~dbl() {}
+    virtual ~dbl() = default;
     virtual bool setup(const gloop::stream::named_element_t *elem) const {
       prop = elem->findProp(propname);
       if (prop == nullptr && !has_default) return false;
@@ -283,7 +283,7 @@ namespace {
       n(0),
       v_base(_v_base), vt_base(_vt_base), vn_base(_vn_base) {
     }
-    virtual ~face() {}
+    virtual ~face() = default;
 
     virtual bool setup(const gloop::stream::named_element_t *elem) const {
       v_prop = elem->findProp("vertex_indices");
@@ -344,7 +344,7 @@ namespace {
   };
 
   struct null : public prop {
-    virtual ~null() {}
+    virtual ~null() = default;
 
     virtual bool setup(const gloop::stream::named_element_t * /* elem */) const {
       return true;

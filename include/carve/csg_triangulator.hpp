@@ -36,9 +36,9 @@ template<bool with_improvement>
 class CarveTriangulator : public csg::CSG::Hook
 {
 public:
-	CarveTriangulator() {}
+	CarveTriangulator() = default;
 
-	~CarveTriangulator() override {}
+	~CarveTriangulator() override = default;
 
 	void processOutputFace(std::vector<carve::mesh::MeshSet<3>::face_t*>& faces,
 			const carve::mesh::MeshSet<3>::face_t* orig,
@@ -103,9 +103,9 @@ using CarveTriangulatorWithImprovement = detail::CarveTriangulator<true>;
 class CarveTriangulationImprover : public csg::CSG::Hook
 {
 public:
-	CarveTriangulationImprover() {}
+	CarveTriangulationImprover() = default;
 
-	~CarveTriangulationImprover() override {}
+	~CarveTriangulationImprover() override = default;
 
 	void processOutputFace(std::vector<carve::mesh::MeshSet<3>::face_t*>& faces,
 			const carve::mesh::MeshSet<3>::face_t* orig,
@@ -191,9 +191,9 @@ class CarveTriangulationQuadMerger : public csg::CSG::Hook
 	using edge_map_t = std::map<V2, F2>;
 
 public:
-	CarveTriangulationQuadMerger() {}
+	CarveTriangulationQuadMerger() = default;
 
-	~CarveTriangulationQuadMerger() override {}
+	~CarveTriangulationQuadMerger() override = default;
 
 	double scoreQuad(edge_map_t::iterator i, edge_map_t& edge_map)
 	{
@@ -319,9 +319,9 @@ public:
 class CarveHoleResolver : public csg::CSG::Hook
 {
 public:
-	CarveHoleResolver() {}
+	CarveHoleResolver() = default;
 
-	~CarveHoleResolver() override {}
+	~CarveHoleResolver() override = default;
 
 	bool findRepeatedEdges(
 			const std::vector<carve::mesh::MeshSet<3>::vertex_t*>& vertices,

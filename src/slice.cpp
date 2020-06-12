@@ -203,7 +203,7 @@ public:
 			const carve::mesh::MeshSet<3>* _src_b)
 			: carve::csg::CSG::Collector(), src_a(_src_a), src_b(_src_b) {}
 
-	~Slice() override {}
+	~Slice() override = default;
 
 protected:
 	void collect(carve::csg::FaceLoopGroup* grp,

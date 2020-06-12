@@ -185,7 +185,7 @@ struct begin_pointset : public gloop::stream::null_reader
 
 	begin_pointset(gloop::stream::model_reader& _sr, carve::input::Input& _inputs)
 			: sr(_sr), inputs(_inputs) {}
-	~begin_pointset() override {}
+	~begin_pointset() override = default;
 	void begin() override
 	{
 		data = new carve::input::PointSetData();
@@ -208,7 +208,7 @@ struct begin_polyline : public gloop::stream::null_reader
 
 	begin_polyline(gloop::stream::model_reader& _sr, carve::input::Input& _inputs)
 			: sr(_sr), inputs(_inputs) {}
-	~begin_polyline() override {}
+	~begin_polyline() override = default;
 	void begin() override
 	{
 		data = new carve::input::PolylineSetData();
@@ -237,7 +237,7 @@ struct begin_polyhedron : public gloop::stream::null_reader
 	begin_polyhedron(gloop::stream::model_reader& _sr,
 			carve::input::Input& _inputs)
 			: sr(_sr), inputs(_inputs) {}
-	~begin_polyhedron() override {}
+	~begin_polyhedron() override = default;
 	void begin() override
 	{
 		data = new carve::input::PolyhedronData();

@@ -233,9 +233,9 @@ protected:
 	}
 
 public:
-	Parser() {}
+	Parser() = default;
 
-	virtual ~Parser() {}
+	virtual ~Parser() = default;
 
 	Parser& option(const std::string& str, char ch, bool arg,
 			const std::string& help)

@@ -129,8 +129,8 @@ public:
 		init(base, _vertices, flipped);
 	}
 
-	Face() {}
-	~Face() {}
+	Face() = default;
+	~Face() = default;
 
 	bool recalc();
 

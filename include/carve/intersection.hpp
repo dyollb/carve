@@ -45,7 +45,7 @@ struct Intersections
 
 	using super = std::unordered_map<IObj, IObjVMapSmall, IObj_hash>;
 
-	~Intersections() {}
+	~Intersections() = default;
 
 	/**
    * \brief Record the position of intersection between a pair of intersection

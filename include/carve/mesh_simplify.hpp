@@ -228,7 +228,7 @@ class MeshSimplifier
 
 	struct FlippableColinearPair : public FlippableBase
 	{
-		FlippableColinearPair() {}
+		FlippableColinearPair() = default;
 
 		double score(const EdgeInfo* e) const override { return e->l[0] - e->l[1]; }
 
@@ -1685,7 +1685,7 @@ public:
 			double dist;
 			vector_t pt;
 			heapval_t(double _dist, vector_t _pt) : dist(_dist), pt(_pt) {}
-			heapval_t() {}
+			heapval_t() = default;
 			bool operator==(const heapval_t& other) const
 			{
 				return dist == other.dist && pt == other.pt;

@@ -123,7 +123,7 @@ public:
 		Node(const Node& node);						 // undefined.
 		Node& operator=(const Node& node); // undefined.
 
-		Node() {}
+		Node() = default;
 
 		inline aabb_t makeAABB() const
 		{
