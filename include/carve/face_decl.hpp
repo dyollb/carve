@@ -112,10 +112,10 @@ public:
 
 	Face(const std::vector<const vertex_t*>& _vertices,
 			bool delay_recalc = false);
-	Face(const vertex_t* v1, const vertex_t* v2, const vertex_t* v3,
+	Face(const vertex_t* a, const vertex_t* b, const vertex_t* c,
 			bool delay_recalc = false);
-	Face(const vertex_t* v1, const vertex_t* v2, const vertex_t* v3,
-			const vertex_t* v4, bool delay_recalc = false);
+	Face(const vertex_t* a, const vertex_t* b, const vertex_t* c,
+			const vertex_t* d, bool delay_recalc = false);
 
 	template<typename iter_t>
 	Face(const Face* base, iter_t vbegin, iter_t vend, bool flipped)

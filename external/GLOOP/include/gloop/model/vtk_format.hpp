@@ -70,7 +70,7 @@ namespace gloop {
 
       virtual ~VtkWriter() = default;
 
-      virtual bool write(std::ostream &in);
+      virtual bool write(std::ostream &out);
     };
 
   }

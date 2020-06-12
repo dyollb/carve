@@ -414,7 +414,7 @@ public:
 
 	vector_t centroid() const;
 
-	CARVE_API static Face* closeLoop(edge_t* open_edge);
+	CARVE_API static Face* closeLoop(edge_t* start);
 
 	explicit Face(edge_t* e) : edge(e), n_edges(0), mesh(nullptr)
 	{

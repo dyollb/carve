@@ -104,7 +104,7 @@ public:
 	void addEdges(const std::vector<carve::poly::Geometry<3>::edge_t>& edges);
 	void addFaces(const std::vector<carve::poly::Geometry<3>::face_t>& faces);
 	void addVertices(
-			const std::vector<const carve::poly::Geometry<3>::vertex_t*>& vertices);
+			const std::vector<const carve::poly::Geometry<3>::vertex_t*>& p);
 
 	static carve::geom3d::AABB makeAABB(const Node* node);
 

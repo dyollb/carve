@@ -59,7 +59,7 @@ namespace gloop {
 
       virtual ~PlyWriter() = default;
 
-      virtual bool write(std::ostream &in);
+      virtual bool write(std::ostream &out);
     };
 
   }

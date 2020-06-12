@@ -223,8 +223,8 @@ private:
    * @param a Polyhedron a.
    * @param b Polyhedron b.
    */
-	void generateIntersections(meshset_t* a, const face_rtree_t* a_node,
-			meshset_t* b, const face_rtree_t* b_node,
+	void generateIntersections(meshset_t* a, const face_rtree_t* a_rtree,
+			meshset_t* b, const face_rtree_t* b_rtree,
 			detail::Data& data);
 
 	/**

@@ -113,7 +113,7 @@ public:
 
 	void testVertexAgainstClosedManifolds(const carve::geom3d::Vector& v,
 			std::map<int, PointClass>& result,
-			bool ignore_orentation) const;
+			bool ignore_orientation) const;
 
 	PointClass containsVertex(const carve::geom3d::Vector& v,
 			const face_t** hit_face = nullptr,

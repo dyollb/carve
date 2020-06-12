@@ -36,11 +36,11 @@
 #include <istream>
 
 CARVE_IO_API bool readPLY(
-		std::istream& in, carve::input::Input& inputs,
+		std::istream& in, carve::input::Input& result,
 		const carve::math::Matrix& transform = carve::math::Matrix::IDENT());
 
 CARVE_IO_API bool readPLY(
-		const std::string& in_file, carve::input::Input& inputs,
+		const std::string& in_file, carve::input::Input& result,
 		const carve::math::Matrix& transform = carve::math::Matrix::IDENT());
 
 CARVE_IO_API carve::poly::Polyhedron* readPLY(
@@ -60,11 +60,11 @@ CARVE_IO_API carve::mesh::MeshSet<3>* readPLYasMesh(
 		const carve::math::Matrix& transform = carve::math::Matrix::IDENT());
 
 CARVE_IO_API bool readOBJ(
-		std::istream& in, carve::input::Input& inputs,
+		std::istream& in, carve::input::Input& result,
 		const carve::math::Matrix& transform = carve::math::Matrix::IDENT());
 
 CARVE_IO_API bool readOBJ(
-		const std::string& in_file, carve::input::Input& inputs,
+		const std::string& in_file, carve::input::Input& result,
 		const carve::math::Matrix& transform = carve::math::Matrix::IDENT());
 
 CARVE_IO_API carve::poly::Polyhedron* readOBJ(
@@ -84,11 +84,11 @@ CARVE_IO_API carve::mesh::MeshSet<3>* readOBJasMesh(
 		const carve::math::Matrix& transform = carve::math::Matrix::IDENT());
 
 CARVE_IO_API bool readVTK(
-		std::istream& in, carve::input::Input& inputs,
+		std::istream& in, carve::input::Input& result,
 		const carve::math::Matrix& transform = carve::math::Matrix::IDENT());
 
 CARVE_IO_API bool readVTK(
-		const std::string& in_file, carve::input::Input& inputs,
+		const std::string& in_file, carve::input::Input& result,
 		const carve::math::Matrix& transform = carve::math::Matrix::IDENT());
 
 CARVE_IO_API carve::poly::Polyhedron* readVTK(

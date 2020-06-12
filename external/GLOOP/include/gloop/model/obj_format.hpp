@@ -74,7 +74,7 @@ namespace gloop {
 
       virtual ~ObjWriter() = default;
 
-      virtual bool write(std::ostream &in);
+      virtual bool write(std::ostream &out);
     };
 
   }
