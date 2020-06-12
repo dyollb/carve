@@ -174,8 +174,7 @@ int sat_edge(const vec2 tri_a[3], const vec2 tri_b[3], unsigned i) {
 // returns: -1 - no intersection
 //           0 - touching
 //          +1 - intersection
-bool sat_edge(const vec2 tri_a[3], const vec2 tri_b[3], unsigned i,
-              unsigned j) {
+int sat_edge(const vec2 tri_a[3], const vec2 tri_b[3], unsigned i, unsigned j) {
   return std::max(dbl_sign(orient2d_exact(tri_a[i], tri_a[(i + 1) % 3],
                                           tri_b[(j + 1) % 3])),
                   dbl_sign(orient2d_exact(tri_a[i], tri_a[(i + 1) % 3],
@@ -442,7 +441,6 @@ TriangleInt triangle_intersection(const vec2 tri_a[3], const vec2 tri_b[3]) {
     }
     case 1: {
       // shared vertex (ia, ib) [but not shared edge]
-      // TODO BL: sat_edge returns a boo, so <0 is always false !!
       if (sat_edge(tri_a, tri_b, (ia + 2) % 3, ib) < 0) {
         return TR_INT_VERT;
       }
