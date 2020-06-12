@@ -1418,10 +1418,7 @@ namespace XCore { namespace Modeling
 
 		// Check Output
 		CheckOutput();
-		if ( Error() )
-			return false;
-
-		return true;
+		return !Error();
 	}
 
 	// ---------------------------------------------------------------------------- //

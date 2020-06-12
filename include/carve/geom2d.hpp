@@ -319,12 +319,7 @@ static inline bool quadIsConvex(const P2& a, const P2& b, const P2& c,
 
 	s_1 = carve::geom2d::orient2d(b, d, a);
 	s_2 = carve::geom2d::orient2d(b, d, c);
-	if ((s_1 < 0.0 && s_2 < 0.0) || (s_1 > 0.0 && s_2 > 0.0))
-	{
-		return false;
-	}
-
-	return true;
+	return !((s_1 < 0.0 && s_2 < 0.0) || (s_1 > 0.0 && s_2 > 0.0));
 }
 
 template<typename T, typename adapt_t>

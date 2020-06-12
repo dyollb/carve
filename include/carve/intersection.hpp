@@ -120,11 +120,7 @@ struct Intersections
 		{
 			return false;
 		}
-		if (i->second.find(v) != i->second.end())
-		{
-			return true;
-		}
-		return false;
+		return i->second.find(v) != i->second.end();
 	}
 
 	/**
@@ -214,12 +210,9 @@ struct Intersections
    */
 	bool intersects(edge_t* e1, edge_t* e2)
 	{
-		if (intersects(e1->v1(), e2) || intersects(e1->v2(), e2) ||
-				intersects(IObj(e1), e2))
-		{
-			return true;
-		}
-		return false;
+		return intersects(e1->v1(), e2) || intersects(e1->v2(), e2) ||
+
+				intersects(IObj(e1), e2);
 	}
 
 	/**
@@ -232,12 +225,9 @@ struct Intersections
    */
 	bool intersects(edge_t* e, face_t* f)
 	{
-		if (intersects(e->v1(), f) || intersects(e->v2(), f) ||
-				intersects(IObj(e), f))
-		{
-			return true;
-		}
-		return false;
+		return intersects(e->v1(), f) || intersects(e->v2(), f) ||
+
+				intersects(IObj(e), f);
 	}
 
 	/**

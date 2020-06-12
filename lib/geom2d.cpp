@@ -51,11 +51,7 @@ bool lineSegmentIntersection_simple(const P2& l1v1, const P2& l1v2,
   double l2v1_side = orient2d(l1v1, l1v2, l2v1);
   double l2v2_side = orient2d(l1v1, l1v2, l2v2);
 
-  if (l1v1_side * l1v2_side > 0.0 || l2v1_side * l2v2_side > 0.0) {
-    return false;
-  }
-
-  return true;
+  return !(l1v1_side * l1v2_side > 0.0 || l2v1_side * l2v2_side > 0.0);
 }
 
 bool lineSegmentIntersection_simple(const LineSegment2& l1,

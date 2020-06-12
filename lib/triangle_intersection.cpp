@@ -133,10 +133,7 @@ bool sat_plane(const vec3 tri_a[3], const vec3 tri_b[3], unsigned i, unsigned j,
   a = orient3d_exact(tri_a[i], tri_a[(i + 1) % 3], tri_b[j],
                      tri_a[(i + 2) % 3]);
   b = orient3d_exact(tri_a[i], tri_a[(i + 1) % 3], tri_b[j], tri_b[k]);
-  if (a * b < 0.0) {
-    return true;
-  }
-  return false;
+  return a * b < 0.0;
 }
 
 // returns true if no intersection, based upon edge^a_i and vertex^b_j

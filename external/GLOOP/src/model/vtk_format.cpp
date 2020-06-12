@@ -40,10 +40,7 @@ namespace {
   bool asUnsigned(const std::string &s, size_t &val) {
     char *c;
     val = strtoul(s.c_str(), &c, 10);
-    if (c == s.c_str()) {
-      return false;
-    }
-    return true;
+    return c != s.c_str();
   }
 
   bool readIndexBlock(std::istream &in, size_t cnt, std::vector<uint32_t> &blk, size_t &num) {

@@ -453,12 +453,7 @@ inline bool aabb<3>::intersects(const ray<3>& ray) const
 
 	// ray.D.cross(z-axis)?
 	r = extent.x * fabs(ray.D.y) + extent.y * fabs(ray.D.x);
-	if (fabs(t.x * ray.D.y - t.y * ray.D.x) > r)
-	{
-		return false;
-	}
-
-	return true;
+	return fabs(t.x * ray.D.y - t.y * ray.D.x) <= r;
 }
 
 template<>
@@ -503,12 +498,7 @@ inline bool aabb<3>::intersectsLineSegment(const vector<3>& v1,
 
 	// half_length.cross(z-axis)?
 	r = extent.x * fabs(half_length.y) + extent.y * fabs(half_length.x);
-	if (fabs(t.x * half_length.y - t.y * half_length.x) > r)
-	{
-		return false;
-	}
-
-	return true;
+	return fabs(t.x * half_length.y - t.y * half_length.x) <= r;
 }
 
 template<int Ax, int Ay, int Az, int c>

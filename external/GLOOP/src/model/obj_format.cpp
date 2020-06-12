@@ -214,7 +214,7 @@ namespace gloop {
           std::cerr << "warning: unhandled OBJ element [" << cmd << "]" << std::endl;
           result = true;
         }
-        if (result == false) {
+        if (!result) {
           if (rd) rd->fail();
           return false;
         }
@@ -291,8 +291,7 @@ namespace {
       vt_prop = elem->findProp("texture_indices");
       if (vt_prop != nullptr && vt_prop->wt == nullptr) return false;
       vn_prop = elem->findProp("normal_indices");
-      if (vn_prop != nullptr && vn_prop->wt == nullptr) return false;
-      return true;
+      return !(vn_prop != nullptr && vn_prop->wt == nullptr);
     }
     virtual std::string next() const {
       std::ostringstream s;
