@@ -221,7 +221,7 @@ namespace gloop {
           : name(n), rd(nullptr), wt(nullptr) {}
     };
 
-    typedef std::list<named_prop_t> named_prop_list_t;
+    using named_prop_list_t = std::list<named_prop_t>;
 
     struct named_element_t {
       std::string name;

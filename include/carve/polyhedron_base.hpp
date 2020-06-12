@@ -67,7 +67,7 @@ struct Geometry : public Object
 template<>
 struct CARVE_API Geometry<2> : public Object
 {
-	typedef Vertex<2> vertex_t;
+	using vertex_t = Vertex<2>;
 	using edge_t = Edge<2>;
 
 	struct Connectivity

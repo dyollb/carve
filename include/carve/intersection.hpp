@@ -39,7 +39,7 @@ namespace csg {
 struct Intersections
 		: public std::unordered_map<IObj, IObjVMapSmall, IObj_hash>
 {
-	typedef carve::mesh::MeshSet<3>::vertex_t vertex_t;
+	using vertex_t = carve::mesh::MeshSet<3>::vertex_t;
 	using edge_t = carve::mesh::MeshSet<3>::edge_t;
 	using face_t = carve::mesh::MeshSet<3>::face_t;
 
