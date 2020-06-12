@@ -134,8 +134,6 @@ add_subdirectory(src)
 add_subdirectory(examples) 
 add_subdirectory(tests) 
 
-add_subdirectory(usecase) 
-
 include(CTest)
 
 if(BUILD_TESTING)
