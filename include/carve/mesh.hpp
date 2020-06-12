@@ -515,7 +515,7 @@ struct MeshOptions
 {
 	bool opt_avoid_cavities{false};
 
-	MeshOptions()  {}
+	MeshOptions()  = default;
 
 	MeshOptions& avoid_cavities(bool val)
 	{

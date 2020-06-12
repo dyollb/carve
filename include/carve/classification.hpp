@@ -106,7 +106,7 @@ struct ClassificationInfo
 	FaceClass classification{FACE_UNCLASSIFIED};
 
 	ClassificationInfo()
-			 {}
+			 = default;
 	ClassificationInfo(const carve::mesh::Mesh<3>* _intersected_mesh,
 			FaceClass _classification)
 			: intersected_mesh(_intersected_mesh), classification(_classification) {}

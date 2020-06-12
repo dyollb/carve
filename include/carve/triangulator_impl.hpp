@@ -302,7 +302,7 @@ struct CARVE_API tri_pair_t
 	double score{0.0};
 	size_t idx;
 
-	tri_pair_t()  {}
+	tri_pair_t()  = default;
 
 	static inline unsigned N(unsigned i) { return (i + 1) % 3; }
 	static inline unsigned P(unsigned i) { return (i + 2) % 3; }

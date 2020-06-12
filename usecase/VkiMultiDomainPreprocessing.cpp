@@ -805,7 +805,7 @@ namespace XCore { namespace Modeling
 	// ---------------------------------------------------------------------------- //
 	CMultiDomainPreprocessor::CMultiDomainPreprocessor() 
 		
-	{ }
+	= default;
 
 	
 	// Destructor(s) ============================================================== //

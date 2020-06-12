@@ -67,8 +67,7 @@ namespace gloop {
     int refcount() const {
       return __refcount;
     }
-    RefObj()  {
-    }
+    RefObj()  = default;
   };
 
   class MonitoredRefObj {
@@ -108,8 +107,7 @@ namespace gloop {
     int refcount() const {
       return __refcount;
     }
-    MonitoredRefObj()  {
-    }
+    MonitoredRefObj()  = default;
   };
 
   #ifdef __OBJC__

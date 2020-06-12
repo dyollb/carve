@@ -63,7 +63,7 @@ struct EdgeSurface {
   FaceLoop* rev{nullptr};
   double rev_ang{0.0};
 
-  EdgeSurface()  {}
+  EdgeSurface()  = default;
 };
 
 typedef std::map<const carve::mesh::MeshSet<3>::mesh_t*, EdgeSurface>
