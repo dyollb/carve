@@ -698,12 +698,12 @@ namespace gloop {
         else if (str::startswith(s, "comment")) continue;
         else if (str::startswith(s, "element")) {
           elements.push_back(elem_info(s));
-          if (elements.back().name == "") {
+          if (elements.back().name.empty()) {
             throw exception(str::format() << "bad PLY header [" << s << "]");
           }
         } else if (str::startswith(s, "property")) {
           elements.back().props.push_back(prop_info(s));
-          if (elements.back().props.back().name == "") {
+          if (elements.back().props.back().name.empty()) {
             throw exception(str::format() << "bad PLY header [" << s << "]");
           }
         } else {

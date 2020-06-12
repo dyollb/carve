@@ -59,7 +59,7 @@ struct GroupPoly : public CSG::Collector {
     }
 
     std::list<ClassificationInfo>& cinfo = (grp->classification);
-    if (cinfo.size() == 0) {
+    if (cinfo.empty()) {
       std::cerr << "WARNING! group " << grp << " has no classification info!"
                 << std::endl;
       return;

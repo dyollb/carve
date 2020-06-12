@@ -781,7 +781,7 @@ inline int Mesh<3>::orientationAtVertex(edge_t* e_base)
 template<unsigned ndim>
 void Mesh<ndim>::calcOrientation()
 {
-	if (open_edges.size() || !closed_edges.size())
+	if (!open_edges.empty() || closed_edges.empty())
 	{
 		is_negative = false;
 		return;

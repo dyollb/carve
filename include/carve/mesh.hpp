@@ -698,13 +698,13 @@ public:
 
 	aabb_t getAABB() const { return aabb_t(faces.begin(), faces.end()); }
 
-	bool isClosed() const { return open_edges.size() == 0; }
+	bool isClosed() const { return open_edges.empty(); }
 
 	bool isNegative() const { return is_negative; }
 
 	double volume() const
 	{
-		if (is_negative || !faces.size())
+		if (is_negative || faces.empty())
 		{
 			return 0.0;
 		}

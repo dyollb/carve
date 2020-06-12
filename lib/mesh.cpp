@@ -480,12 +480,12 @@ void FaceStitcher::removePath(const std::vector<const vertex_t*>& path) {
   }
 
   edge_graph[path[0]].erase(path[1]);
-  if (edge_graph[path[0]].size() == 0) {
+  if (edge_graph[path[0]].empty()) {
     edge_graph.erase(path[0]);
   }
 
   edge_graph[path[path.size() - 1]].erase(path[path.size() - 2]);
-  if (edge_graph[path[path.size() - 1]].size() == 0) {
+  if (edge_graph[path[path.size() - 1]].empty()) {
     edge_graph.erase(path[path.size() - 1]);
   }
 }
@@ -551,7 +551,7 @@ void FaceStitcher::matchOrderedEdges(
       }
     }
 
-    if (!pair_counts.size()) {
+    if (pair_counts.empty()) {
       break;
     }
 
@@ -565,7 +565,7 @@ void FaceStitcher::matchOrderedEdges(
 
     std::set<size_t> rem_fwd, rem_rev;
 
-    while (counts.size()) {
+    while (!counts.empty()) {
       std::pair<size_t, size_t> join = counts.front().second;
       std::pop_heap(counts.begin(), counts.end());
       counts.pop_back();
@@ -771,12 +771,12 @@ done:;
 
 void FaceStitcher::construct() {
   matchSimpleEdges();
-  if (!complex_edges.size()) {
+  if (complex_edges.empty()) {
     return;
   }
 
   resolveOpenEdges();
-  if (!complex_edges.size()) {
+  if (complex_edges.empty()) {
     return;
   }
 
@@ -784,7 +784,7 @@ void FaceStitcher::construct() {
 
   std::list<std::vector<const vertex_t*> > paths;
 
-  while (edge_graph.size()) {
+  while (!edge_graph.empty()) {
     paths.push_back(std::vector<const vertex_t*>());
     extractPath(paths.back());
     removePath(paths.back());
@@ -903,7 +903,7 @@ mesh::MeshSet<3>* meshFromPolyhedron(const poly::Polyhedron* poly,
   std::vector<mesh_t*> meshes;
   meshes.reserve(faces.size());
   for (size_t i = 0; i < faces.size(); ++i) {
-    if (faces[i].size()) {
+    if (!faces[i].empty()) {
       meshes.push_back(new mesh_t(faces[i]));
     }
   }

@@ -234,7 +234,7 @@ void readVals(std::istream& in, std::vector<double>& vals)
 
 void add(std::vector<carve::geom2d::P2>& points, carve::geom2d::P2 p)
 {
-	if (!points.size() || points.back() != p)
+	if (points.empty() || points.back() != p)
 	{
 		points.push_back(p);
 	}

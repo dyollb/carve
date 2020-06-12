@@ -642,7 +642,7 @@ class MeshSimplifier
 		carve::heap::make_heap(edge_heap.begin(), edge_heap.end(),
 				flipper.priority(), EdgeInfo::NotifyPos());
 
-		while (edge_heap.size())
+		while (!edge_heap.empty())
 		{
 			//           std::cerr << "test" << std::endl;
 			//           for (size_t m = 0; m < mesh->meshes.size(); ++m) {
@@ -799,7 +799,7 @@ class MeshSimplifier
 		carve::heap::make_heap(edge_heap.begin(), edge_heap.end(),
 				merger.priority(), EdgeInfo::NotifyPos());
 
-		while (edge_heap.size())
+		while (!edge_heap.empty())
 		{
 			//           std::cerr << "test" << std::endl;
 			//           for (size_t m = 0; m < mesh->meshes.size(); ++m) {
@@ -841,7 +841,7 @@ class MeshSimplifier
 					vert_to_edges[v2].begin(), vert_to_edges[v2].end(),
 					std::back_inserter(edges_to_merge));
 
-			CARVE_ASSERT(edges_to_merge.size() > 0);
+			CARVE_ASSERT(!edges_to_merge.empty());
 
 			std::set_difference(vert_to_edges[v1].begin(), vert_to_edges[v1].end(),
 					edges_to_merge.begin(), edges_to_merge.end(),
@@ -1008,7 +1008,7 @@ class MeshSimplifier
 			coplanar_face_edges.insert(std::min(e, e->rev));
 		}
 
-		while (coplanar_face_edges.size())
+		while (!coplanar_face_edges.empty())
 		{
 			edge_t* edge = *coplanar_face_edges.begin();
 			if (edge->face == edge->rev->face)
@@ -1470,14 +1470,14 @@ public:
 			}
 		}
 
-		while (interacting_faces.size())
+		while (!interacting_faces.empty())
 		{
 			std::set<face_t*> face_set;
 			uint8_t axes = 0;
 
 			std::set<face_t*> open;
 			open.insert((*interacting_faces.begin()).first);
-			while (open.size())
+			while (!open.empty())
 			{
 				face_t* curr = *open.begin();
 				open.erase(open.begin());
@@ -1819,7 +1819,7 @@ public:
 			(*i).second.pt = new point_enumerator_t((*i).first->v, base, n_dp);
 		}
 
-		while (vertex_qinfo.size())
+		while (!vertex_qinfo.empty())
 		{
 			std::vector<vertex_t*> quantized;
 
@@ -1854,7 +1854,7 @@ public:
 				vertex_qinfo.erase(quantized[i]);
 			}
 
-			if (!quantized.size())
+			if (quantized.empty())
 			{
 				break;
 			}

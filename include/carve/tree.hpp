@@ -121,7 +121,7 @@ public:
 		{
 			c = c->clone();
 		}
-		if (!selected_meshes.size())
+		if (selected_meshes.empty())
 		{
 			c->invert();
 		}

@@ -216,13 +216,13 @@ int main(int argc, char** argv)
 			vmap[(*i).first] = j++;
 		}
 
-		while (edge_graph.size())
+		while (!edge_graph.empty())
 		{
 			VVSMap::iterator prior_i = edge_graph.begin();
 			const carve::mesh::MeshSet<3>::vertex_t* prior = (*prior_i).first;
 			std::vector<size_t> connected;
 			connected.push_back(vmap[prior]);
-			while (prior_i != edge_graph.end() && (*prior_i).second.size())
+			while (prior_i != edge_graph.end() && !(*prior_i).second.empty())
 			{
 				const carve::mesh::MeshSet<3>::vertex_t* next =
 						*(*prior_i).second.begin();
@@ -231,13 +231,13 @@ int main(int argc, char** argv)
 				connected.push_back(vmap[next]);
 				(*prior_i).second.erase(next);
 				(*next_i).second.erase(prior);
-				if (!(*prior_i).second.size())
+				if ((*prior_i).second.empty())
 				{
 					edge_graph.erase(prior);
 					prior = nullptr;
 					prior_i = edge_graph.end();
 				}
-				if (!(*next_i).second.size())
+				if ((*next_i).second.empty())
 				{
 					edge_graph.erase(next);
 					next = nullptr;

@@ -260,7 +260,7 @@ bool findDiagonal(vertex_info* begin, vertex_info*& v1, vertex_info*& v2) {
                      vertex_info_l2norm_inc_ordering(v1));
     }
 
-    while (heap.size()) {
+    while (!heap.empty()) {
       std::pop_heap(heap.begin(), heap.end(),
                     vertex_info_l2norm_inc_ordering(v1));
       v2 = heap.back();
@@ -826,7 +826,7 @@ void carve::triangulate::incorporateHolesIntoPolygon(
     result.push_back(std::make_pair((size_t)poly_loop, i));
   }
 
-  if (hole_loops.size() == 0) {
+  if (hole_loops.empty()) {
     return;
   }
 
@@ -914,7 +914,7 @@ void carve::triangulate::incorporateHolesIntoPolygon(
     // vertex that we are attempting to join with as an endpoint).
     size_t attachment_point = result.size();
 
-    while (f_loop_heap.size()) {
+    while (!f_loop_heap.empty()) {
       std::pop_heap(f_loop_heap.begin(), f_loop_heap.end(), _heap_ordering);
       size_t curr = f_loop_heap.back();
       f_loop_heap.pop_back();
@@ -1112,7 +1112,7 @@ carve::triangulate::mergePolygonsAndHoles(
   std::vector<std::vector<std::pair<size_t, size_t> > > result;
   result.resize(poly_indices.size());
 
-  if (hole_indices.size() == 0) {
+  if (hole_indices.empty()) {
     for (size_t i = 0; i < poly.size(); ++i) {
       result[i].resize(poly[i].size());
       for (size_t j = 0; j < poly[i].size(); ++j) {

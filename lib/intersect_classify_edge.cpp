@@ -121,7 +121,7 @@ static inline void remove(carve::mesh::MeshSet<3>::vertex_t* a,
   CARVE_ASSERT(i != shared_edge_graph.end());
   size_t n = (*i).second.erase(b);
   CARVE_ASSERT(n == 1);
-  if ((*i).second.size() == 0) {
+  if ((*i).second.empty()) {
     shared_edge_graph.erase(i);
   }
 }
@@ -439,7 +439,7 @@ static void traceIntersectionGraph(
 #endif
 
   std::list<V2> out;
-  while (shared_edge_graph.size()) {
+  while (!shared_edge_graph.empty()) {
     carve::csg::detail::VVSMap::iterator i = shared_edge_graph.begin();
     carve::mesh::MeshSet<3>::vertex_t* v1 = (*i).first;
     carve::mesh::MeshSet<3>::vertex_t* v2 = *((*i).second.begin());
@@ -549,7 +549,7 @@ void generateCandidateOnSets(FLGroupList& a_grp, FLGroupList& b_grp,
 
 static inline std::string CODE(const FaceLoopGroup* grp) {
   const std::list<ClassificationInfo>& cinfo = (grp->classification);
-  if (cinfo.size() == 0) {
+  if (cinfo.empty()) {
     return "?";
   }
 
@@ -832,7 +832,7 @@ void CSG::classifyFaceGroupsEdge(
 
   for (FLGroupList::iterator i = a_loops_grouped.begin();
        i != a_loops_grouped.end(); ++i) {
-    if ((*i).classification.size() == 0) {
+    if ((*i).classification.empty()) {
 #if defined(CARVE_DEBUG)
       std::cerr << " non intersecting group (poly a): " << &(*i) << std::endl;
 #endif
@@ -869,7 +869,7 @@ void CSG::classifyFaceGroupsEdge(
 
   for (FLGroupList::iterator i = b_loops_grouped.begin();
        i != b_loops_grouped.end(); ++i) {
-    if ((*i).classification.size() == 0) {
+    if ((*i).classification.empty()) {
 #if defined(CARVE_DEBUG)
       std::cerr << " non intersecting group (poly b): " << &(*i) << std::endl;
 #endif

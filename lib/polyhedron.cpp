@@ -243,7 +243,7 @@ bool Polyhedron::initConnectivity() {
                      carve::hash_pair>
       edge_map;
 
-  if (meshset->vertex_storage.size()) {
+  if (!meshset->vertex_storage.empty()) {
     mesh::Vertex<3>* Vbase = &meshset->vertex_storage[0];
     for (size_t m = 0; m < meshset->meshes.size(); ++m) {
       mesh::Mesh<3>* mesh = meshset->meshes[m];
@@ -445,7 +445,7 @@ done:;
   std::set<int> parents, new_parents;
   parents.insert(-1);
 
-  while (embedding.size()) {
+  while (!embedding.empty()) {
     new_parents.clear();
     for (std::map<int, std::set<int> >::iterator i = embedding.begin();
          i != embedding.end(); ++i) {

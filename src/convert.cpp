@@ -151,7 +151,7 @@ int main(int argc, char** argv)
 	std::vector<carve::line::PolylineSet*> lines;
 	std::vector<carve::point::PointSet*> points;
 
-	if (options.file == "")
+	if (options.file.empty())
 	{
 		readPLY(std::cin, inputs);
 	}

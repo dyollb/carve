@@ -495,7 +495,7 @@ namespace XCore { namespace Modeling
 
 		std::list< carve::csg::ClassificationInfo>& cinfo = ( grp->classification );
 
-		if ( cinfo.size() == 0 ) {
+		if ( cinfo.empty() ) {
 			std::cerr << "WARNING! group " << grp << " has no classification info!"
 				<< std::endl;
 			return;
@@ -905,7 +905,7 @@ namespace XCore { namespace Modeling
 	// ---------------------------------------------------------------------------- //
 	bool CMultiDomainPreprocessor::Empty() const
 	{
-		return ( m_domains.size() == 0 );
+		return ( m_domains.empty() );
 	}
 
 	// ---------------------------------------------------------------------------- //
@@ -1461,7 +1461,7 @@ namespace XCore { namespace Modeling
 				// Pointer points to a empty domain
 				else
 				{
-					if ( ( domain_ptr->meshes.size() == 0 ) || ( domain_ptr->meshes.front()->faces.size() == 0 ) )
+					if ( ( domain_ptr->meshes.empty() ) || ( domain_ptr->meshes.front()->faces.empty() ) )
 					{
 						msg << "CMultiDomainPreprocessor::CheckInput ** ERROR ** domain: " << std::get<1>(domain) << " is empty\n";
 						m_errors += msg.str();
@@ -1505,7 +1505,7 @@ namespace XCore { namespace Modeling
 				// Check for empty output
 				else
 				{
-					if ( ( output->meshes.size() == 0 ) || ( output->meshes.front()->faces.size() == 0 ) )
+					if ( ( output->meshes.empty() ) || ( output->meshes.front()->faces.empty() ) )
 					{
 						msg << "CMultiDomainPreprocessor::CheckOutput ** WARNING ** Some domains were lost due to the priority scheme. Output domain " << i << " is empty\n";
 						m_warnings += msg.str();

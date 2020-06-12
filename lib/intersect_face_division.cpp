@@ -260,7 +260,7 @@ struct Graph {
     delete edge;
   }
 
-  bool empty() const { return graph.size() == 0; }
+  bool empty() const { return graph.empty(); }
 
   GraphEdge* pickStartEdge() {
     // Try and find a vertex from which there is only one outbound edge. Won't
@@ -681,7 +681,7 @@ static void mergeFacesAndHoles(
   face_holes.resize(face_loops.size());
 
   for (unsigned i = 0; i < containing_faces.size(); ++i) {
-    if (containing_faces[i].size() == 0) {
+    if (containing_faces[i].empty()) {
       std::map<int, std::map<int, std::pair<unsigned, unsigned> > >::iterator
           it = hole_shared_vertices.find(i);
       if (it != hole_shared_vertices.end()) {
@@ -767,7 +767,7 @@ static void mergeFacesAndHoles(
 #else
   // use new 2d-only hole patching code.
   for (size_t i = 0; i < face_loops.size(); ++i) {
-    if (!face_holes[i].size()) {
+    if (face_holes[i].empty()) {
       f_loops.push_back(face_loops[i]);
       continue;
     }
@@ -846,7 +846,7 @@ static bool assembleBaseLoop(
         base_loop.push_back(ev_vec[k++]);
       }
 
-      if (ev_vec.size() &&
+      if (!ev_vec.empty() &&
           hooks.hasHook(carve::csg::CSG::Hooks::EDGE_DIVISION_HOOK)) {
         carve::mesh::MeshSet<3>::vertex_t* v1 = e->vert;
         carve::mesh::MeshSet<3>::vertex_t* v2;
@@ -1197,7 +1197,7 @@ bool processCrossingEdges(
 #endif
   }
 
-  if (!noncross.size()) {
+  if (noncross.empty()) {
     // If there are no non-crossing paths then we're done.
     populateListFromVector(divided_base_loop, face_loops_out);
     return true;
@@ -1263,7 +1263,7 @@ bool processCrossingEdges(
     std::cerr << " ]" << std::endl;
 #endif
 
-    if (inc.size()) {
+    if (!inc.empty()) {
       carve::csg::V2Set face_edges;
 
       for (size_t j = 0; j < divided_base_loop[i].size() - 1; ++j) {
@@ -1287,7 +1287,7 @@ bool processCrossingEdges(
 
       splitFace(face, face_edges, face_loops, hole_loops, vertex_intersections);
 
-      if (hole_loops.size()) {
+      if (!hole_loops.empty()) {
         mergeFacesAndHoles(face, face_loops, hole_loops, hooks);
       }
       std::copy(face_loops.begin(), face_loops.end(),
@@ -1352,7 +1352,7 @@ void composeEdgesIntoPaths(
     }
   }
 
-  while (endpoints.size()) {
+  while (!endpoints.empty()) {
     carve::mesh::MeshSet<3>::vertex_t* v = *endpoints.begin();
     detail::VVSMap::iterator p = vertex_graph.find(v);
     if (p == vertex_graph.end()) {
@@ -1367,7 +1367,7 @@ void composeEdgesIntoPaths(
       CARVE_ASSERT(p != vertex_graph.end());
 
       // pick a connected vertex to move to.
-      if ((*p).second.size() == 0) {
+      if ((*p).second.empty()) {
         break;
       }
 
@@ -1382,10 +1382,10 @@ void composeEdgesIntoPaths(
       v = n;
       path.push_back(v);
 
-      if ((*p).second.size() == 0) {
+      if ((*p).second.empty()) {
         vertex_graph.erase(p);
       }
-      if ((*q).second.size() == 0) {
+      if ((*q).second.empty()) {
         vertex_graph.erase(q);
         q = vertex_graph.end();
       }
@@ -1415,7 +1415,7 @@ void composeEdgesIntoPaths(
   populateVectorFromList(cut_list, cuts);
 
   // now only loops should remain in the graph.
-  while (vertex_graph.size()) {
+  while (!vertex_graph.empty()) {
     detail::VVSMap::iterator p = vertex_graph.begin();
     carve::mesh::MeshSet<3>::vertex_t* v = (*p).first;
     CARVE_ASSERT((*p).second.size() == 2);
@@ -1439,10 +1439,10 @@ void composeEdgesIntoPaths(
       v = n;
       path.push_back(v);
 
-      if ((*p).second.size() == 0) {
+      if ((*p).second.empty()) {
         vertex_graph.erase(p);
       }
-      if ((*q).second.size() == 0) {
+      if ((*q).second.empty()) {
         vertex_graph.erase(q);
       }
 
@@ -1573,7 +1573,7 @@ void generateOneFaceLoop(
   }
 
   // face is unsplit.
-  if (!split_edges.size()) {
+  if (split_edges.empty()) {
     face_loops.push_back(base_loop);
     return;
   }
@@ -1660,7 +1660,7 @@ void generateOneFaceLoop(
   std::cerr << "###   loops.size(): " << loops.size() << std::endl;
 #endif
 
-  if (!paths.size()) {
+  if (paths.empty()) {
     // No complex paths.
     face_loops.push_back(base_loop);
   } else {
@@ -1722,7 +1722,7 @@ void generateOneFaceLoop(
   }
 
   // if there are holes, then they need to be merged with faces.
-  if (hole_loops.size()) {
+  if (!hole_loops.empty()) {
     mergeFacesAndHoles(face, face_loops, hole_loops, hooks);
   }
 }

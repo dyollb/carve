@@ -118,7 +118,7 @@ class BaseCollector : public CSG::Collector {
   void collect(FaceLoopGroup* grp, CSG::Hooks& hooks) override {
     std::list<ClassificationInfo>& cinfo = (grp->classification);
 
-    if (cinfo.size() == 0) {
+    if (cinfo.empty()) {
       std::cerr << "WARNING! group " << grp << " has no classification info!"
                 << std::endl;
       return;

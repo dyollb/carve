@@ -271,7 +271,7 @@ public:
 			}
 		}
 
-		while (edge_map.size())
+		while (!edge_map.empty())
 		{
 			edge_map_t::iterator i = edge_map.begin();
 			edge_map_t::iterator best = i;
@@ -291,7 +291,7 @@ public:
 			out_faces.push_back(mergeQuad(best, edge_map));
 		}
 
-		if (edge_map.size())
+		if (!edge_map.empty())
 		{
 			tagable::tag_begin();
 			for (edge_map_t::iterator i = edge_map.begin(); i != edge_map.end();
@@ -345,7 +345,7 @@ public:
 				edge_pos.push_back(std::make_pair((*i).second, (*j).second));
 			}
 		}
-		return edge_pos.size() > 0;
+		return !edge_pos.empty();
 	}
 
 	void flood(size_t t1, size_t t2, size_t old_grp, size_t new_grp_1,
@@ -361,7 +361,7 @@ public:
 		to_visit.push_back(t2);
 		std::vector<std::pair<size_t, size_t>> rev;
 		rev.resize(3);
-		while (to_visit.size())
+		while (!to_visit.empty())
 		{
 			size_t curr = to_visit.front();
 			to_visit.pop_front();
@@ -469,7 +469,7 @@ public:
 
 			size_t grp_max = 0;
 
-			while (rep_edges.size())
+			while (!rep_edges.empty())
 			{
 				std::pair<size_t, size_t> e1, e2;
 

@@ -646,7 +646,7 @@ void scale_zeroelim(iter_t ebegin, iter_t eend, double b, exact_t& h)
 			h.push_back(sum[0]);
 		}
 	}
-	if ((Q != 0.0) || (h.size() == 0))
+	if ((Q != 0.0) || (h.empty()))
 	{
 		h.push_back(Q);
 	}
@@ -740,7 +740,7 @@ void sum_zeroelim(iter_t ebegin, iter_t eend, iter_t fbegin, iter_t fend,
 		}
 	}
 
-	if (Q != 0.0 || !h.size())
+	if (Q != 0.0 || h.empty())
 	{
 		h.push_back(Q);
 	}

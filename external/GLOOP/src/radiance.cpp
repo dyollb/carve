@@ -209,7 +209,7 @@ namespace gloop {
     
     while (in.good()) {
       std::getline(in, str);
-      if (str == "") break;
+      if (str.empty()) break;
       if (str[0] == '#') continue;
 
       std::string tag;

@@ -112,7 +112,7 @@ public:
 
 	const std::string& str() const
 	{
-		if (accum.str().size() > 0)
+		if (!accum.str().empty())
 		{
 			err += accum.str();
 			accum.str("");

@@ -228,7 +228,7 @@ protected:
 
 		std::list<carve::csg::ClassificationInfo>& cinfo = grp->classification;
 
-		if (cinfo.size() == 0)
+		if (cinfo.empty())
 		{
 			std::cerr << "WARNING! group " << grp << " has no classification info!"
 								<< std::endl;

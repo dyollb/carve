@@ -110,7 +110,7 @@ struct Options : public opt::Parser
 
 	void arg(const std::string& a) override
 	{
-		if (file == "")
+		if (file.empty())
 		{
 			file = a;
 		}

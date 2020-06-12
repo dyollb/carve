@@ -149,7 +149,7 @@ carve::mesh::MeshSet<3>* readModel(const std::string& file)
 {
 	carve::mesh::MeshSet<3>* poly;
 
-	if (file == "")
+	if (file.empty())
 	{
 		if (options.obj)
 		{

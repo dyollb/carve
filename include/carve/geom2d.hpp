@@ -390,7 +390,7 @@ template<typename T, typename adapt_t>
 bool pointInPolySimple(const std::vector<T>& points, adapt_t adapt,
 		const P2& p)
 {
-	CARVE_ASSERT(points.size() > 0);
+	CARVE_ASSERT(!points.empty());
 	P2Vector::size_type l = points.size();
 	double s = 0.0;
 	double rp, r0, d;

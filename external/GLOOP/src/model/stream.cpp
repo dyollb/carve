@@ -147,13 +147,13 @@ namespace gloop {
     }
 
     bool model_writer::addWriter(const std::string &spec, writer_base *wt) {
-      if (!blocks.size()) return false;
+      if (blocks.empty()) return false;
       std::vector<std::string> splitspec;
       str::split(std::back_inserter(splitspec), spec, '.', 2);
 
       block_t &block(blocks.back().second);
-      if (splitspec.size() < 1) return false;
-      if (block.name != "" && block.name != splitspec[0]) return false;
+      if (splitspec.empty()) return false;
+      if (!block.name.empty() && block.name != splitspec[0]) return false;
       block.name = splitspec[0];
       switch(splitspec.size()) {
       case 1: {

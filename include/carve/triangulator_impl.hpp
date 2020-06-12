@@ -834,7 +834,7 @@ static std::vector<vert_t> incorporateHolesIntoPolygon(
 		// vertex that we are attempting to join with as an endpoint).
 		size_t attachment_point = current_f_loop.size();
 
-		while (f_loop_heap.size())
+		while (!f_loop_heap.empty())
 		{
 			std::pop_heap(f_loop_heap.begin(), f_loop_heap.end(), _heap_ordering);
 			size_t curr = f_loop_heap.back();

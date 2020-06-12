@@ -60,7 +60,7 @@ void carve::csg::VertexPool::reset() {
 
 carve::csg::VertexPool::vertex_t* carve::csg::VertexPool::get(
     const vertex_t::vector_t& v) {
-  if (!pool.size() || pool.back().size() == blocksize) {
+  if (pool.empty() || pool.back().size() == blocksize) {
     pool.push_back(std::vector<vertex_t>());
     pool.back().reserve(blocksize);
   }
@@ -404,7 +404,7 @@ void facesForObject(const carve::csg::IObj& obj,
 }  // namespace
 
 bool carve::csg::CSG::Hooks::hasHook(unsigned hook_num) {
-  return hooks[hook_num].size() > 0;
+  return !hooks[hook_num].empty();
 }
 
 void carve::csg::CSG::Hooks::intersectionVertex(
@@ -505,7 +505,7 @@ static carve::mesh::MeshSet<3>::vertex_t* chooseWeldPoint(
     const carve::csg::detail::VSet& equivalent,
     carve::csg::VertexPool& vertex_pool) {
   // XXX: choose a better weld point.
-  if (!equivalent.size()) {
+  if (equivalent.empty()) {
     return nullptr;
   }
 

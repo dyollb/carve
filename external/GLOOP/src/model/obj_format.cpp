@@ -84,7 +84,7 @@ namespace gloop {
       std::vector<std::string> blocks;
       str::split(std::back_inserter(blocks), s);
 
-      if (!blocks.size()) return false;
+      if (blocks.empty()) return false;
 
       std::vector<std::string> r1, r2;
       str::split(std::back_inserter(r1), blocks[0], '/');
@@ -95,12 +95,12 @@ namespace gloop {
         str::split(std::back_inserter(r2), blocks[i], '/');
         if (r1.size() != r2.size()) return false;
         for (size_t j = 0; j < r1.size(); ++j) {
-          if ((r1[j]=="") != (r2[j]=="")) return false;
+          if ((r1[j].empty()) != (r2[j].empty())) return false;
         }
       }
 
       for (size_t i = 0; i < std::min(rd_count, r1.size()); ++i) {
-        if (v_rd[i] && r1[i].size()) {
+        if (v_rd[i] && !r1[i].empty()) {
           v_rd[i]->begin();
           v_rd[i]->length(blocks.size());
         }
@@ -180,13 +180,13 @@ namespace gloop {
         for (;;) {
           std::string t;
           std::getline(in, t);
-          if (t.size() && t[0] == '#') continue;
+          if (!t.empty() && t[0] == '#') continue;
           t.erase(t.begin() + t.find_last_not_of("\r\n") + 1, t.end());
           s += t;
           if (s[s.size() - 1] != '\\') break;
           s.erase(s.end() - 1);
         }
-        if (str::strip(s) == "") continue;
+        if (str::strip(s).empty()) continue;
         std::istringstream inl(s);
         std::string cmd;
         inl >> cmd;
@@ -375,10 +375,10 @@ namespace {
       std::string s;
       elem->wt->next();
       out << objtype;
-      s = p1.next(); if (s != "") out << " " << s;
-      s = p2.next(); if (s != "") out << " " << s;
-      s = p3.next(); if (s != "") out << " " << s;
-      s = p4.next(); if (s != "") out << " " << s;
+      s = p1.next(); if (!s.empty()) out << " " << s;
+      s = p2.next(); if (!s.empty()) out << " " << s;
+      s = p3.next(); if (!s.empty()) out << " " << s;
+      s = p4.next(); if (!s.empty()) out << " " << s;
       out << std::endl;
     }
     elem->wt->end();

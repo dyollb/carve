@@ -110,7 +110,7 @@ namespace gloop {
 
       while (in.good()) {
         std::getline(in, s);
-        if (str::strip(s) == "") continue;
+        if (str::strip(s).empty()) continue;
 
         if (str::startswith(s, "DATASET")) {
           dataset_type = str::split(s)[1];

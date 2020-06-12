@@ -134,7 +134,7 @@ void Octree::Node::putInside(const T& input, Node* child, T& output) {
 }
 
 bool Octree::Node::hasGeometry() {
-  return faces.size() > 0 || edges.size() > 0 || vertices.size() > 0;
+  return !faces.empty() || !edges.empty() || !vertices.empty();
 }
 
 Octree::Octree() {

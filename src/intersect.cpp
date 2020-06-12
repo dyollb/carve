@@ -182,7 +182,7 @@ struct Options : public opt::Parser
 			std::cerr << "Can't mix command line arguments and -f" << std::endl;
 			exit(1);
 		}
-		if (stream.size())
+		if (!stream.empty())
 		{
 			stream += " ";
 		}

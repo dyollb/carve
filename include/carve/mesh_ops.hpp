@@ -962,7 +962,7 @@ struct TriangulationData
   xml:space=\"preserve\">\n";
 
 		dumpLoop(out, points, "rgb(0,0,0)", "blue", 0.1, 0, 0, 1);
-		if (points2.size())
+		if (!points2.empty())
 		{
 			dumpLoop(out, points2, "rgb(255,0,0)", "blue", 0.1, 0, 0, 1);
 		}

@@ -91,7 +91,7 @@ void carve::csg::detail::LoopEdges::removeFaceLoop(FaceLoop* fl) {
     iterator l(find(std::make_pair(v1, v2)));
     if (l != end()) {
       (*l).second.remove(fl);
-      if (!(*l).second.size()) {
+      if ((*l).second.empty()) {
         erase(l);
       }
     }
