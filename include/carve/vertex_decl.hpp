@@ -56,7 +56,7 @@ public:
 
 	~Vertex() = default;
 
-	Vertex(const vector_t& _v) : tagable(), v(_v) {}
+	explicit Vertex(const vector_t& _v) : tagable(), v(_v) {}
 };
 
 struct hash_vertex_ptr

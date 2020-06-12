@@ -37,7 +37,7 @@ struct VPtrSort
 {
 	order_t order;
 
-	VPtrSort(const order_t& _order) : order(_order) {}
+	explicit VPtrSort(const order_t& _order) : order(_order) {}
 	bool operator()(carve::poly::Polyhedron::vertex_t const* a,
 			carve::poly::Polyhedron::vertex_t const* b) const
 	{

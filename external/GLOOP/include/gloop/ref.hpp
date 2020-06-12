@@ -131,14 +131,14 @@ namespace gloop {
   public:
     Ref() : pointee(NULL) {
     }
-    template<typename U, typename S>
-    Ref(const Ref<U, S> &p) : pointee(NULL) {
+    template <typename U, typename S>
+    explicit Ref(const Ref<U, S> &p) : pointee(NULL) {
       *this = p;
     }
     Ref(const Ref &p) : pointee(nullptr) {
       *this = p;
     }
-    Ref(typename R::ptr_type p) : pointee(p) {
+    explicit Ref(typename R::ptr_type p) : pointee(p) {
       if (pointee) R::incref(pointee);
     }
     ~Ref() {

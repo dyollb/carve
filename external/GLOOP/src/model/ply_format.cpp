@@ -287,7 +287,9 @@ namespace {
     gloop::stream::reader_base *rd;
     gloop::stream::writer_base *wt;
 
-    prop_info(const std::string &s) : name(), count_type(0), type(0), is_list(false), rd(nullptr), wt(nullptr) {
+    explicit prop_info(const std::string &s)
+        : name(), count_type(0), type(0), is_list(false), rd(nullptr),
+          wt(nullptr) {
       std::istringstream in(s);
       std::string tok;
 
@@ -473,7 +475,8 @@ namespace {
       return ok;
     }
 
-    elem_info(const std::string &s) : name(), count(0), props(), rd(nullptr), wt(nullptr) {
+    explicit elem_info(const std::string &s)
+        : name(), count(0), props(), rd(nullptr), wt(nullptr) {
       std::istringstream in(s);
       std::string tok;
 

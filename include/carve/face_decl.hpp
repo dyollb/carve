@@ -53,7 +53,7 @@ struct p2_adapt_project
 {
 	using proj_t = carve::geom2d::P2 (*)(const carve::geom::vector<ndim>&);
 	proj_t proj;
-	p2_adapt_project(proj_t _proj) : proj(_proj) {}
+	explicit p2_adapt_project(proj_t _proj) : proj(_proj) {}
 	carve::geom2d::P2 operator()(const carve::geom::vector<ndim>& v) const
 	{
 		return proj(v);
@@ -110,7 +110,7 @@ public:
 	project_t project;
 	unproject_t unproject;
 
-	Face(const std::vector<const vertex_t*>& _vertices,
+	explicit Face(const std::vector<const vertex_t*>& _vertices,
 			bool delay_recalc = false);
 	Face(const vertex_t* a, const vertex_t* b, const vertex_t* c,
 			bool delay_recalc = false);

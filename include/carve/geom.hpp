@@ -108,7 +108,7 @@ struct vector : public base<ndim>
 	aabb<ndim> getAABB() const;
 
 	vector() { setZero(); }
-	vector(noinit_t) {}
+	explicit vector(noinit_t) {}
 };
 
 template<unsigned ndim>
@@ -420,7 +420,7 @@ struct tri
 	aabb<ndim> getAABB() const;
 
 	tri() = default;
-	tri(vector_t _v[3]);
+	explicit tri(vector_t _v[3]);
 	tri(const vector_t& a, const vector_t& b, const vector_t& c);
 
 	vector_t normal() const

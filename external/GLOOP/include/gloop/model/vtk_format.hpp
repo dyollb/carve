@@ -65,8 +65,7 @@ namespace gloop {
       Fmt fmt;
 
     public:
-      VtkWriter(Fmt _fmt) : stream::model_writer(), fmt(_fmt) {
-      }
+      explicit VtkWriter(Fmt _fmt) : stream::model_writer(), fmt(_fmt) {}
 
       virtual ~VtkWriter() = default;
 

@@ -117,8 +117,8 @@ struct Matrix3
 		_32 = __32;
 		_33 = __33;
 	}
-	Matrix3(double _m[3][3]) { std::memcpy(m, _m, sizeof(m)); }
-	Matrix3(double _v[9]) { std::memcpy(v, _v, sizeof(v)); }
+	explicit Matrix3(double _m[3][3]) { std::memcpy(m, _m, sizeof(m)); }
+	explicit Matrix3(double _v[9]) { std::memcpy(v, _v, sizeof(v)); }
 	Matrix3()
 	{
 		_11 = 1.00;
@@ -171,8 +171,8 @@ struct Matrix
 		_43 = __43;
 		_44 = __44;
 	}
-	Matrix(double _m[4][4]) { std::memcpy(m, _m, sizeof(m)); }
-	Matrix(double _v[16]) { std::memcpy(v, _v, sizeof(v)); }
+	explicit Matrix(double _m[4][4]) { std::memcpy(m, _m, sizeof(m)); }
+	explicit Matrix(double _v[16]) { std::memcpy(v, _v, sizeof(v)); }
 	Matrix()
 	{
 		_11 = 1.00;
@@ -321,7 +321,8 @@ struct matrix_transformation
 {
 	Matrix matrix;
 
-	matrix_transformation(const Matrix& _matrix) : matrix(_matrix) {}
+	explicit matrix_transformation(const Matrix& _matrix)
+			: matrix(_matrix) {}
 
 	carve::geom::vector<3> operator()(
 			const carve::geom::vector<3>& vector) const

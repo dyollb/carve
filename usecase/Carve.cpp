@@ -1,28 +1,28 @@
-#include "XCoreModelingApi.h"
 #include "Carve.h"
 #include "UndefMinMax.h"
+#include "XCoreModelingApi.h"
 
 //#include "FloatingPointExceptions.h"
 
 #include "QGenTriangleMesh.h"
 
-#pragma warning( push )
-#pragma warning( disable : 4018 )
-#pragma warning( disable : 4101 )
-#pragma warning( disable : 4267 )
-#pragma warning( disable : 4244 )
+#pragma warning(push)
+#pragma warning(disable : 4018)
+#pragma warning(disable : 4101)
+#pragma warning(disable : 4267)
+#pragma warning(disable : 4244)
 #include <carve/config.h>
-#include <carve/mesh.hpp>
-#include <carve/input.hpp>
 #include <carve/csg.hpp>
-#include <carve/tree.hpp>
 #include <carve/csg_triangulator.hpp>
+#include <carve/input.hpp>
+#include <carve/mesh.hpp>
+#include <carve/tree.hpp>
 
+#include <carve/exact.hpp>
 #include <carve/geom3d.hpp>
 #include <carve/rtree.hpp>
 #include <carve/triangle_intersection.hpp>
-#include <carve/exact.hpp>
-#pragma warning( pop )
+#pragma warning(pop)
 
 namespace XCore {
 
@@ -35,7 +35,7 @@ carve::mesh::MeshSet<3>* ToCarve(const QGenTriangleMesh& mesh)
 	vec3 v;
 	for (auto& p : mesh.get_verts_buffer())
 	{
-		v = p;//tr.Transform(p);
+		v = p; //tr.Transform(p);
 		verts.push_back(v);
 	}
 
@@ -65,12 +65,12 @@ QGenTriangleMesh_ptr FromCarve(const carve::mesh::MeshSet<3>& cmesh, bool with_i
 	const carve::mesh::MeshSet<3>::vertex_t* VBase = cmesh.vertex_storage.data();
 	for (auto f = cmesh.faceBegin(); f != cmesh.faceEnd(); ++f)
 	{
-		const carve::mesh::MeshSet<3>::face_t *face = *f;
+		const carve::mesh::MeshSet<3>::face_t* face = *f;
 
-		if (face->nVertices() == 3) 
+		if (face->nVertices() == 3)
 		{
 			QGenTriangleMesh::tri t;
-			auto *e = face->edge;
+			auto* e = face->edge;
 			for (int c = 0; c < 3; c++, e = e->next)
 			{
 				t.inds[c] = static_cast<bit32>(e->v1() - VBase);
@@ -81,20 +81,21 @@ QGenTriangleMesh_ptr FromCarve(const carve::mesh::MeshSet<3>& cmesh, bool with_i
 
 		std::vector<carve::triangulate::tri_idx> result;
 
-		std::vector<carve::mesh::MeshSet<3>::vertex_t *> vloop;
+		std::vector<carve::mesh::MeshSet<3>::vertex_t*> vloop;
 		face->getVertices(vloop);
 
 		carve::triangulate::triangulate(
-			carve::mesh::MeshSet<3>::face_t::projection_mapping(face->project),
-			vloop,
-			result);
-
-		if (with_improvement) {
-			carve::triangulate::improve(
 				carve::mesh::MeshSet<3>::face_t::projection_mapping(face->project),
 				vloop,
-				carve::mesh::vertex_distance(),
 				result);
+
+		if (with_improvement)
+		{
+			carve::triangulate::improve(
+					carve::mesh::MeshSet<3>::face_t::projection_mapping(face->project),
+					vloop,
+					carve::mesh::vertex_distance(),
+					result);
 		}
 
 		QGenTriangleMesh::tri t;
@@ -141,15 +142,20 @@ carve::csg::CSG::OP ToCarve(eBoolean operation)
 	switch (operation)
 	{
 	case eBoolean::kUnion:
-		op = carve::csg::CSG::UNION; break;
+		op = carve::csg::CSG::UNION;
+		break;
 	case eBoolean::kIntersection:
-		op = carve::csg::CSG::INTERSECTION; break;
+		op = carve::csg::CSG::INTERSECTION;
+		break;
 	case eBoolean::kA_Minus_B:
-		op = carve::csg::CSG::A_MINUS_B; break;
+		op = carve::csg::CSG::A_MINUS_B;
+		break;
 	case eBoolean::kB_Minus_A:
-		op = carve::csg::CSG::B_MINUS_A; break;
+		op = carve::csg::CSG::B_MINUS_A;
+		break;
 	case eBoolean::kSymmetricDifference:
-		op = carve::csg::CSG::SYMMETRIC_DIFFERENCE; break;
+		op = carve::csg::CSG::SYMMETRIC_DIFFERENCE;
+		break;
 	default:
 		break;
 	}
@@ -174,7 +180,7 @@ QGenTriangleMesh_ptr Boolean(const QGenTriangleMesh& a, const QGenTriangleMesh& 
 	if (lhs != nullptr)
 	{
 		std::shared_ptr<carve::csg::CSG_TreeNode> lhs_raii(lhs);
-		carve::mesh::MeshSet<3> *result_mesh = nullptr;
+		carve::mesh::MeshSet<3>* result_mesh = nullptr;
 		bool is_temp;
 		try
 		{
@@ -197,7 +203,8 @@ QGenTriangleMesh_ptr Boolean(const QGenTriangleMesh& a, const QGenTriangleMesh& 
 		if (result_mesh)
 		{
 			output = FromCarve(*result_mesh);
-			if (is_temp) delete result_mesh;
+			if (is_temp)
+				delete result_mesh;
 		}
 	}
 	return output;
@@ -214,7 +221,7 @@ carve::mesh::MeshSet<3>* Boolean(carve::mesh::MeshSet<3>* a, carve::mesh::MeshSe
 	if (lhs != nullptr)
 	{
 		std::shared_ptr<carve::csg::CSG_TreeNode> lhs_raii(lhs);
-		carve::mesh::MeshSet<3> *result_mesh = nullptr;
+		carve::mesh::MeshSet<3>* result_mesh = nullptr;
 		try
 		{
 			bool is_temp;
@@ -249,10 +256,11 @@ std::vector<size_t> SelfIntersect(const QGenTriangleMesh& mesh)
 	face_rtree_t* tree = face_rtree_t::construct_STR(poly->faceBegin(), poly->faceEnd(), 4, 4);
 	std::shared_ptr<face_rtree_t> tree_raii(tree);
 
-	for (carve::mesh::MeshSet<3>::face_iter f = poly->faceBegin(); f != poly->faceEnd(); ++f) 
+	for (carve::mesh::MeshSet<3>::face_iter f = poly->faceBegin(); f != poly->faceEnd(); ++f)
 	{
 		carve::mesh::MeshSet<3>::face_t* fa = *f;
-		if (fa->nVertices() != 3) {
+		if (fa->nVertices() != 3)
+		{
 			continue;
 		}
 
@@ -264,14 +272,16 @@ std::vector<size_t> SelfIntersect(const QGenTriangleMesh& mesh)
 		std::vector<const carve::mesh::MeshSet<3>::face_t*> near_faces;
 		tree->search(fa->getAABB(), std::back_inserter(near_faces));
 
-		for (size_t f2 = 0; f2 < near_faces.size(); ++f2) 
+		for (size_t f2 = 0; f2 < near_faces.size(); ++f2)
 		{
 			const carve::mesh::MeshSet<3>::face_t* fb = near_faces[f2];
-			if (fb->nVertices() != 3) {
+			if (fb->nVertices() != 3)
+			{
 				continue;
 			}
 
-			if (fa >= fb) {
+			if (fa >= fb)
+			{
 				continue;
 			}
 
@@ -280,7 +290,7 @@ std::vector<size_t> SelfIntersect(const QGenTriangleMesh& mesh)
 			tri_b[1] = fb->edge->next->vert->v;
 			tri_b[2] = fb->edge->next->next->vert->v;
 
-			if (carve::geom::triangle_intersection_exact(tri_a, tri_b) == carve::geom::TR_TYPE_INT) 
+			if (carve::geom::triangle_intersection_exact(tri_a, tri_b) == carve::geom::TR_TYPE_INT)
 			{
 				tri_ids.push_back(fa->id);
 				tri_ids.push_back(fb->id);
@@ -298,4 +308,4 @@ std::vector<size_t> SelfIntersect(const QGenTriangleMesh& mesh)
 	return tri_ids;
 }
 
-}// namespace XCore
+} // namespace XCore

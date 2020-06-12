@@ -40,7 +40,7 @@ struct polyline_vertex_iter
 	Polyline* base;
 	std::int64_t idx;
 
-	polyline_vertex_iter(Polyline* _base) : base(_base), idx(0) {}
+	explicit polyline_vertex_iter(Polyline* _base) : base(_base), idx(0) {}
 
 	polyline_vertex_iter(Polyline* _base, std::int64_t _idx)
 			: base(_base), idx(_idx) {}
@@ -125,7 +125,8 @@ struct polyline_vertex_const_iter
 	const Polyline* base;
 	std::int64_t idx;
 
-	polyline_vertex_const_iter(const Polyline* _base) : base(_base), idx(0) {}
+	explicit polyline_vertex_const_iter(const Polyline* _base)
+			: base(_base), idx(0) {}
 
 	polyline_vertex_const_iter(const Polyline* _base, std::int64_t _idx)
 			: base(_base), idx(_idx) {}
@@ -227,7 +228,7 @@ struct polyline_edge_iter
 	Polyline* base;
 	std::int64_t idx;
 
-	polyline_edge_iter(Polyline* _base) : base(_base), idx(0) {}
+	explicit polyline_edge_iter(Polyline* _base) : base(_base), idx(0) {}
 
 	polyline_edge_iter(Polyline* _base, std::int64_t _idx) : base(_base), idx(_idx) {}
 
@@ -305,7 +306,8 @@ struct polyline_edge_const_iter
 	const Polyline* base;
 	std::int64_t idx;
 
-	polyline_edge_const_iter(const Polyline* _base) : base(_base), idx(0) {}
+	explicit polyline_edge_const_iter(const Polyline* _base)
+			: base(_base), idx(0) {}
 
 	polyline_edge_const_iter(const Polyline* _base, std::int64_t _idx)
 			: base(_base), idx(_idx) {}

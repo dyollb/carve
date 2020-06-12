@@ -72,10 +72,10 @@ namespace gloop {
       }
       return *this;
     }
-    
-    operator M3() const;
-    operator M4() const;
-    
+
+    explicit operator M3() const;
+    explicit operator M4() const;
+
     static QUAT slerp(const QUAT &a, const QUAT &b, float t);
   };
 

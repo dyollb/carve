@@ -47,8 +47,8 @@ namespace {
 struct line : public gloop::stream::null_reader
 {
 	carve::input::PolylineSetData* data;
-	line(carve::input::PolylineSetData* _data) : data(_data) {}
-	void length(int /* len */) override {}
+        explicit line(carve::input::PolylineSetData *_data) : data(_data) {}
+        void length(int /* len */) override {}
 	void next() override { data->beginPolyline(); }
 	void end() override {}
 	carve::input::PolylineSetData::polyline_data_t& curr() const
@@ -60,15 +60,15 @@ struct line : public gloop::stream::null_reader
 struct line_closed : public gloop::stream::reader<bool>
 {
 	line* l;
-	line_closed(line* _l) : l(_l) {}
-	void value(bool val) override { l->curr().first = val; }
+        explicit line_closed(line *_l) : l(_l) {}
+        void value(bool val) override { l->curr().first = val; }
 };
 
 struct line_idx : public gloop::stream::reader<int>
 {
 	line* l;
-	line_idx(line* _l) : l(_l) {}
-	virtual void length(size_t len)
+        explicit line_idx(line *_l) : l(_l) {}
+        virtual void length(size_t len)
 	{
 		if (l != nullptr)
 		{
@@ -82,8 +82,8 @@ template<typename container_t>
 struct vertex : public gloop::stream::null_reader
 {
 	container_t& container;
-	vertex(container_t& _container) : container(_container) {}
-	void next() override { container.push_back(carve::geom3d::Vector()); }
+        explicit vertex(container_t &_container) : container(_container) {}
+        void next() override { container.push_back(carve::geom3d::Vector()); }
 	void length(int l) override
 	{
 		if (l > 0)
@@ -104,8 +104,8 @@ template<int idx, typename curr_t>
 struct vertex_component : public gloop::stream::reader<double>
 {
 	const curr_t* i;
-	vertex_component(const curr_t* _i) : i(_i) {}
-	void value(double val) override { i->curr().v[idx] = val; }
+        explicit vertex_component(const curr_t *_i) : i(_i) {}
+        void value(double val) override { i->curr().v[idx] = val; }
 };
 template<int idx, typename curr_t>
 vertex_component<idx, curr_t>* vertex_component_inserter(const curr_t* i)
@@ -116,8 +116,8 @@ vertex_component<idx, curr_t>* vertex_component_inserter(const curr_t* i)
 struct face : public gloop::stream::null_reader
 {
 	carve::input::PolyhedronData* data;
-	face(carve::input::PolyhedronData* _data) : data(_data) {}
-	void length(int l) override
+        explicit face(carve::input::PolyhedronData *_data) : data(_data) {}
+        void length(int l) override
 	{
 		if (l > 0)
 		{
@@ -131,9 +131,10 @@ struct face_idx : public gloop::stream::reader<int>
 	carve::input::PolyhedronData* data;
 	mutable std::vector<int> vidx;
 
-	face_idx(carve::input::PolyhedronData* _data) : data(_data), vidx() {}
+        explicit face_idx(carve::input::PolyhedronData *_data)
+            : data(_data), vidx() {}
 
-	void length(int l) override
+        void length(int l) override
 	{
 		vidx.clear();
 		vidx.reserve(l);
@@ -148,10 +149,10 @@ struct tristrip_idx : public gloop::stream::reader<int>
 	mutable int a, b, c;
 	mutable bool clk;
 
-	tristrip_idx(carve::input::PolyhedronData* _data)
-			: data(_data), a(-1), b(-1), c(-1), clk(true) {}
+        explicit tristrip_idx(carve::input::PolyhedronData *_data)
+            : data(_data), a(-1), b(-1), c(-1), clk(true) {}
 
-	void value(int val) override
+        void value(int val) override
 	{
 		a = b;
 		b = c;

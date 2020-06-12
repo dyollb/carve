@@ -27,7 +27,7 @@ QGenTriangleMesh load_mesh(const std::string& fname)
 	QGenTriangleMesh::tri_buffer tris;
 	vtkIdType npts, *pts;
 	auto polys = pd->GetPolys();
-	for (polys->InitTraversal(); polys->GetNextCell(npts, pts); )
+	for (polys->InitTraversal(); polys->GetNextCell(npts, pts);)
 	{
 		QGenTriangleMesh::tri t;
 		t.inds[0] = pts[0];

@@ -85,12 +85,12 @@ public:
 
 struct TimingName
 {
-	TimingName(const char*) {}
+	explicit TimingName(const char*) {}
 };
 struct TimingBlock
 {
-	TimingBlock(int /* id */) {}
-	TimingBlock(const TimingName& /* name */) {}
+	explicit TimingBlock(int /* id */) {}
+	explicit TimingBlock(const TimingName& /* name */) {}
 };
 struct Timing
 {

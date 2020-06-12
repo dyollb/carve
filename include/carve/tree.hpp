@@ -88,7 +88,8 @@ class CSG_InvertNode : public CSG_TreeNode
 	CSG_TreeNode* child;
 
 public:
-	CSG_InvertNode(CSG_TreeNode* _child) : selected_meshes(), child(_child) {}
+	explicit CSG_InvertNode(CSG_TreeNode* _child)
+			: selected_meshes(), child(_child) {}
 	CSG_InvertNode(int g_id, CSG_TreeNode* _child)
 			: selected_meshes(), child(_child)
 	{

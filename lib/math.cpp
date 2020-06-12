@@ -45,7 +45,7 @@ struct Root {
   double root;
   int multiplicity;
 
-  Root(double r) : root(r), multiplicity(1) {}
+  explicit Root(double r) : root(r), multiplicity(1) {}
   Root(double r, int m) : root(r), multiplicity(m) {}
 };
 

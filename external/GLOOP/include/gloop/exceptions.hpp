@@ -39,7 +39,7 @@ namespace gloop {
     mutable std::string err;
 
   public:
-    exception(const std::string &e) : err(e) { }
+    explicit exception(const std::string &e) : err(e) {}
     exception() : err() { }
 
     const std::string &str() const {

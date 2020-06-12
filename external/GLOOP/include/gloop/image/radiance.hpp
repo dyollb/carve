@@ -127,10 +127,10 @@ namespace gloop {
 
     packed_colour() = default;
     packed_colour(uint8_t _r, uint8_t _g, uint8_t _b, uint8_t _e) { r = _r; g = _g; b = _b; e = _e; }
-    packed_colour(uint32_t _val) { val = _val; }
-    packed_colour(const void *mem) { memcpy(&v, mem, 4); }
-    packed_colour(const V3 &col);
-    
+    explicit packed_colour(uint32_t _val) { val = _val; }
+    explicit packed_colour(const void *mem) { memcpy(&v, mem, 4); }
+    explicit packed_colour(const V3 &col);
+
     const static packed_colour white;
     const static packed_colour black;
     

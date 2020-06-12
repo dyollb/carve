@@ -46,7 +46,7 @@ protected:
 public:
 	djset() : set() {}
 
-	djset(size_t N)
+	explicit djset(size_t N)
 	{
 		n_sets = N;
 		set.reserve(N);

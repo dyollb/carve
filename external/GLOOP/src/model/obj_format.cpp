@@ -242,7 +242,8 @@ namespace {
     mutable gloop::stream::named_prop_t *prop;
     std::string propname;
 
-    dbl(const char *pn, const char *defval = nullptr) : has_default(false), def(), prop(nullptr), propname(pn) {
+    explicit dbl(const char *pn, const char *defval = nullptr)
+        : has_default(false), def(), prop(nullptr), propname(pn) {
       if (defval) {
         def = defval;
         has_default = true;

@@ -39,7 +39,7 @@ class exact_t : public std::vector<double>
 public:
 	exact_t() : super() {}
 
-	exact_t(double v, size_t sz = 1) : super(sz, v) {}
+	explicit exact_t(double v, size_t sz = 1) : super(sz, v) {}
 
 	template<typename iter_t>
 	exact_t(iter_t a, iter_t b) : super(a, b) {}
@@ -127,7 +127,10 @@ public:
 		return result;
 	}
 
-	operator double() const { return std::accumulate(begin(), end(), 0.0); }
+	explicit operator double() const
+	{
+		return std::accumulate(begin(), end(), 0.0);
+	}
 
 	void removeZeroes() { erase(std::remove(begin(), end(), 0.0), end()); }
 };

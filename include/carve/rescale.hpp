@@ -127,7 +127,7 @@ struct rescale
 struct fwd
 {
 	rescale r;
-	fwd(const rescale& _r) : r(_r) {}
+	explicit fwd(const rescale& _r) : r(_r) {}
 	carve::geom3d::Vector operator()(const carve::geom3d::Vector& v) const
 	{
 		return carve::geom::VECTOR((v.x - r.dx) / r.scale, (v.y - r.dy) / r.scale,
@@ -138,7 +138,7 @@ struct fwd
 struct rev
 {
 	rescale r;
-	rev(const rescale& _r) : r(_r) {}
+	explicit rev(const rescale& _r) : r(_r) {}
 	carve::geom3d::Vector operator()(const carve::geom3d::Vector& v) const
 	{
 		return carve::geom::VECTOR((v.x * r.scale) + r.dx, (v.y * r.scale) + r.dy,

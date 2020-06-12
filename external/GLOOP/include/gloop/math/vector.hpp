@@ -44,7 +44,7 @@ namespace gloop {
     };
     
     V2(float _x, float _y) : x(_x), y(_y) { }
-    V2(const float *_v) { memcpy(v, _v, sizeof(v)); }
+    explicit V2(const float *_v) { memcpy(v, _v, sizeof(v)); }
   };
 
   static inline V2 &operator+=(V2 &a, const V2 &b) { a.x += b.x; a.y += b.y; return a; }

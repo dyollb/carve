@@ -92,7 +92,7 @@ template<typename adapt_t>
 struct vec_cmp_lt_x
 {
 	adapt_t adapt;
-	vec_cmp_lt_x(adapt_t _adapt = adapt_t()) : adapt(_adapt) {}
+	explicit vec_cmp_lt_x(adapt_t _adapt = adapt_t()) : adapt(_adapt) {}
 	template<typename input_t>
 	bool operator()(const input_t& a, const input_t& b) const
 	{
@@ -109,7 +109,7 @@ template<typename adapt_t>
 struct vec_cmp_lt_y
 {
 	adapt_t adapt;
-	vec_cmp_lt_y(adapt_t _adapt = adapt_t()) : adapt(_adapt) {}
+	explicit vec_cmp_lt_y(adapt_t _adapt = adapt_t()) : adapt(_adapt) {}
 	template<typename input_t>
 	bool operator()(const input_t& a, const input_t& b) const
 	{
@@ -126,7 +126,7 @@ template<typename adapt_t>
 struct vec_cmp_lt_z
 {
 	adapt_t adapt;
-	vec_cmp_lt_z(adapt_t _adapt = adapt_t()) : adapt(_adapt) {}
+	explicit vec_cmp_lt_z(adapt_t _adapt = adapt_t()) : adapt(_adapt) {}
 	template<typename input_t>
 	bool operator()(const input_t& a, const input_t& b) const
 	{
@@ -143,7 +143,7 @@ template<typename adapt_t>
 struct vec_cmp_gt_x
 {
 	adapt_t adapt;
-	vec_cmp_gt_x(adapt_t _adapt = adapt_t()) : adapt(_adapt) {}
+	explicit vec_cmp_gt_x(adapt_t _adapt = adapt_t()) : adapt(_adapt) {}
 	template<typename input_t>
 	bool operator()(const input_t& a, const input_t& b) const
 	{
@@ -160,7 +160,7 @@ template<typename adapt_t>
 struct vec_cmp_gt_y
 {
 	adapt_t adapt;
-	vec_cmp_gt_y(adapt_t _adapt = adapt_t()) : adapt(_adapt) {}
+	explicit vec_cmp_gt_y(adapt_t _adapt = adapt_t()) : adapt(_adapt) {}
 	template<typename input_t>
 	bool operator()(const input_t& a, const input_t& b) const
 	{
@@ -177,7 +177,7 @@ template<typename adapt_t>
 struct vec_cmp_gt_z
 {
 	adapt_t adapt;
-	vec_cmp_gt_z(adapt_t _adapt = adapt_t()) : adapt(_adapt) {}
+	explicit vec_cmp_gt_z(adapt_t _adapt = adapt_t()) : adapt(_adapt) {}
 	template<typename input_t>
 	bool operator()(const input_t& a, const input_t& b) const
 	{

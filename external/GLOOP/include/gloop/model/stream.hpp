@@ -217,7 +217,8 @@ namespace gloop {
       Ref<reader_base> rd;
       Ref<writer_base> wt;
 
-      named_prop_t(const std::string &n) : name(n), rd(nullptr), wt(nullptr) {}
+      explicit named_prop_t(const std::string &n)
+          : name(n), rd(nullptr), wt(nullptr) {}
     };
 
     typedef std::list<named_prop_t> named_prop_list_t;
@@ -229,7 +230,8 @@ namespace gloop {
       Ref<reader_base> rd;
       Ref<writer_base> wt;
 
-      named_element_t(const std::string &n) : name(n), props(), rd(nullptr), wt(nullptr) {}
+      explicit named_element_t(const std::string &n)
+          : name(n), props(), rd(nullptr), wt(nullptr) {}
 
       named_prop_t *findProp(const std::string &n) const;
       named_prop_t &findOrCreateProp(const std::string &n);
@@ -244,7 +246,8 @@ namespace gloop {
       Ref<reader_base> rd;
       Ref<writer_base> wt;
 
-      block_t(const std::string &n) : name(n), elems(), rd(nullptr), wt(nullptr) {}
+      explicit block_t(const std::string &n)
+          : name(n), elems(), rd(nullptr), wt(nullptr) {}
 
       named_element_t *findElem(const std::string &n) const;
       named_element_t &findOrCreateElem(const std::string &n);

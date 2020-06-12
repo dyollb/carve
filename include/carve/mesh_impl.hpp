@@ -1150,7 +1150,7 @@ struct VPtrSort
 {
 	order_t order;
 
-	VPtrSort(const order_t& _order = order_t()) : order(_order) {}
+	explicit VPtrSort(const order_t& _order = order_t()) : order(_order) {}
 
 	template<unsigned ndim>
 	bool operator()(carve::mesh::Vertex<ndim>* a,

@@ -668,7 +668,7 @@ struct TriangulationData
 	template<typename out_iter_t>
 	bool doTriangulate(VertexInfo* begin, out_iter_t out);
 
-	TriangulationData(proj_t _proj) : proj(_proj) {}
+	explicit TriangulationData(proj_t _proj) : proj(_proj) {}
 
 	VertexInfo* init(edge_t* begin)
 	{
@@ -713,7 +713,7 @@ struct TriangulationData
 		}
 
 	public:
-		EarQueue(TriangulationData& _data) : data(_data), queue() {}
+		explicit EarQueue(TriangulationData& _data) : data(_data), queue() {}
 
 		size_t size() const { return queue.size(); }
 

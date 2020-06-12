@@ -51,8 +51,8 @@ struct vertex : public vertex_base
 {
 	const container_t& cnt;
 	int i;
-	vertex(const container_t& _cnt) : cnt(_cnt), i(-1) {}
-	void next() override { ++i; }
+        explicit vertex(const container_t &_cnt) : cnt(_cnt), i(-1) {}
+        void next() override { ++i; }
 	int length() override { return cnt.size(); }
 	const carve::geom3d::Vector& curr() const override { return cnt[i].v; }
 };
@@ -66,19 +66,20 @@ template<int idx>
 struct vertex_component : public gloop::stream::writer<double>
 {
 	vertex_base& r;
-	vertex_component(vertex_base& _r) : r(_r) {}
-	double value() override { return r.curr().v[idx]; }
+        explicit vertex_component(vertex_base &_r) : r(_r) {}
+        double value() override { return r.curr().v[idx]; }
 };
 
 struct mesh_face : public gloop::stream::null_writer
 {
 	std::vector<const carve::mesh::MeshSet<3>::face_t*> faces;
 	int i;
-	mesh_face(const carve::mesh::MeshSet<3>* poly) : faces(), i(-1)
-	{
-		std::copy(poly->faceBegin(), poly->faceEnd(), std::back_inserter(faces));
-	}
-	void next() override { ++i; }
+        explicit mesh_face(const carve::mesh::MeshSet<3> *poly)
+            : faces(), i(-1) {
+          std::copy(poly->faceBegin(), poly->faceEnd(),
+                    std::back_inserter(faces));
+        }
+        void next() override { ++i; }
 	int length() override { return faces.size(); }
 	const carve::mesh::MeshSet<3>::face_t* curr() const { return faces[i]; }
 };
@@ -115,8 +116,9 @@ struct face : public gloop::stream::null_writer
 {
 	const carve::poly::Polyhedron* poly;
 	int i;
-	face(const carve::poly::Polyhedron* _poly) : poly(_poly), i(-1) {}
-	void next() override { ++i; }
+        explicit face(const carve::poly::Polyhedron *_poly)
+            : poly(_poly), i(-1) {}
+        void next() override { ++i; }
 	int length() override { return poly->faces.size(); }
 	const carve::poly::Face<3>* curr() const { return &poly->faces[i]; }
 };
@@ -158,11 +160,11 @@ struct lineset : public gloop::stream::null_writer
 	const carve::line::PolylineSet* polyline;
 	carve::line::PolylineSet::const_line_iter c;
 	carve::line::PolylineSet::const_line_iter n;
-	lineset(const carve::line::PolylineSet* _polyline) : polyline(_polyline)
-	{
-		n = polyline->lines.begin();
-	}
-	void next() override
+        explicit lineset(const carve::line::PolylineSet *_polyline)
+            : polyline(_polyline) {
+          n = polyline->lines.begin();
+        }
+        void next() override
 	{
 		c = n;
 		++n;
@@ -174,8 +176,8 @@ struct lineset : public gloop::stream::null_writer
 struct line_closed : public gloop::stream::writer<bool>
 {
 	lineset& ls;
-	line_closed(lineset& _ls) : ls(_ls) {}
-	gloop::stream::Type dataType() override { return gloop::stream::U8; }
+        explicit line_closed(lineset &_ls) : ls(_ls) {}
+        gloop::stream::Type dataType() override { return gloop::stream::U8; }
 	bool value() override { return ls.curr()->isClosed(); }
 };
 

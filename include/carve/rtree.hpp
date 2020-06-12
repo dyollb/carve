@@ -58,15 +58,14 @@ struct RTreeNode
 		data_t data;
 
 		data_aabb_t() = default;
-		data_aabb_t(const data_t& _data)
-				: bbox(aabb_calc_t()(_data)), data(_data) {}
+		data_aabb_t(const data_t& _data) : bbox(aabb_calc_t()(_data)), data(_data) {}
 
 		aabb_t getAABB() const { return bbox; }
 
 		struct cmp
 		{
 			size_t dim;
-			cmp(size_t _dim) : dim(_dim) {}
+			explicit cmp(size_t _dim) : dim(_dim) {}
 			bool operator()(const data_aabb_t& a, const data_aabb_t& b)
 			{
 				return a.bbox.pos.v[dim] < b.bbox.pos.v[dim];
@@ -225,7 +224,7 @@ struct RTreeNode
 	struct aabb_cmp_mid
 	{
 		size_t dim;
-		aabb_cmp_mid(size_t _dim) : dim(_dim) {}
+		explicit aabb_cmp_mid(size_t _dim) : dim(_dim) {}
 
 		bool operator()(const node_t* a, const node_t* b)
 		{
@@ -242,7 +241,7 @@ struct RTreeNode
 	struct aabb_cmp_min
 	{
 		size_t dim;
-		aabb_cmp_min(size_t _dim) : dim(_dim) {}
+		explicit aabb_cmp_min(size_t _dim) : dim(_dim) {}
 
 		bool operator()(const node_t* a, const node_t* b)
 		{
@@ -259,7 +258,7 @@ struct RTreeNode
 	struct aabb_cmp_max
 	{
 		size_t dim;
-		aabb_cmp_max(size_t _dim) : dim(_dim) {}
+		explicit aabb_cmp_max(size_t _dim) : dim(_dim) {}
 
 		bool operator()(const node_t* a, const node_t* b)
 		{
@@ -275,7 +274,7 @@ struct RTreeNode
 	struct aabb_extent
 	{
 		size_t dim;
-		aabb_extent(size_t _dim) : dim(_dim) {}
+		explicit aabb_extent(size_t _dim) : dim(_dim) {}
 
 		double min(const node_t* a)
 		{

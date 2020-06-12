@@ -72,18 +72,16 @@ private:
 	mutable std::ostringstream accum;
 
 public:
-	exception(const std::string& e) : err(e), accum() {}
-	exception() : err(), accum() {}
-	exception(const exception& e) : err(e.str()), accum() {}
+  explicit exception(const std::string &e) : err(e), accum() {}
+  exception() : err(), accum() {}
+  exception(const exception &e) : err(e.str()), accum() {}
 
-	const std::string& str() const
-	{
-		if (accum.tellp())
-		{
-			err = accum.str();
-			accum.str("");
-		}
-		return err;
+  const std::string &str() const {
+    if (accum.tellp()) {
+      err = accum.str();
+      accum.str("");
+    }
+    return err;
 	}
 
 	template<typename T>

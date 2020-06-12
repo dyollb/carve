@@ -57,7 +57,7 @@ struct CARVE_API PointSet
 	std::vector<Vertex> vertices;
 	carve::geom3d::AABB aabb;
 
-	PointSet(const std::vector<carve::geom3d::Vector>& points);
+	explicit PointSet(const std::vector<carve::geom3d::Vector>& points);
 	PointSet() = default;
 
 	void sortVertices(const carve::geom3d::Vector& axis);

@@ -133,7 +133,8 @@ struct FaceLoopGroup
 	V2Set perimeter;
 	std::list<ClassificationInfo> classification;
 
-	FaceLoopGroup(const carve::mesh::MeshSet<3>* _src) : src(_src) {}
+	explicit FaceLoopGroup(const carve::mesh::MeshSet<3>* _src)
+			: src(_src) {}
 
 	FaceClass classificationAgainst(
 			const carve::mesh::MeshSet<3>::mesh_t* mesh) const;

@@ -122,7 +122,7 @@ struct vertex_info_ordering {
 
 struct vertex_info_l2norm_inc_ordering {
   const vertex_info* v;
-  vertex_info_l2norm_inc_ordering(const vertex_info* _v) : v(_v) {}
+  explicit vertex_info_l2norm_inc_ordering(const vertex_info *_v) : v(_v) {}
   bool operator()(const vertex_info* a, const vertex_info* b) const {
     return carve::geom::distance2(v->p, a->p) >
            carve::geom::distance2(v->p, b->p);

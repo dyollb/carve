@@ -52,7 +52,7 @@ public:
 
 	container_t data;
 
-	kd_node(kd_node* _parent = NULL)
+	explicit kd_node(kd_node* _parent = NULL)
 			: c_neg(NULL), c_pos(NULL), parent(_parent), splitpos(0, 0.0) {}
 
 	~kd_node()

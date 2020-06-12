@@ -124,7 +124,8 @@ class MeshSimplifier
 	{
 		double min_dp;
 
-		FlippableBase(double _min_dp = 0.0) : min_dp(_min_dp) {}
+		explicit FlippableBase(double _min_dp = 0.0)
+				: min_dp(_min_dp) {}
 
 		bool open(const EdgeInfo* e) const { return e->edge->rev == nullptr; }
 

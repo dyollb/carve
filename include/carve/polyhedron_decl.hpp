@@ -100,9 +100,9 @@ public:
 	Polyhedron(std::vector<face_t>& _faces, std::vector<vertex_t>& _vertices,
 			bool _recalc = false);
 
-	Polyhedron(std::vector<face_t>& _faces, bool _recalc = false);
+	explicit Polyhedron(std::vector<face_t>& _faces, bool _recalc = false);
 
-	Polyhedron(std::list<face_t>& _faces, bool _recalc = false);
+	explicit Polyhedron(std::list<face_t>& _faces, bool _recalc = false);
 
 	Polyhedron(const std::vector<carve::geom3d::Vector>& vertices, int n_faces,
 			const std::vector<int>& face_indices);

@@ -34,7 +34,7 @@ protected:
 	set_t* set;
 
 public:
-	set_insert_iterator(set_t& s) : set(&s) {}
+	explicit set_insert_iterator(set_t& s) : set(&s) {}
 
 	set_insert_iterator& operator=(typename set_t::const_reference value)
 	{
