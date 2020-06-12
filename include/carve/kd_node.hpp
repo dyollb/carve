@@ -38,8 +38,8 @@ template<unsigned ndim, typename data_t, typename inserter_t,
 		typename aabb_calc_t>
 class kd_node
 {
-	kd_node(const kd_node&);
-	kd_node& operator=(const kd_node&);
+	kd_node(const kd_node&) = delete;
+	kd_node& operator=(const kd_node&) = delete;
 
 public:
 	kd_node* c_neg;

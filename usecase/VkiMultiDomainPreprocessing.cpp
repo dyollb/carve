@@ -114,7 +114,7 @@ namespace XCore { namespace Modeling
 		 *
 		 *	Initialize a empty collector.
 		*/
-		CMultiDomainCollector( );
+		CMultiDomainCollector( ) = delete;
 		/*!
 		 *	@brief Copy-constructor (deleted).
 		 */
@@ -159,7 +159,7 @@ namespace XCore { namespace Modeling
 		/*!
 		 *	@brief Copy assignment operator (deleted).
 		*/
-		CMultiDomainCollector& operator=( const CMultiDomainCollector& );
+		CMultiDomainCollector& operator=( const CMultiDomainCollector& ) = delete;
 
 		// Method(s) -------------------------------------------------------------- //
 	private:

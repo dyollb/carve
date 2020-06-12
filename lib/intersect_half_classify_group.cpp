@@ -99,7 +99,7 @@ class FaceMaker {
 };
 
 class HalfClassifyFaceGroups {
-  HalfClassifyFaceGroups& operator=(const HalfClassifyFaceGroups&);
+  HalfClassifyFaceGroups& operator=(const HalfClassifyFaceGroups&) = delete;
 
  public:
   std::list<std::pair<FaceClass, carve::mesh::MeshSet<3>*> >& b_out;

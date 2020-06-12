@@ -47,8 +47,8 @@ namespace gloop {
   class RefObj {
     mutable int __refcount;
 
-    RefObj(const RefObj &);
-    RefObj &operator=(const RefObj &);
+    RefObj(const RefObj &) = delete;
+    RefObj &operator=(const RefObj &) = delete;
 
   protected:
     virtual ~RefObj() = default;
@@ -74,8 +74,8 @@ namespace gloop {
   class MonitoredRefObj {
     mutable int __refcount;
 
-    MonitoredRefObj(const MonitoredRefObj &);
-    MonitoredRefObj &operator=(const MonitoredRefObj &);
+    MonitoredRefObj(const MonitoredRefObj &) = delete;
+    MonitoredRefObj &operator=(const MonitoredRefObj &) = delete;
 
   protected:
     virtual void refcountIncreased(int /* refcount */) const {

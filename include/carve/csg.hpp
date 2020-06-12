@@ -155,8 +155,8 @@ public:
    */
 	class CARVE_API Collector
 	{
-		Collector(const Collector&);
-		Collector& operator=(const Collector&);
+		Collector(const Collector&) = delete;
+		Collector& operator=(const Collector&) = delete;
 
 	protected:
 	public:

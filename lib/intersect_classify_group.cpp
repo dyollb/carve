@@ -85,7 +85,7 @@ class FaceMaker1 {
 #else
 template <int poly_num>
 class FaceMaker {
-  FaceMaker& operator=(const FaceMaker&);
+  FaceMaker& operator=(const FaceMaker&) = delete;
 
  public:
   CSG::Collector& collector;
@@ -109,7 +109,7 @@ typedef FaceMaker<0> FaceMaker0;
 using FaceMaker1 = FaceMaker<1>;
 #endif
 class ClassifyFaceGroups {
-  ClassifyFaceGroups& operator=(const ClassifyFaceGroups&);
+  ClassifyFaceGroups& operator=(const ClassifyFaceGroups&) = delete;
 
  public:
   CSG::Collector& collector;

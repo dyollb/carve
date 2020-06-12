@@ -322,7 +322,7 @@ public:
 	unproject_t unproject;
 
 private:
-	Face& operator=(const Face& other);
+	Face& operator=(const Face& other) = delete;
 
 protected:
 	Face()
@@ -527,9 +527,9 @@ struct MeshOptions
 namespace detail {
 class CARVE_API FaceStitcher
 {
-	FaceStitcher();
-	FaceStitcher(const FaceStitcher&);
-	FaceStitcher& operator=(const FaceStitcher&);
+	FaceStitcher() = delete;
+	FaceStitcher(const FaceStitcher&) = delete;
+	FaceStitcher& operator=(const FaceStitcher&) = delete;
 
 	using vertex_t = Vertex<3>;
 	using edge_t = Edge<3>;
@@ -772,9 +772,9 @@ public:
 template<unsigned ndim>
 class MeshSet
 {
-	MeshSet();
-	MeshSet(const MeshSet&);
-	MeshSet& operator=(const MeshSet&);
+	MeshSet() = delete;
+	MeshSet(const MeshSet&) = delete;
+	MeshSet& operator=(const MeshSet&) = delete;
 
 	template<typename iter_t>
 	void _init_from_faces(iter_t begin, iter_t end, const MeshOptions& opts);

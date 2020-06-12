@@ -38,7 +38,7 @@ namespace {
 // private code related to hole patching.
 
 class order_h_loops_2d {
-  order_h_loops_2d& operator=(const order_h_loops_2d&);
+  order_h_loops_2d& operator=(const order_h_loops_2d&) = delete;
 
   const std::vector<std::vector<carve::geom2d::P2> >& poly;
   int axis;
@@ -56,7 +56,7 @@ class order_h_loops_2d {
 };
 
 class heap_ordering_2d {
-  heap_ordering_2d& operator=(const heap_ordering_2d&);
+  heap_ordering_2d& operator=(const heap_ordering_2d&) = delete;
 
   const std::vector<std::vector<carve::geom2d::P2> >& poly;
   const std::vector<std::pair<size_t, size_t> >& loop;

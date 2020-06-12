@@ -36,8 +36,8 @@ namespace csg {
 
 class CSG_TreeNode
 {
-	CSG_TreeNode(const CSG_TreeNode&);
-	CSG_TreeNode& operator=(const CSG_TreeNode&);
+	CSG_TreeNode(const CSG_TreeNode&) = delete;
+	CSG_TreeNode& operator=(const CSG_TreeNode&) = delete;
 
 protected:
 public:

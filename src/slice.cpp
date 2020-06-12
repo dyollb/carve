@@ -177,9 +177,9 @@ static Options options;
 
 class Slice : public carve::csg::CSG::Collector
 {
-	Slice();
-	Slice(const Slice&);
-	Slice& operator=(const Slice&);
+	Slice() = delete;
+	Slice(const Slice&) = delete;
+	Slice& operator=(const Slice&) = delete;
 
 protected:
 	struct face_data_t

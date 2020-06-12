@@ -40,9 +40,9 @@ namespace csg {
 namespace {
 
 class BaseCollector : public CSG::Collector {
-  BaseCollector();
-  BaseCollector(const BaseCollector&);
-  BaseCollector& operator=(const BaseCollector&);
+  BaseCollector() = delete;
+  BaseCollector(const BaseCollector&) = delete;
+  BaseCollector& operator=(const BaseCollector&) = delete;
 
  protected:
   struct face_data_t {

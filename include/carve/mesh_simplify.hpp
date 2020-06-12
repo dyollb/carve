@@ -177,7 +177,7 @@ class MeshSimplifier
 
 		class Priority
 		{
-			Priority& operator=(const Priority&);
+			Priority& operator=(const Priority&) = delete;
 			const FlippableBase& flip;
 
 		public:
@@ -292,7 +292,7 @@ class MeshSimplifier
 
 		class Priority
 		{
-			Priority& operator=(const Priority&);
+			Priority& operator=(const Priority&) = delete;
 
 		public:
 			const EdgeMerger& merger;
