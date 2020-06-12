@@ -25,13 +25,13 @@
 #pragma once
 
 #if defined(WIN32) && !defined(CARVE_STATIC)
-#  if defined(carve_misc_EXPORTS)
-#    define CARVE_MISC_API __declspec(dllexport)
-#  else
-#    define CARVE_MISC_API __declspec(dllimport)
-#  endif
+#	if defined(carve_misc_EXPORTS)
+#		define CARVE_MISC_API __declspec(dllexport)
+#	else
+#		define CARVE_MISC_API __declspec(dllimport)
+#	endif
 #else
-#    define CARVE_MISC_API
+#	define CARVE_MISC_API
 #endif
 
 #include <carve/carve.hpp>
@@ -40,29 +40,29 @@
 #include <carve/poly.hpp>
 
 #ifdef WIN32
-#undef rad1
-#undef rad2
+#	undef rad1
+#	undef rad2
 #endif
 
 CARVE_MISC_API carve::mesh::MeshSet<3>* makeCube(
-    const carve::math::Matrix& transform = carve::math::Matrix());
+		const carve::math::Matrix& transform = carve::math::Matrix());
 
 CARVE_MISC_API carve::mesh::MeshSet<3>* makeSubdividedCube(
-    int sub_x = 3, int sub_y = 3, int sub_z = 3,
-    bool (*inc)(int, int, int) = nullptr,
-    const carve::math::Matrix& transform = carve::math::Matrix());
+		int sub_x = 3, int sub_y = 3, int sub_z = 3,
+		bool (*inc)(int, int, int) = nullptr,
+		const carve::math::Matrix& transform = carve::math::Matrix());
 
 CARVE_MISC_API carve::mesh::MeshSet<3>* makeDoubleCube(
-    const carve::math::Matrix& transform = carve::math::Matrix());
+		const carve::math::Matrix& transform = carve::math::Matrix());
 
 CARVE_MISC_API carve::mesh::MeshSet<3>* makeTorus(
-    int slices, int rings, double rad1, double rad2,
-    const carve::math::Matrix& transform = carve::math::Matrix());
+		int slices, int rings, double rad1, double rad2,
+		const carve::math::Matrix& transform = carve::math::Matrix());
 
 CARVE_MISC_API carve::mesh::MeshSet<3>* makeCylinder(
-    int slices, double rad, double height,
-    const carve::math::Matrix& transform = carve::math::Matrix());
+		int slices, double rad, double height,
+		const carve::math::Matrix& transform = carve::math::Matrix());
 
 CARVE_MISC_API carve::mesh::MeshSet<3>* makeCone(
-    int slices, double rad, double height,
-    const carve::math::Matrix& transform = carve::math::Matrix());
+		int slices, double rad, double height,
+		const carve::math::Matrix& transform = carve::math::Matrix());

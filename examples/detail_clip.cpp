@@ -23,7 +23,7 @@
 // SOFTWARE.
 
 #if defined(HAVE_CONFIG_H)
-#include <carve_config.h>
+#	include <carve_config.h>
 #endif
 
 #include <carve/csg.hpp>
@@ -34,64 +34,73 @@
 
 #include <carve/input.hpp>
 
+#include <ctime>
 #include <fstream>
 #include <set>
 #include <string>
 #include <utility>
-#include <ctime>
 
-class DetailClip : public carve::csg::CSG::Collector {
-  DetailClip();
-  DetailClip(const DetailClip&);
-  DetailClip& operator=(const DetailClip&);
+class DetailClip : public carve::csg::CSG::Collector
+{
+	DetailClip();
+	DetailClip(const DetailClip&);
+	DetailClip& operator=(const DetailClip&);
 
- public:
-  std::list<carve::mesh::MeshSet<3>::face_t*> faces;
-  std::set<const carve::mesh::MeshSet<3>::face_t*> seen;
-  const carve::mesh::MeshSet<3>* src_a;
-  const carve::mesh::MeshSet<3>* src_b;
+public:
+	std::list<carve::mesh::MeshSet<3>::face_t*> faces;
+	std::set<const carve::mesh::MeshSet<3>::face_t*> seen;
+	const carve::mesh::MeshSet<3>* src_a;
+	const carve::mesh::MeshSet<3>* src_b;
 
-  DetailClip(const carve::mesh::MeshSet<3>* _src_a,
-             const carve::mesh::MeshSet<3>* _src_b)
-      : carve::csg::CSG::Collector(), src_a(_src_a), src_b(_src_b) {}
+	DetailClip(const carve::mesh::MeshSet<3>* _src_a,
+			const carve::mesh::MeshSet<3>* _src_b)
+			: carve::csg::CSG::Collector(), src_a(_src_a), src_b(_src_b) {}
 
-  ~DetailClip() override {}
+	~DetailClip() override {}
 
-  void collect(carve::csg::FaceLoopGroup* grp,
-               carve::csg::CSG::Hooks& hooks) override {
-    if (grp->face_loops.head->orig_face->mesh->meshset != src_b) {
-      return;
-    }
-    if (grp->classificationAgainst(nullptr) == carve::csg::FACE_IN) {
-      return;
-    }
-    if (grp->classificationAgainst(src_a->meshes[0]) == carve::csg::FACE_IN) {
-      return;
-    }
+	void collect(carve::csg::FaceLoopGroup* grp,
+			carve::csg::CSG::Hooks& hooks) override
+	{
+		if (grp->face_loops.head->orig_face->mesh->meshset != src_b)
+		{
+			return;
+		}
+		if (grp->classificationAgainst(nullptr) == carve::csg::FACE_IN)
+		{
+			return;
+		}
+		if (grp->classificationAgainst(src_a->meshes[0]) == carve::csg::FACE_IN)
+		{
+			return;
+		}
 
-    for (carve::csg::FaceLoop* f = grp->face_loops.head; f; f = f->next) {
-      if (seen.find(f->orig_face) == seen.end()) {
-        std::vector<carve::mesh::MeshSet<3>::vertex_t*> vertices;
-        f->orig_face->getVertices(vertices);
-        faces.push_back(
-            f->orig_face->create(vertices.begin(), vertices.end(), false));
-        seen.insert(f->orig_face);
-      }
-    }
-  }
+		for (carve::csg::FaceLoop* f = grp->face_loops.head; f; f = f->next)
+		{
+			if (seen.find(f->orig_face) == seen.end())
+			{
+				std::vector<carve::mesh::MeshSet<3>::vertex_t*> vertices;
+				f->orig_face->getVertices(vertices);
+				faces.push_back(
+						f->orig_face->create(vertices.begin(), vertices.end(), false));
+				seen.insert(f->orig_face);
+			}
+		}
+	}
 
-  carve::mesh::MeshSet<3>* done(carve::csg::CSG::Hooks& hooks) override {
-    return new carve::mesh::MeshSet<3>(faces);
-  }
+	carve::mesh::MeshSet<3>* done(carve::csg::CSG::Hooks& hooks) override
+	{
+		return new carve::mesh::MeshSet<3>(faces);
+	}
 };
 
-int main(int argc, char** argv) {
-  carve::mesh::MeshSet<3> *a, *b;
-  a = readPLYasMesh(argv[1]);
-  b = readPLYasMesh(argv[2]);
-  DetailClip detail_clip_collector(a, b);
-  carve::mesh::MeshSet<3>* c = carve::csg::CSG().compute(
-      a, b, detail_clip_collector, nullptr, carve::csg::CSG::CLASSIFY_EDGE);
-  writePLY(std::cout, c, false);
-  return 0;
+int main(int argc, char** argv)
+{
+	carve::mesh::MeshSet<3>*a, *b;
+	a = readPLYasMesh(argv[1]);
+	b = readPLYasMesh(argv[2]);
+	DetailClip detail_clip_collector(a, b);
+	carve::mesh::MeshSet<3>* c = carve::csg::CSG().compute(
+			a, b, detail_clip_collector, nullptr, carve::csg::CSG::CLASSIFY_EDGE);
+	writePLY(std::cout, c, false);
+	return 0;
 }

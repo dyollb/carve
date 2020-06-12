@@ -35,12 +35,12 @@
 #include "rgb.hpp"
 
 void drawMeshSetWireframe(carve::mesh::MeshSet<3>* poly, int group,
-                          bool draw_normal, bool draw_edgeconn);
+		bool draw_normal, bool draw_edgeconn);
 void drawMeshSet(carve::mesh::MeshSet<3>* poly, float r, float g, float b,
-                 float a, int group = -1);
+		float a, int group = -1);
 
 void drawColourPoly(const carve::geom3d::Vector& normal,
-                    std::vector<std::pair<carve::geom3d::Vector, cRGBA> >& v);
+		std::vector<std::pair<carve::geom3d::Vector, cRGBA>>& v);
 void drawColourFace(carve::mesh::Face<3>* face, const std::vector<cRGBA>& vc);
 void drawFace(carve::mesh::Face<3>* face, cRGBA fc);
 

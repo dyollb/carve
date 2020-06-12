@@ -23,7 +23,7 @@
 // SOFTWARE.
 
 #if defined(HAVE_CONFIG_H)
-#include <carve_config.h>
+#	include <carve_config.h>
 #endif
 
 #include <carve/carve.hpp>
@@ -48,9 +48,9 @@
 #include <utility>
 
 #ifdef _WIN32
-# include <carve/win32.h>
+#	include <carve/win32.h>
 #else
-# include <sys/time.h>
+#	include <sys/time.h>
 #endif
 
 typedef carve::mesh::MeshSet<3> meshset_t;
@@ -59,22 +59,26 @@ typedef mesh_t::vertex_t vertex_t;
 typedef mesh_t::edge_t edge_t;
 typedef mesh_t::face_t face_t;
 
-int main(int argc, char** argv) {
-  try {
-    carve::input::Input inputs;
-    readPLY(std::string(argv[1]), inputs);
-    carve::mesh::MeshSet<3>* p;
-    p = carve::input::Input::create<carve::mesh::MeshSet<3> >(
-        *inputs.input.begin());
+int main(int argc, char** argv)
+{
+	try
+	{
+		carve::input::Input inputs;
+		readPLY(std::string(argv[1]), inputs);
+		carve::mesh::MeshSet<3>* p;
+		p = carve::input::Input::create<carve::mesh::MeshSet<3>>(
+				*inputs.input.begin());
 
-    carve::mesh::MeshSimplifier simplifier;
+		carve::mesh::MeshSimplifier simplifier;
 
-    simplifier.mergeCoplanarFaces(p, 1e-2);
-    // simplifier.snap(p, -5, 0, 0);
+		simplifier.mergeCoplanarFaces(p, 1e-2);
+		// simplifier.snap(p, -5, 0, 0);
 
-    writePLY(std::cout, p, true);
-    return 0;
-  } catch (carve::exception e) {
-    std::cerr << "exception: " << e.str() << std::endl;
-  }
+		writePLY(std::cout, p, true);
+		return 0;
+	}
+	catch (carve::exception e)
+	{
+		std::cerr << "exception: " << e.str() << std::endl;
+	}
 }

@@ -24,7 +24,6 @@
 
 #pragma once
 
-
 #include "carve_fileformats.hpp"
 
 #include <carve/carve.hpp>
@@ -37,24 +36,24 @@
 #include <ostream>
 
 CARVE_IO_API void writePLY(std::ostream& out, const carve::mesh::MeshSet<3>* poly,
-              bool ascii = false);
+		bool ascii = false);
 CARVE_IO_API void writePLY(const std::string& out_file, const carve::mesh::MeshSet<3>* poly,
-              bool ascii = false);
+		bool ascii = false);
 
 CARVE_IO_API void writePLY(std::ostream& out, const carve::poly::Polyhedron* poly,
-              bool ascii = false);
+		bool ascii = false);
 CARVE_IO_API void writePLY(const std::string& out_file, const carve::poly::Polyhedron* poly,
-              bool ascii = false);
+		bool ascii = false);
 
 CARVE_IO_API void writePLY(std::ostream& out, const carve::line::PolylineSet* lines,
-              bool ascii = false);
+		bool ascii = false);
 CARVE_IO_API void writePLY(const std::string& out_file,
-              const carve::line::PolylineSet* lines, bool ascii = false);
+		const carve::line::PolylineSet* lines, bool ascii = false);
 
 CARVE_IO_API void writePLY(std::ostream& out, const carve::point::PointSet* points,
-              bool ascii = false);
+		bool ascii = false);
 CARVE_IO_API void writePLY(const std::string& out_file, const carve::point::PointSet* points,
-              bool ascii = false);
+		bool ascii = false);
 
 CARVE_IO_API void writeOBJ(std::ostream& out, const carve::mesh::MeshSet<3>* poly);
 CARVE_IO_API void writeOBJ(const std::string& out_file, const carve::mesh::MeshSet<3>* poly);
@@ -64,7 +63,7 @@ CARVE_IO_API void writeOBJ(const std::string& out_file, const carve::poly::Polyh
 
 CARVE_IO_API void writeOBJ(std::ostream& out, const carve::line::PolylineSet* lines);
 CARVE_IO_API void writeOBJ(const std::string& out_file,
-              const carve::line::PolylineSet* lines);
+		const carve::line::PolylineSet* lines);
 
 CARVE_IO_API void writeVTK(std::ostream& out, const carve::mesh::MeshSet<3>* poly);
 CARVE_IO_API void writeVTK(const std::string& out_file, const carve::mesh::MeshSet<3>* poly);
@@ -74,4 +73,4 @@ CARVE_IO_API void writeVTK(const std::string& out_file, const carve::poly::Polyh
 
 CARVE_IO_API void writeVTK(std::ostream& out, const carve::line::PolylineSet* lines);
 CARVE_IO_API void writeVTK(const std::string& out_file,
-              const carve::line::PolylineSet* lines);
+		const carve::line::PolylineSet* lines);

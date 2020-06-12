@@ -23,7 +23,7 @@
 // SOFTWARE.
 
 #if defined(HAVE_CONFIG_H)
-#include <carve_config.h>
+#	include <carve_config.h>
 #endif
 
 #include <carve/carve.hpp>
@@ -53,30 +53,34 @@ typedef mesh_t::face_t face_t;
 
 #include "opts.hpp"
 
-int main(int argc, char** argv) {
-  try {
-    carve::input::Input inputs;
-    readPLY(std::string(argv[1]), inputs);
-    carve::mesh::MeshSet<3>* p;
-    p = carve::input::Input::create<carve::mesh::MeshSet<3> >(
-        *inputs.input.begin());
+int main(int argc, char** argv)
+{
+	try
+	{
+		carve::input::Input inputs;
+		readPLY(std::string(argv[1]), inputs);
+		carve::mesh::MeshSet<3>* p;
+		p = carve::input::Input::create<carve::mesh::MeshSet<3>>(
+				*inputs.input.begin());
 
-    carve::mesh::MeshSimplifier simplifier;
+		carve::mesh::MeshSimplifier simplifier;
 
-    simplifier.removeFins(p);
-    simplifier.removeLowVolumeManifolds(p, 1.0);
+		simplifier.removeFins(p);
+		simplifier.removeLowVolumeManifolds(p, 1.0);
 
-    // p->transform(carve::geom::quantize<10,3>());
-    simplifier.simplify(p, 1e-2, 1.0, M_PI / 180.0, 2e-3);
-    // std::cerr << "n_flips: " << simplifier.improveMesh_conservative(p) <<
-    // std::endl;
+		// p->transform(carve::geom::quantize<10,3>());
+		simplifier.simplify(p, 1e-2, 1.0, M_PI / 180.0, 2e-3);
+		// std::cerr << "n_flips: " << simplifier.improveMesh_conservative(p) <<
+		// std::endl;
 
-    simplifier.removeFins(p);
-    simplifier.removeLowVolumeManifolds(p, 1.0);
+		simplifier.removeFins(p);
+		simplifier.removeLowVolumeManifolds(p, 1.0);
 
-    writePLY(std::cout, p, true);
-    return 0;
-  } catch (carve::exception e) {
-    std::cerr << "exception: " << e.str() << std::endl;
-  }
+		writePLY(std::cout, p, true);
+		return 0;
+	}
+	catch (carve::exception e)
+	{
+		std::cerr << "exception: " << e.str() << std::endl;
+	}
 }

@@ -23,39 +23,40 @@
 // SOFTWARE.
 
 #if defined(__APPLE__)
-#include <OpenGL/gl.h>
-#include <OpenGL/glu.h>
+#	include <OpenGL/gl.h>
+#	include <OpenGL/glu.h>
 #else
 
-#ifdef WIN32
-#include <windows.h>
-#undef rad1
-#undef rad2
-#endif
+#	ifdef WIN32
+#		include <windows.h>
+#		undef rad1
+#		undef rad2
+#	endif
 
-#include <GL/gl.h>
-#include <GL/glu.h>
+#	include <GL/gl.h>
+#	include <GL/glu.h>
 
 #endif
 
 #include <carve/csg.hpp>
 
-class GLUTriangulator : public carve::csg::CSG::Hook {
-  GLUtesselator* tess;
-  GLenum curr_type;
+class GLUTriangulator : public carve::csg::CSG::Hook
+{
+	GLUtesselator* tess;
+	GLenum curr_type;
 
-  std::vector<const carve::poly::Vertex<3>*> vertices;
-  std::vector<carve::poly::Face<3>*> new_faces;
-  const carve::poly::Face<3>* orig_face;
+	std::vector<const carve::poly::Vertex<3>*> vertices;
+	std::vector<carve::poly::Face<3>*> new_faces;
+	const carve::poly::Face<3>* orig_face;
 
- public:
-  GLUTriangulator();
-  ~GLUTriangulator() override;
-  virtual void processOutputFace(std::vector<carve::poly::Face<3>*>& faces,
-                                 const carve::poly::Face<3>* orig,
-                                 bool flipped);
+public:
+	GLUTriangulator();
+	~GLUTriangulator() override;
+	virtual void processOutputFace(std::vector<carve::poly::Face<3>*>& faces,
+			const carve::poly::Face<3>* orig,
+			bool flipped);
 
-  void faceBegin(GLenum type);
-  void faceVertex(const carve::poly::Vertex<3>* vertex);
-  void faceEnd();
+	void faceBegin(GLenum type);
+	void faceVertex(const carve::poly::Vertex<3>* vertex);
+	void faceEnd();
 };
