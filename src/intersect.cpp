@@ -675,7 +675,7 @@ carve::csg::CSG_TreeNode* parseTransform(TOK& tok)
 			return nullptr;
 		}
 		++tok;
-		while (1)
+		while (true)
 		{
 			if (!STRTOUL(*tok, id))
 			{

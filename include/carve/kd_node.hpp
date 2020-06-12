@@ -365,7 +365,7 @@ public:
 
 		const data_t* next()
 		{
-			while (1)
+			while (true)
 			{
 				if (pq.size())
 				{

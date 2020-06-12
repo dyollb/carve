@@ -352,7 +352,7 @@ struct TriangulationData
 	{
 		VertexInfo* v = vert;
 		VertexInfo* r = vert;
-		while (1)
+		while (true)
 		{
 			r = r->next;
 			v = v->next;
