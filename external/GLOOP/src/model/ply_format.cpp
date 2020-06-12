@@ -30,11 +30,11 @@
 #include <gloop/gloop.hpp>
 #include <gloop/gloop-model.hpp>
 
-#include <iostream>
-#include <stdarg.h>
-#include <cstdio>
+#include <cstdarg>
 #include <cstdint>
+#include <cstdio>
 #include <cstring>
+#include <iostream>
 
 namespace {
 

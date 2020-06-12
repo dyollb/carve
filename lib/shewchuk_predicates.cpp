@@ -116,9 +116,9 @@ namespace shewchuk {
 /*                                                                           */
 /*****************************************************************************/
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+#include <cmath>
+#include <cstdio>
+#include <cstdlib>
 #ifdef CPU86
 #include <float.h>
 #endif /* CPU86 */

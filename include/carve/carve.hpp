@@ -72,7 +72,7 @@
 
 #include <carve/util.hpp>
 
-#include <stdarg.h>
+#include <cstdarg>
 
 #define STR(x) #x
 #define XSTR(x) STR(x)
