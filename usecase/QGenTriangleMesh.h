@@ -26,11 +26,11 @@ public:
 	using vec3_buffer = std::vector<vec3>;
 	using tri_buffer = std::vector<tri>;
 
-	bit32 verts_count() const { return (bit32)_verts.size(); }
+	bit32 verts_count() const { return static_cast<bit32>(_verts.size()); }
 	const std::vector<vec3>& get_verts_buffer() const { return _verts; }
 	void set_verts_buffer(const std::vector<vec3>& v) { _verts = v; }
 
-	bit32 tris_count() const { return (bit32)_tris.size(); }
+	bit32 tris_count() const { return static_cast<bit32>(_tris.size()); }
 	const std::vector<tri>& get_tris_buffer() const { return _tris; }
 	void set_tris_buffer(const std::vector<tri>& t) { _tris = t; }
 

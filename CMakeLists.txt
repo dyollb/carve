@@ -13,15 +13,16 @@ set(CARVE_VERSION ${carve_VERSION_MAJOR}.${carve_VERSION_MINOR}.${carve_VERSION_
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 option(BUILD_COVERAGE                    "Compile with gcov"                                 OFF)
 option(BUILD_SHARED_LIBS                 "Compile libcarve as shared"                        ON)
-option(CARVE_WITH_GUI                    "Compile gui code"                                  ON)
+option(CARVE_WITH_GUI                    "Compile gui code"                                  OFF)
 option(CARVE_DEBUG                       "Compile in debug code"                             OFF)
 option(CARVE_DEBUG_WRITE_PLY_DATA        "Write geometry output during debug"                OFF)
-option(CARVE_USE_EXACT_PREDICATES        "Use Shewchuk's exact predicates, where possible"   OFF)
+option(CARVE_USE_EXACT_PREDICATES        "Use Shewchuk's exact predicates, where possible"   ON)
 option(CARVE_INTERSECT_GLU_TRIANGULATOR  "Include support for GLU triangulator in intersect" OFF)
-option(CARVE_GTEST_TESTS                 "Complie gtest, and dependent tests"                ON)
+option(CARVE_GTEST_TESTS                 "Complie gtest, and dependent tests"                OFF)
 
 if (MSVC AND NOT BUILD_SHARED_LIBS)
   # For MSVC, CMake sets certain flags to defaults we want to override.
