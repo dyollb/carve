@@ -109,7 +109,7 @@ public:
 	
   // Re-seeding functions with same behavior as initializers
   void seed(const uint32_t oneSeed);
-  void seed(uint32_t *const bigSeed, const uint32_t seedLength = N);
+  void seed(const uint32_t *const bigSeed, const uint32_t seedLength = N);
   void seed();
 	
   // Saving and loading generator state
@@ -236,7 +236,7 @@ inline void MTRand::seed(const uint32_t oneSeed) {
 }
 
 
-inline void MTRand::seed(uint32_t *const bigSeed, const uint32_t seedLength) {
+inline void MTRand::seed(const uint32_t *const bigSeed, const uint32_t seedLength) {
   // Seed the generator with an array of uint32_t's
   // There are 2^19937-1 possible initial states.  This function allows
   // all of those to be accessed by providing at least 19937 bits (with a

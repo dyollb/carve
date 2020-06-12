@@ -232,7 +232,7 @@ inline int fsign(double d)
 	return +1;
 }
 
-inline void count(int s[3], int c[3])
+inline void count(const int s[3], int c[3])
 {
 	std::fill(c, c + 3, 0);
 	c[s[0] + 1]++;

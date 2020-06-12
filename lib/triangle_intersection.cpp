@@ -291,7 +291,7 @@ carve::geom::TriangleIntType triangle_intersection_coplanar_exact(
   return triangle_intersection_exact(ptri_a, ptri_b);
 }
 
-void count(int v[3], int c[3]) {
+void count(const int v[3], int c[3]) {
   c[0] = c[1] = c[2] = 0;
   c[v[0] + 1]++;
   c[v[1] + 1]++;
