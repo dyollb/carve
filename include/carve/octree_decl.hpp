@@ -73,11 +73,11 @@ public:
 
 		~Node();
 
-		bool mightContain(const carve::poly::Geometry<3>::face_t& face);
-		bool mightContain(const carve::poly::Geometry<3>::edge_t& edge);
-		bool mightContain(const carve::poly::Geometry<3>::vertex_t& p);
-		bool hasChildren();
-		bool hasGeometry();
+		bool mightContain(const carve::poly::Geometry<3>::face_t& face) const;
+		bool mightContain(const carve::poly::Geometry<3>::edge_t& edge) const;
+		bool mightContain(const carve::poly::Geometry<3>::vertex_t& p) const;
+		bool hasChildren() const;
+		bool hasGeometry() const;
 
 		template<class T>
 		void putInside(const T& input, Node* child, T& output);
@@ -101,10 +101,10 @@ public:
 			const carve::geom3d::Vector& max);
 	void setBounds(carve::geom3d::AABB aabb);
 
-	void addEdges(const std::vector<carve::poly::Geometry<3>::edge_t>& edges);
-	void addFaces(const std::vector<carve::poly::Geometry<3>::face_t>& faces);
+	void addEdges(const std::vector<carve::poly::Geometry<3>::edge_t>& edges) const;
+	void addFaces(const std::vector<carve::poly::Geometry<3>::face_t>& faces) const;
 	void addVertices(
-			const std::vector<const carve::poly::Geometry<3>::vertex_t*>& p);
+			const std::vector<const carve::poly::Geometry<3>::vertex_t*>& p) const;
 
 	static carve::geom3d::AABB makeAABB(const Node* node);
 
@@ -181,7 +181,7 @@ public:
 	template<typename FUNC>
 	void iterateNodes(const FUNC& f) const;
 
-	void splitTree();
+	void splitTree() const;
 };
 }
 } // namespace carve::csg

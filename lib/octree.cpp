@@ -67,7 +67,7 @@ Octree::Node::~Node() {
   }
 }
 
-bool Octree::Node::mightContain(const carve::poly::Face<3>& face) {
+bool Octree::Node::mightContain(const carve::poly::Face<3>& face) const {
   if (face.nVertices() == 3) {
     return aabb.intersects(carve::geom::tri<3>(
         face.vertex(0)->v, face.vertex(1)->v, face.vertex(2)->v));
@@ -76,15 +76,15 @@ bool Octree::Node::mightContain(const carve::poly::Face<3>& face) {
   }
 }
 
-bool Octree::Node::mightContain(const carve::poly::Edge<3>& edge) {
+bool Octree::Node::mightContain(const carve::poly::Edge<3>& edge) const {
   return aabb.intersectsLineSegment(edge.v1->v, edge.v2->v);
 }
 
-bool Octree::Node::mightContain(const carve::poly::Vertex<3>& p) {
+bool Octree::Node::mightContain(const carve::poly::Vertex<3>& p) const {
   return aabb.containsPoint(p.v);
 }
 
-bool Octree::Node::hasChildren() {
+bool Octree::Node::hasChildren() const {
   return !is_leaf;
 }
 
@@ -133,7 +133,7 @@ void Octree::Node::putInside(const T& input, Node* child, T& output) {
   }
 }
 
-bool Octree::Node::hasGeometry() {
+bool Octree::Node::hasGeometry() const {
   return !faces.empty() || !edges.empty() || !vertices.empty();
 }
 
@@ -163,21 +163,21 @@ void Octree::setBounds(carve::geom3d::AABB aabb) {
   root = new Node(aabb.min(), aabb.max());
 }
 
-void Octree::addEdges(const std::vector<carve::poly::Edge<3> >& e) {
+void Octree::addEdges(const std::vector<carve::poly::Edge<3> >& e) const {
   root->edges.reserve(root->edges.size() + e.size());
   for (size_t i = 0; i < e.size(); ++i) {
     root->edges.push_back(&e[i]);
   }
 }
 
-void Octree::addFaces(const std::vector<carve::poly::Face<3> >& f) {
+void Octree::addFaces(const std::vector<carve::poly::Face<3> >& f) const {
   root->faces.reserve(root->faces.size() + f.size());
   for (size_t i = 0; i < f.size(); ++i) {
     root->faces.push_back(&f[i]);
   }
 }
 
-void Octree::addVertices(const std::vector<const carve::poly::Vertex<3>*>& p) {
+void Octree::addVertices(const std::vector<const carve::poly::Vertex<3>*>& p) const {
   root->vertices.insert(root->vertices.end(), p.begin(), p.end());
 }
 
@@ -458,7 +458,7 @@ void Octree::doSplit(int maxSplit, Node* node) {
   }
 }
 
-void Octree::splitTree() {
+void Octree::splitTree() const {
   // initially split 4 levels
   doSplit(0, root);
 }

@@ -144,7 +144,7 @@ namespace gloop {
       }
     }
 
-    long normbright() {
+    long normbright() const {
       return ((long)(CIE_rf * 256.0f + 0.5f) * r + (long)(CIE_gf * 256.0f + 0.5f) * g + (long)(CIE_bf * 256.0f + 0.5f) * b) >> 8;
     }
 
@@ -189,13 +189,13 @@ namespace gloop {
     M3 cvt;
     bool cvt_set{false};
 
-    int stride(int axis) {
+    int stride(int axis) const {
       int stride = 3;
       if (axis > 0) stride *= width;
       if (axis > 1) stride *= height;
       return stride;
     }
-    float *pixel(int X = 0, int Y = 0, int Z = 0) {
+    float *pixel(int X = 0, int Y = 0, int Z = 0) const {
       return target + 3 * (X + width * (Y + height * Z));
     }
     virtual void header(radiance_colour_format fmt,

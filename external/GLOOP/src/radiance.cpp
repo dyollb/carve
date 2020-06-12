@@ -338,7 +338,7 @@ namespace gloop {
       p = tgt->pixel(X, Y, Z);
       s = tgt->stride(scan_axis);
     }
-    V3 &operator*() {
+    V3 &operator*() const {
       return *reinterpret_cast<V3 *>(p);
     }
     floatbuf_iter &operator++() { p += s; return *this; }
@@ -355,7 +355,7 @@ namespace gloop {
       p = tgt->pixel(X, Y, Z);
       s = tgt->stride(scan_axis);
     }
-    V3 operator*() {
+    V3 operator*() const {
       return cvt * *reinterpret_cast<V3 *>(p);
     }
     floatbuf_iter_cvt &operator++() { p += s; return *this; }

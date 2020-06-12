@@ -325,7 +325,7 @@ size_t FaceStitcher::faceGroupID(const Edge<3>* edge) {
 void FaceStitcher::orderForwardAndReverseEdges(
     std::vector<std::vector<Edge<3>*> >& efwd,
     std::vector<std::vector<Edge<3>*> >& erev,
-    std::vector<std::vector<EdgeOrderData> >& result) {
+    std::vector<std::vector<EdgeOrderData> >& result) const {
   const size_t Nfwd = efwd.size();
   const size_t Nrev = erev.size();
   const size_t N = efwd[0].size();

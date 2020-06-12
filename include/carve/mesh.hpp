@@ -622,7 +622,7 @@ class CARVE_API FaceStitcher
 	void orderForwardAndReverseEdges(
 			std::vector<std::vector<Edge<3>*>>& efwd,
 			std::vector<std::vector<Edge<3>*>>& erev,
-			std::vector<std::vector<EdgeOrderData>>& result);
+			std::vector<std::vector<EdgeOrderData>>& result) const;
 
 	void edgeIncidentGroups(
 			const vpair_t& e, const edge_map_t& all_edges,
