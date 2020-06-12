@@ -208,7 +208,7 @@ protected:
 		}
 
 		Hook(Interpolator* _interpolator, const carve::csg::CSG& _csg)
-				: interpolator(_interpolator), csg(_csg) {}
+				: csg(_csg), interpolator(_interpolator) {}
 
 		~Hook() override = default;
 	};
