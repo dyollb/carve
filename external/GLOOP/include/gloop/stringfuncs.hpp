@@ -3,10 +3,10 @@
 
 #pragma once
 
-#include <string>
-#include <sstream>
-#include <vector>
 #include <locale>
+#include <sstream>
+#include <string>
+#include <vector>
 
 namespace gloop {
   namespace str {

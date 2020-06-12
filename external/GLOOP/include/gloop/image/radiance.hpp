@@ -29,11 +29,13 @@
 
 #pragma once
 
-#include <cstdint>
+#include <gloop/math/matrix.hpp>
+
 #include <algorithm>
+#include <cstdint>
 #include <istream>
-#include <vector>
 #include <string>
+#include <vector>
 
 #ifdef  NTSC
 #  define  CIE_x_r                0.670f // standard NTSC primaries

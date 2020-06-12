@@ -26,6 +26,9 @@
 
 #include <carve/carve.hpp>
 
+#include <carve/collection_types.hpp>
+#include <carve/faceloop.hpp>
+#include <carve/mesh.hpp>
 #include <carve/polyhedron_base.hpp>
 
 namespace carve {

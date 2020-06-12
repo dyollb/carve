@@ -26,8 +26,8 @@
 #include <carve_config.h>
 #endif
 
-#include <carve/csg.hpp>
 #include "csg_detail.hpp"
+#include <carve/csg.hpp>
 
 const char* carve::csg::ENUM(carve::csg::FaceClass f) {
   if (f == FACE_ON_ORIENT_OUT) {

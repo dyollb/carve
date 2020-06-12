@@ -29,6 +29,6 @@
 
 #pragma once
 
-#include <gloop/math/vector.hpp>
-#include <gloop/math/quaternion.hpp>
 #include <gloop/math/matrix.hpp>
+#include <gloop/math/quaternion.hpp>
+#include <gloop/math/vector.hpp>

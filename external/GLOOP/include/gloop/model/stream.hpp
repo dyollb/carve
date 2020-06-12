@@ -36,8 +36,8 @@
 
 #include <cstdlib>
 
-#include <string>
 #include <list>
+#include <string>
 #include <vector>
 
 namespace gloop {

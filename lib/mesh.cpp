@@ -28,8 +28,8 @@
 
 #include <carve/mesh.hpp>
 #include <carve/mesh_impl.hpp>
-#include <carve/rtree.hpp>
 #include <carve/poly.hpp>
+#include <carve/rtree.hpp>
 
 #include <functional>
 

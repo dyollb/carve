@@ -29,8 +29,8 @@
 
 #pragma once
 
-#include <iostream>
 #include <cstdlib>
+#include <iostream>
 
 namespace gloop {
 

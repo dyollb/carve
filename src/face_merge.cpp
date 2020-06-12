@@ -47,9 +47,7 @@
 #include <string>
 #include <utility>
 
-#ifdef _WIN32
-#	include <carve/win32.h>
-#else
+#ifndef _WIN32
 #	include <sys/time.h>
 #endif
 
