@@ -109,7 +109,7 @@ public:
 
 	void processOutputFace(std::vector<carve::mesh::MeshSet<3>::face_t*>& faces,
 			const carve::mesh::MeshSet<3>::face_t* orig,
-			bool flipped) override
+			bool /* flipped */) override
 	{
 		if (faces.size() == 1)
 		{
@@ -195,7 +195,7 @@ public:
 
 	~CarveTriangulationQuadMerger() override = default;
 
-	double scoreQuad(edge_map_t::iterator i, edge_map_t& edge_map)
+	double scoreQuad(edge_map_t::iterator i, edge_map_t& /* edge_map */)
 	{
 		if (!(*i).second.first || !(*i).second.second)
 		{
@@ -204,8 +204,7 @@ public:
 		return -1;
 	}
 
-	carve::mesh::MeshSet<3>::face_t* mergeQuad(edge_map_t::iterator i,
-			edge_map_t& edge_map)
+	carve::mesh::MeshSet<3>::face_t* mergeQuad(edge_map_t::iterator /* i */, edge_map_t& /* edge_map */)
 	{
 		return nullptr;
 	}
@@ -225,8 +224,8 @@ public:
 	}
 
 	void processOutputFace(std::vector<carve::mesh::MeshSet<3>::face_t*>& faces,
-			const carve::mesh::MeshSet<3>::face_t* orig,
-			bool flipped) override
+			const carve::mesh::MeshSet<3>::face_t* /* orig */,
+			bool /* flipped */) override
 	{
 		if (faces.size() == 1)
 		{
@@ -427,7 +426,7 @@ public:
 
 	void processOutputFace(std::vector<carve::mesh::MeshSet<3>::face_t*>& faces,
 			const carve::mesh::MeshSet<3>::face_t* orig,
-			bool flipped) override
+			bool /* flipped */) override
 	{
 		std::vector<carve::mesh::MeshSet<3>::face_t*> out_faces;
 
