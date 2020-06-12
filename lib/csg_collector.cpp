@@ -69,7 +69,7 @@ class BaseCollector : public CSG::Collector {
   void FWD(const carve::mesh::MeshSet<3>::face_t* orig_face,
            const std::vector<carve::mesh::MeshSet<3>::vertex_t*>& vertices,
            carve::geom3d::Vector /* normal */, bool /* poly_a */,
-           FaceClass face_class, CSG::Hooks& hooks) {
+           FaceClass /* face_class */, CSG::Hooks& hooks) {
     std::vector<carve::mesh::MeshSet<3>::face_t*> new_faces;
     new_faces.reserve(1);
     new_faces.push_back(
@@ -90,7 +90,7 @@ class BaseCollector : public CSG::Collector {
   void REV(const carve::mesh::MeshSet<3>::face_t* orig_face,
            const std::vector<carve::mesh::MeshSet<3>::vertex_t*>& vertices,
            carve::geom3d::Vector /* normal */, bool /* poly_a */,
-           FaceClass face_class, CSG::Hooks& hooks) {
+           FaceClass /* face_class */, CSG::Hooks& hooks) {
     // normal = -normal;
     std::vector<carve::mesh::MeshSet<3>::face_t*> new_faces;
     new_faces.reserve(1);

@@ -1502,8 +1502,8 @@ carve::mesh::MeshSet<3>* carve::csg::CSG::compute(
       face_rtree_t::construct_STR(b->faceBegin(), b->faceEnd(), 4, 4));
 
   {
-    static carve::TimingName FUNC_NAME("CSG::compute - calc()");
-    carve::TimingBlock block(FUNC_NAME);
+    static carve::TimingName FUNC_NAME1("CSG::compute - calc()");
+    carve::TimingBlock block(FUNC_NAME1);
     calc(a, a_rtree.get(), b, b_rtree.get(), vclass, eclass, a_face_loops,
          b_face_loops, a_edge_count, b_edge_count);
   }
@@ -1512,15 +1512,15 @@ carve::mesh::MeshSet<3>* carve::csg::CSG::compute(
   detail::LoopEdges b_edge_map;
 
   {
-    static carve::TimingName FUNC_NAME("CSG::compute - makeEdgeMap()");
-    carve::TimingBlock block(FUNC_NAME);
+    static carve::TimingName FUNC_NAME2("CSG::compute - makeEdgeMap()");
+    carve::TimingBlock block(FUNC_NAME2);
     makeEdgeMap(a_face_loops, a_edge_count, a_edge_map);
     makeEdgeMap(b_face_loops, b_edge_count, b_edge_map);
   }
 
   {
-    static carve::TimingName FUNC_NAME("CSG::compute - sortFaceLoopLists()");
-    carve::TimingBlock block(FUNC_NAME);
+    static carve::TimingName FUNC_NAME3("CSG::compute - sortFaceLoopLists()");
+    carve::TimingBlock block(FUNC_NAME3);
     a_edge_map.sortFaceLoopLists();
     b_edge_map.sortFaceLoopLists();
   }
@@ -1528,14 +1528,14 @@ carve::mesh::MeshSet<3>* carve::csg::CSG::compute(
   V2Set shared_edges;
 
   {
-    static carve::TimingName FUNC_NAME("CSG::compute - findSharedEdges()");
-    carve::TimingBlock block(FUNC_NAME);
+    static carve::TimingName FUNC_NAME4("CSG::compute - findSharedEdges()");
+    carve::TimingBlock block(FUNC_NAME4);
     findSharedEdges(a_edge_map, b_edge_map, shared_edges);
   }
 
   {
-    static carve::TimingName FUNC_NAME("CSG::compute - groupFaceLoops()");
-    carve::TimingBlock block(FUNC_NAME);
+    static carve::TimingName FUNC_NAME5("CSG::compute - groupFaceLoops()");
+    carve::TimingBlock block(FUNC_NAME5);
     groupFaceLoops(a, a_face_loops, a_edge_map, shared_edges, a_loops_grouped);
     groupFaceLoops(b, b_face_loops, b_edge_map, shared_edges, b_loops_grouped);
 #if defined(CARVE_DEBUG)

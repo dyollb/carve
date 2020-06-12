@@ -304,7 +304,7 @@ struct RTreeNode
 		const size_t N = std::distance(begin, end);
 
 		size_t dim = ndim;
-		double r_best = N + 1;
+		double r_best = N + 1.0;
 
 		// find the sparsest remaining dimension to partition by.
 		for (size_t i = 0; i < ndim; ++i)

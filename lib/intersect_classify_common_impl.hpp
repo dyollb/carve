@@ -54,8 +54,8 @@ inline bool isSameRev(const V2Set& a, const V2Set& b) {
 
 static void performClassifySimpleOnFaceGroups(FLGroupList& a_groups,
                                               FLGroupList& b_groups,
-                                              carve::mesh::MeshSet<3>* poly_a,
-                                              carve::mesh::MeshSet<3>* poly_b,
+                                              carve::mesh::MeshSet<3>* /* poly_a */,
+                                              carve::mesh::MeshSet<3>* /* poly_b */,
                                               CSG::Collector& collector,
                                               CSG::Hooks& hooks) {
   // Simple ON faces groups are face groups that consist of a single
