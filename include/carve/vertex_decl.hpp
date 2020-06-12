@@ -42,71 +42,83 @@ namespace poly {
 
 struct Object;
 
-template <unsigned ndim>
-class Vertex : public tagable {
- public:
-  typedef carve::geom::vector<ndim> vector_t;
-  typedef Object obj_t;
+template<unsigned ndim>
+class Vertex : public tagable
+{
+public:
+	typedef carve::geom::vector<ndim> vector_t;
+	typedef Object obj_t;
 
-  vector_t v;
-  obj_t* owner;
+	vector_t v;
+	obj_t* owner;
 
-  Vertex() : tagable(), v() {}
+	Vertex() : tagable(), v() {}
 
-  ~Vertex() {}
+	~Vertex() {}
 
-  Vertex(const vector_t& _v) : tagable(), v(_v) {}
+	Vertex(const vector_t& _v) : tagable(), v(_v) {}
 };
 
-struct hash_vertex_ptr {
-  template <unsigned ndim>
-  size_t operator()(const Vertex<ndim>* const& v) const {
-    return (size_t)v;
-  }
+struct hash_vertex_ptr
+{
+	template<unsigned ndim>
+	size_t operator()(const Vertex<ndim>* const& v) const
+	{
+		return (size_t)v;
+	}
 
-  template <unsigned ndim>
-  size_t operator()(
-      const std::pair<const Vertex<ndim>*, const Vertex<ndim>*>& v) const {
-    size_t r = (size_t)v.first;
-    size_t s = (size_t)v.second;
-    return r ^ ((s >> 16) | (s << 16));
-  }
+	template<unsigned ndim>
+	size_t operator()(
+			const std::pair<const Vertex<ndim>*, const Vertex<ndim>*>& v) const
+	{
+		size_t r = (size_t)v.first;
+		size_t s = (size_t)v.second;
+		return r ^ ((s >> 16) | (s << 16));
+	}
 };
 
-template <unsigned ndim>
-double distance(const Vertex<ndim>* v1, const Vertex<ndim>* v2) {
-  return distance(v1->v, v2->v);
+template<unsigned ndim>
+double distance(const Vertex<ndim>* v1, const Vertex<ndim>* v2)
+{
+	return distance(v1->v, v2->v);
 }
 
-template <unsigned ndim>
-double distance(const Vertex<ndim>& v1, const Vertex<ndim>& v2) {
-  return distance(v1.v, v2.v);
+template<unsigned ndim>
+double distance(const Vertex<ndim>& v1, const Vertex<ndim>& v2)
+{
+	return distance(v1.v, v2.v);
 }
 
-struct vec_adapt_vertex_ref {
-  template <unsigned ndim>
-  const typename Vertex<ndim>::vector_t& operator()(
-      const Vertex<ndim>& v) const {
-    return v.v;
-  }
+struct vec_adapt_vertex_ref
+{
+	template<unsigned ndim>
+	const typename Vertex<ndim>::vector_t& operator()(
+			const Vertex<ndim>& v) const
+	{
+		return v.v;
+	}
 
-  template <unsigned ndim>
-  typename Vertex<ndim>::vector_t& operator()(Vertex<ndim>& v) const {
-    return v.v;
-  }
+	template<unsigned ndim>
+	typename Vertex<ndim>::vector_t& operator()(Vertex<ndim>& v) const
+	{
+		return v.v;
+	}
 };
 
-struct vec_adapt_vertex_ptr {
-  template <unsigned ndim>
-  const typename Vertex<ndim>::vector_t& operator()(
-      const Vertex<ndim>* v) const {
-    return v->v;
-  }
+struct vec_adapt_vertex_ptr
+{
+	template<unsigned ndim>
+	const typename Vertex<ndim>::vector_t& operator()(
+			const Vertex<ndim>* v) const
+	{
+		return v->v;
+	}
 
-  template <unsigned ndim>
-  typename Vertex<ndim>::vector_t& operator()(Vertex<ndim>* v) const {
-    return v->v;
-  }
+	template<unsigned ndim>
+	typename Vertex<ndim>::vector_t& operator()(Vertex<ndim>* v) const
+	{
+		return v->v;
+	}
 };
-}  // namespace poly
-}  // namespace carve
+}
+} // namespace carve::poly

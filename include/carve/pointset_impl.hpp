@@ -36,8 +36,9 @@
 namespace carve {
 namespace point {
 
-inline size_t PointSet::vertexToIndex_fast(const Vertex* v) const {
-  return (size_t)(v - &vertices[0]);
+inline size_t PointSet::vertexToIndex_fast(const Vertex* v) const
+{
+	return (size_t)(v - &vertices[0]);
 }
 }
-}
+} // namespace carve::point

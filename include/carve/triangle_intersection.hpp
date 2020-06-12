@@ -31,34 +31,36 @@
 namespace carve {
 namespace geom {
 
-enum TriangleIntType { TR_TYPE_NONE = 0, TR_TYPE_TOUCH = 1, TR_TYPE_INT = 2 };
+enum TriangleIntType { TR_TYPE_NONE = 0,
+	TR_TYPE_TOUCH = 1,
+	TR_TYPE_INT = 2 };
 
 enum TriangleInt {
-  TR_INT_NONE = 0,  // no intersection.
-  TR_INT_INT = 1,   // intersection.
-  TR_INT_VERT = 2,  // intersection due to shared vertex.
-  TR_INT_EDGE = 3,  // intersection due to shared edge.
-  TR_INT_TRI = 4    // intersection due to identical triangle.
+	TR_INT_NONE = 0, // no intersection.
+	TR_INT_INT = 1,	 // intersection.
+	TR_INT_VERT = 2, // intersection due to shared vertex.
+	TR_INT_EDGE = 3, // intersection due to shared edge.
+	TR_INT_TRI = 4	 // intersection due to identical triangle.
 };
 
 TriangleInt triangle_intersection(const vector<2> tri_a[3],
-                                  const vector<2> tri_b[3]);
+		const vector<2> tri_b[3]);
 TriangleInt triangle_intersection(const vector<3> tri_a[3],
-                                  const vector<3> tri_b[3]);
+		const vector<3> tri_b[3]);
 
 bool triangle_intersection_simple(const vector<2> tri_a[3],
-                                  const vector<2> tri_b[3]);
+		const vector<2> tri_b[3]);
 bool triangle_intersection_simple(const vector<3> tri_a[3],
-                                  const vector<3> tri_b[3]);
+		const vector<3> tri_b[3]);
 
 CARVE_API TriangleIntType triangle_intersection_exact(const vector<2> tri_a[3],
-                                            const vector<2> tri_b[3]);
+		const vector<2> tri_b[3]);
 CARVE_API TriangleIntType triangle_intersection_exact(const vector<3> tri_a[3],
-                                            const vector<3> tri_b[3]);
+		const vector<3> tri_b[3]);
 
 TriangleIntType triangle_linesegment_intersection_exact(
-    const vector<2> tri_a[3], const vector<2> line_b[2]);
+		const vector<2> tri_a[3], const vector<2> line_b[2]);
 TriangleIntType triangle_point_intersection_exact(const vector<2> tri_a[3],
-                                                  const vector<2>& pt_b);
-}  // namespace geom
-}  // namespace carve
+		const vector<2>& pt_b);
+}
+} // namespace carve::geom

@@ -25,5 +25,6 @@
 #pragma once
 
 namespace carve {
-namespace poly {}
+namespace poly {
+}
 }

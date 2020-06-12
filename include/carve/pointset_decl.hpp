@@ -25,7 +25,6 @@
 #pragma once
 
 #include <iterator>
-#include <iterator>
 #include <limits>
 #include <list>
 
@@ -39,27 +38,31 @@
 namespace carve {
 namespace point {
 
-struct Vertex : public tagable {
-  carve::geom3d::Vector v;
+struct Vertex : public tagable
+{
+	carve::geom3d::Vector v;
 };
 
-struct vec_adapt_vertex_ptr {
-  const carve::geom3d::Vector& operator()(const Vertex* const& v) {
-    return v->v;
-  }
-  carve::geom3d::Vector& operator()(Vertex*& v) { return v->v; }
+struct vec_adapt_vertex_ptr
+{
+	const carve::geom3d::Vector& operator()(const Vertex* const& v)
+	{
+		return v->v;
+	}
+	carve::geom3d::Vector& operator()(Vertex*& v) { return v->v; }
 };
 
-struct CARVE_API PointSet {
-  std::vector<Vertex> vertices;
-  carve::geom3d::AABB aabb;
+struct CARVE_API PointSet
+{
+	std::vector<Vertex> vertices;
+	carve::geom3d::AABB aabb;
 
-  PointSet(const std::vector<carve::geom3d::Vector>& points);
-  PointSet() {}
+	PointSet(const std::vector<carve::geom3d::Vector>& points);
+	PointSet() {}
 
-  void sortVertices(const carve::geom3d::Vector& axis);
+	void sortVertices(const carve::geom3d::Vector& axis);
 
-  size_t vertexToIndex_fast(const Vertex* v) const;
+	size_t vertexToIndex_fast(const Vertex* v) const;
 };
-}  // namespace point
-}  // namespace carve
+}
+} // namespace carve::point

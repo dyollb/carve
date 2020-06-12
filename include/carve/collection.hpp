@@ -26,27 +26,30 @@
 
 namespace carve {
 
-template <typename set_t>
+template<typename set_t>
 class set_insert_iterator
-    : public std::iterator<std::output_iterator_tag, void, void, void, void> {
- protected:
-  set_t* set;
+		: public std::iterator<std::output_iterator_tag, void, void, void, void>
+{
+protected:
+	set_t* set;
 
- public:
-  set_insert_iterator(set_t& s) : set(&s) {}
+public:
+	set_insert_iterator(set_t& s) : set(&s) {}
 
-  set_insert_iterator& operator=(typename set_t::const_reference value) {
-    set->insert(value);
-    return *this;
-  }
+	set_insert_iterator& operator=(typename set_t::const_reference value)
+	{
+		set->insert(value);
+		return *this;
+	}
 
-  set_insert_iterator& operator*() { return *this; }
-  set_insert_iterator& operator++() { return *this; }
-  set_insert_iterator& operator++(int) { return *this; }
+	set_insert_iterator& operator*() { return *this; }
+	set_insert_iterator& operator++() { return *this; }
+	set_insert_iterator& operator++(int) { return *this; }
 };
 
-template <typename set_t>
-inline set_insert_iterator<set_t> set_inserter(set_t& s) {
-  return set_insert_iterator<set_t>(s);
+template<typename set_t>
+inline set_insert_iterator<set_t> set_inserter(set_t& s)
+{
+	return set_insert_iterator<set_t>(s);
 }
-}  // namespace carve
+} // namespace carve

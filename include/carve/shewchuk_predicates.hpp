@@ -27,4 +27,4 @@ CARVE_API double insphereexact(const double* pa, const double* pb, const double*
 CARVE_API double insphereslow(const double* pa, const double* pb, const double* pc, const double* pd, const double* pe);
 CARVE_API double insphereadapt(const double* pa, const double* pb, const double* pc, const double* pd, const double* pe, double permanent);
 CARVE_API double insphere(const double* pa, const double* pb, const double* pc, const double* pd, const double* pe);
-}  // namespace shewchuk
+} // namespace shewchuk

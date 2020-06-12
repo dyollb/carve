@@ -32,10 +32,10 @@
 
 namespace carve {
 namespace geom {
-template <unsigned ndim>
+template<unsigned ndim>
 struct vector;
 }
-}
+} // namespace carve::geom
 
 namespace carve {
 namespace math {
@@ -43,35 +43,42 @@ struct Matrix3;
 CARVE_API int cubic_roots(double c3, double c2, double c1, double c0, double* roots);
 
 CARVE_API void eigSolveSymmetric(const Matrix3& m, double& l1, carve::geom::vector<3>& e1,
-                       double& l2, carve::geom::vector<3>& e2, double& l3,
-                       carve::geom::vector<3>& e3);
+		double& l2, carve::geom::vector<3>& e2, double& l3,
+		carve::geom::vector<3>& e3);
 
 CARVE_API void eigSolve(const Matrix3& m, double& l1, double& l2, double& l3);
 
-static inline bool ZERO(double x) {
-  return fabs(x) < carve::EPSILON;
+static inline bool ZERO(double x)
+{
+	return fabs(x) < carve::EPSILON;
 }
 
-static inline double radians(double deg) {
-  return deg * M_PI / 180.0;
+static inline double radians(double deg)
+{
+	return deg * M_PI / 180.0;
 }
-static inline double degrees(double rad) {
-  return rad * 180.0 / M_PI;
-}
-
-static inline double ANG(double x) {
-  return (x < 0) ? x + M_TWOPI : x;
+static inline double degrees(double rad)
+{
+	return rad * 180.0 / M_PI;
 }
 
-template <typename T>
-static inline const T& clamp(const T& val, const T& min, const T& max) {
-  if (val < min) {
-    return min;
-  }
-  if (val > max) {
-    return max;
-  }
-  return val;
+static inline double ANG(double x)
+{
+	return (x < 0) ? x + M_TWOPI : x;
 }
-}  // namespace math
-}  // namespace carve
+
+template<typename T>
+static inline const T& clamp(const T& val, const T& min, const T& max)
+{
+	if (val < min)
+	{
+		return min;
+	}
+	if (val > max)
+	{
+		return max;
+	}
+	return val;
+}
+}
+} // namespace carve::math

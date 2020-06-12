@@ -27,13 +27,13 @@
 #include <cmath>
 
 #ifndef M_SQRT_3
-#define M_SQRT_3 1.73205080756887729352
+#	define M_SQRT_3 1.73205080756887729352
 #endif
 
 #ifndef M_PI
-#define M_PI 3.14159265358979323846
+#	define M_PI 3.14159265358979323846
 #endif
 
 #ifndef M_TWOPI
-#define M_TWOPI (M_PI + M_PI)
+#	define M_TWOPI (M_PI + M_PI)
 #endif

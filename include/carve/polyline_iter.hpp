@@ -26,313 +26,379 @@
 
 #include <carve/polyline_decl.hpp>
 
+#include <cstdint>
 #include <iterator>
 #include <limits>
 #include <list>
-#include <cstdint>
 
 namespace carve {
 namespace line {
 
 struct polyline_vertex_iter
-    : public std::iterator<std::random_access_iterator_tag, Vertex*> {
-  Polyline* base;
-  std::int64_t idx;
+		: public std::iterator<std::random_access_iterator_tag, Vertex*>
+{
+	Polyline* base;
+	std::int64_t idx;
 
-  polyline_vertex_iter(Polyline* _base) : base(_base), idx(0) {}
+	polyline_vertex_iter(Polyline* _base) : base(_base), idx(0) {}
 
-  polyline_vertex_iter(Polyline* _base, std::int64_t _idx)
-      : base(_base), idx(_idx) {}
+	polyline_vertex_iter(Polyline* _base, std::int64_t _idx)
+			: base(_base), idx(_idx) {}
 
-  polyline_vertex_iter operator++(int) {
-    return polyline_vertex_iter(base, idx++);
-  }
-  polyline_vertex_iter& operator++() {
-    ++idx;
-    return *this;
-  }
-  polyline_vertex_iter& operator+=(int v) {
-    idx += v;
-    return *this;
-  }
+	polyline_vertex_iter operator++(int)
+	{
+		return polyline_vertex_iter(base, idx++);
+	}
+	polyline_vertex_iter& operator++()
+	{
+		++idx;
+		return *this;
+	}
+	polyline_vertex_iter& operator+=(int v)
+	{
+		idx += v;
+		return *this;
+	}
 
-  polyline_vertex_iter operator--(int) {
-    return polyline_vertex_iter(base, idx--);
-  }
-  polyline_vertex_iter& operator--() {
-    --idx;
-    return *this;
-  }
-  polyline_vertex_iter& operator-=(int v) {
-    idx -= v;
-    return *this;
-  }
+	polyline_vertex_iter operator--(int)
+	{
+		return polyline_vertex_iter(base, idx--);
+	}
+	polyline_vertex_iter& operator--()
+	{
+		--idx;
+		return *this;
+	}
+	polyline_vertex_iter& operator-=(int v)
+	{
+		idx -= v;
+		return *this;
+	}
 
-  Vertex* operator*() const {
-    CARVE_ASSERT(idx >= 0 && idx < base->vertexCount());
-    return base->vertex((size_t)idx);
-  }
+	Vertex* operator*() const
+	{
+		CARVE_ASSERT(idx >= 0 && idx < base->vertexCount());
+		return base->vertex((size_t)idx);
+	}
 };
 
 inline std::int64_t operator-(const polyline_vertex_iter& a,
-                                const polyline_vertex_iter& b) {
-  return a.idx - b.idx;
+		const polyline_vertex_iter& b)
+{
+	return a.idx - b.idx;
 }
 
 inline bool operator==(const polyline_vertex_iter& a,
-                              const polyline_vertex_iter& b) {
-  return a.idx == b.idx;
+		const polyline_vertex_iter& b)
+{
+	return a.idx == b.idx;
 }
 inline bool operator!=(const polyline_vertex_iter& a,
-                              const polyline_vertex_iter& b) {
-  return a.idx != b.idx;
+		const polyline_vertex_iter& b)
+{
+	return a.idx != b.idx;
 }
 inline bool operator<(const polyline_vertex_iter& a,
-                             const polyline_vertex_iter& b) {
-  return a.idx < b.idx;
+		const polyline_vertex_iter& b)
+{
+	return a.idx < b.idx;
 }
 inline bool operator>(const polyline_vertex_iter& a,
-                             const polyline_vertex_iter& b) {
-  return a.idx > b.idx;
+		const polyline_vertex_iter& b)
+{
+	return a.idx > b.idx;
 }
 inline bool operator<=(const polyline_vertex_iter& a,
-                              const polyline_vertex_iter& b) {
-  return a.idx <= b.idx;
+		const polyline_vertex_iter& b)
+{
+	return a.idx <= b.idx;
 }
 inline bool operator>=(const polyline_vertex_iter& a,
-                              const polyline_vertex_iter& b) {
-  return a.idx >= b.idx;
+		const polyline_vertex_iter& b)
+{
+	return a.idx >= b.idx;
 }
 
 struct polyline_vertex_const_iter
-    : public std::iterator<std::random_access_iterator_tag, Vertex*> {
-  const Polyline* base;
-  std::int64_t idx;
+		: public std::iterator<std::random_access_iterator_tag, Vertex*>
+{
+	const Polyline* base;
+	std::int64_t idx;
 
-  polyline_vertex_const_iter(const Polyline* _base) : base(_base), idx(0) {}
+	polyline_vertex_const_iter(const Polyline* _base) : base(_base), idx(0) {}
 
-  polyline_vertex_const_iter(const Polyline* _base, std::int64_t _idx)
-      : base(_base), idx(_idx) {}
+	polyline_vertex_const_iter(const Polyline* _base, std::int64_t _idx)
+			: base(_base), idx(_idx) {}
 
-  polyline_vertex_const_iter operator++(int) {
-    return polyline_vertex_const_iter(base, idx++);
-  }
-  polyline_vertex_const_iter& operator++() {
-    ++idx;
-    return *this;
-  }
-  polyline_vertex_const_iter& operator+=(int v) {
-    idx += v;
-    return *this;
-  }
+	polyline_vertex_const_iter operator++(int)
+	{
+		return polyline_vertex_const_iter(base, idx++);
+	}
+	polyline_vertex_const_iter& operator++()
+	{
+		++idx;
+		return *this;
+	}
+	polyline_vertex_const_iter& operator+=(int v)
+	{
+		idx += v;
+		return *this;
+	}
 
-  polyline_vertex_const_iter operator--(int) {
-    return polyline_vertex_const_iter(base, idx--);
-  }
-  polyline_vertex_const_iter& operator--() {
-    --idx;
-    return *this;
-  }
-  polyline_vertex_const_iter& operator-=(int v) {
-    idx -= v;
-    return *this;
-  }
+	polyline_vertex_const_iter operator--(int)
+	{
+		return polyline_vertex_const_iter(base, idx--);
+	}
+	polyline_vertex_const_iter& operator--()
+	{
+		--idx;
+		return *this;
+	}
+	polyline_vertex_const_iter& operator-=(int v)
+	{
+		idx -= v;
+		return *this;
+	}
 
-  const Vertex* operator*() const {
-    CARVE_ASSERT(idx >= 0 && idx < base->vertexCount());
-    return base->vertex((size_t)idx);
-  }
+	const Vertex* operator*() const
+	{
+		CARVE_ASSERT(idx >= 0 && idx < base->vertexCount());
+		return base->vertex((size_t)idx);
+	}
 };
 
 inline std::int64_t operator-(const polyline_vertex_const_iter& a,
-                                const polyline_vertex_const_iter& b) {
-  return a.idx - b.idx;
+		const polyline_vertex_const_iter& b)
+{
+	return a.idx - b.idx;
 }
 
 inline bool operator==(const polyline_vertex_const_iter& a,
-                              const polyline_vertex_const_iter& b) {
-  return a.idx == b.idx;
+		const polyline_vertex_const_iter& b)
+{
+	return a.idx == b.idx;
 }
 inline bool operator!=(const polyline_vertex_const_iter& a,
-                              const polyline_vertex_const_iter& b) {
-  return a.idx != b.idx;
+		const polyline_vertex_const_iter& b)
+{
+	return a.idx != b.idx;
 }
 inline bool operator<(const polyline_vertex_const_iter& a,
-                             const polyline_vertex_const_iter& b) {
-  return a.idx < b.idx;
+		const polyline_vertex_const_iter& b)
+{
+	return a.idx < b.idx;
 }
 inline bool operator>(const polyline_vertex_const_iter& a,
-                             const polyline_vertex_const_iter& b) {
-  return a.idx > b.idx;
+		const polyline_vertex_const_iter& b)
+{
+	return a.idx > b.idx;
 }
 inline bool operator<=(const polyline_vertex_const_iter& a,
-                              const polyline_vertex_const_iter& b) {
-  return a.idx <= b.idx;
+		const polyline_vertex_const_iter& b)
+{
+	return a.idx <= b.idx;
 }
 inline bool operator>=(const polyline_vertex_const_iter& a,
-                              const polyline_vertex_const_iter& b) {
-  return a.idx >= b.idx;
+		const polyline_vertex_const_iter& b)
+{
+	return a.idx >= b.idx;
 }
 
-inline polyline_vertex_const_iter Polyline::vbegin() const {
-  return polyline_vertex_const_iter(this, 0);
+inline polyline_vertex_const_iter Polyline::vbegin() const
+{
+	return polyline_vertex_const_iter(this, 0);
 }
-inline polyline_vertex_const_iter Polyline::vend() const {
-  return polyline_vertex_const_iter(this, (std::int64_t)vertexCount());
+inline polyline_vertex_const_iter Polyline::vend() const
+{
+	return polyline_vertex_const_iter(this, (std::int64_t)vertexCount());
 }
-inline polyline_vertex_iter Polyline::vbegin() {
-  return polyline_vertex_iter(this, 0);
+inline polyline_vertex_iter Polyline::vbegin()
+{
+	return polyline_vertex_iter(this, 0);
 }
-inline polyline_vertex_iter Polyline::vend() {
-  return polyline_vertex_iter(this, (std::int64_t)vertexCount());
+inline polyline_vertex_iter Polyline::vend()
+{
+	return polyline_vertex_iter(this, (std::int64_t)vertexCount());
 }
 
 struct polyline_edge_iter
-    : public std::iterator<std::random_access_iterator_tag, PolylineEdge*> {
-  Polyline* base;
-  std::int64_t idx;
+		: public std::iterator<std::random_access_iterator_tag, PolylineEdge*>
+{
+	Polyline* base;
+	std::int64_t idx;
 
-  polyline_edge_iter(Polyline* _base) : base(_base), idx(0) {}
+	polyline_edge_iter(Polyline* _base) : base(_base), idx(0) {}
 
-  polyline_edge_iter(Polyline* _base, std::int64_t _idx) : base(_base), idx(_idx) {}
+	polyline_edge_iter(Polyline* _base, std::int64_t _idx) : base(_base), idx(_idx) {}
 
-  polyline_edge_iter operator++(int) { return polyline_edge_iter(base, idx++); }
-  polyline_edge_iter& operator++() {
-    ++idx;
-    return *this;
-  }
-  polyline_edge_iter& operator+=(int v) {
-    idx += v;
-    return *this;
-  }
+	polyline_edge_iter operator++(int) { return polyline_edge_iter(base, idx++); }
+	polyline_edge_iter& operator++()
+	{
+		++idx;
+		return *this;
+	}
+	polyline_edge_iter& operator+=(int v)
+	{
+		idx += v;
+		return *this;
+	}
 
-  polyline_edge_iter operator--(int) { return polyline_edge_iter(base, idx--); }
-  polyline_edge_iter& operator--() {
-    --idx;
-    return *this;
-  }
-  polyline_edge_iter& operator-=(int v) {
-    idx -= v;
-    return *this;
-  }
+	polyline_edge_iter operator--(int) { return polyline_edge_iter(base, idx--); }
+	polyline_edge_iter& operator--()
+	{
+		--idx;
+		return *this;
+	}
+	polyline_edge_iter& operator-=(int v)
+	{
+		idx -= v;
+		return *this;
+	}
 
-  PolylineEdge* operator*() const {
-    CARVE_ASSERT(idx >= 0 && idx < base->edgeCount());
-    return base->edge((size_t)idx);
-  }
+	PolylineEdge* operator*() const
+	{
+		CARVE_ASSERT(idx >= 0 && idx < base->edgeCount());
+		return base->edge((size_t)idx);
+	}
 };
 
 inline std::int64_t operator-(const polyline_edge_iter& a,
-                                const polyline_edge_iter& b) {
-  return a.idx - b.idx;
+		const polyline_edge_iter& b)
+{
+	return a.idx - b.idx;
 }
 
 inline bool operator==(const polyline_edge_iter& a,
-                              const polyline_edge_iter& b) {
-  return a.idx == b.idx;
+		const polyline_edge_iter& b)
+{
+	return a.idx == b.idx;
 }
 inline bool operator!=(const polyline_edge_iter& a,
-                              const polyline_edge_iter& b) {
-  return a.idx != b.idx;
+		const polyline_edge_iter& b)
+{
+	return a.idx != b.idx;
 }
 inline bool operator<(const polyline_edge_iter& a,
-                             const polyline_edge_iter& b) {
-  return a.idx < b.idx;
+		const polyline_edge_iter& b)
+{
+	return a.idx < b.idx;
 }
 inline bool operator>(const polyline_edge_iter& a,
-                             const polyline_edge_iter& b) {
-  return a.idx > b.idx;
+		const polyline_edge_iter& b)
+{
+	return a.idx > b.idx;
 }
 inline bool operator<=(const polyline_edge_iter& a,
-                              const polyline_edge_iter& b) {
-  return a.idx <= b.idx;
+		const polyline_edge_iter& b)
+{
+	return a.idx <= b.idx;
 }
 inline bool operator>=(const polyline_edge_iter& a,
-                              const polyline_edge_iter& b) {
-  return a.idx >= b.idx;
+		const polyline_edge_iter& b)
+{
+	return a.idx >= b.idx;
 }
 
 struct polyline_edge_const_iter
-    : public std::iterator<std::random_access_iterator_tag, PolylineEdge*> {
-  const Polyline* base;
-  std::int64_t idx;
+		: public std::iterator<std::random_access_iterator_tag, PolylineEdge*>
+{
+	const Polyline* base;
+	std::int64_t idx;
 
-  polyline_edge_const_iter(const Polyline* _base) : base(_base), idx(0) {}
+	polyline_edge_const_iter(const Polyline* _base) : base(_base), idx(0) {}
 
-  polyline_edge_const_iter(const Polyline* _base, std::int64_t _idx)
-      : base(_base), idx(_idx) {}
+	polyline_edge_const_iter(const Polyline* _base, std::int64_t _idx)
+			: base(_base), idx(_idx) {}
 
-  polyline_edge_const_iter operator++(int) {
-    return polyline_edge_const_iter(base, idx++);
-  }
-  polyline_edge_const_iter& operator++() {
-    ++idx;
-    return *this;
-  }
-  polyline_edge_const_iter& operator+=(int v) {
-    idx += v;
-    return *this;
-  }
+	polyline_edge_const_iter operator++(int)
+	{
+		return polyline_edge_const_iter(base, idx++);
+	}
+	polyline_edge_const_iter& operator++()
+	{
+		++idx;
+		return *this;
+	}
+	polyline_edge_const_iter& operator+=(int v)
+	{
+		idx += v;
+		return *this;
+	}
 
-  polyline_edge_const_iter operator--(int) {
-    return polyline_edge_const_iter(base, idx--);
-  }
-  polyline_edge_const_iter& operator--() {
-    --idx;
-    return *this;
-  }
-  polyline_edge_const_iter& operator-=(int v) {
-    idx -= v;
-    return *this;
-  }
+	polyline_edge_const_iter operator--(int)
+	{
+		return polyline_edge_const_iter(base, idx--);
+	}
+	polyline_edge_const_iter& operator--()
+	{
+		--idx;
+		return *this;
+	}
+	polyline_edge_const_iter& operator-=(int v)
+	{
+		idx -= v;
+		return *this;
+	}
 
-  const PolylineEdge* operator*() const {
-    CARVE_ASSERT(idx >= 0 && idx < base->edgeCount());
-    return base->edge((size_t)idx);
-  }
+	const PolylineEdge* operator*() const
+	{
+		CARVE_ASSERT(idx >= 0 && idx < base->edgeCount());
+		return base->edge((size_t)idx);
+	}
 };
 
 inline std::int64_t operator-(const polyline_edge_const_iter& a,
-                                const polyline_edge_const_iter& b) {
-  return a.idx - b.idx;
+		const polyline_edge_const_iter& b)
+{
+	return a.idx - b.idx;
 }
 
 inline bool operator==(const polyline_edge_const_iter& a,
-                              const polyline_edge_const_iter& b) {
-  return a.idx == b.idx;
+		const polyline_edge_const_iter& b)
+{
+	return a.idx == b.idx;
 }
 inline bool operator!=(const polyline_edge_const_iter& a,
-                              const polyline_edge_const_iter& b) {
-  return a.idx != b.idx;
+		const polyline_edge_const_iter& b)
+{
+	return a.idx != b.idx;
 }
 inline bool operator<(const polyline_edge_const_iter& a,
-                             const polyline_edge_const_iter& b) {
-  return a.idx < b.idx;
+		const polyline_edge_const_iter& b)
+{
+	return a.idx < b.idx;
 }
 inline bool operator>(const polyline_edge_const_iter& a,
-                             const polyline_edge_const_iter& b) {
-  return a.idx > b.idx;
+		const polyline_edge_const_iter& b)
+{
+	return a.idx > b.idx;
 }
 inline bool operator<=(const polyline_edge_const_iter& a,
-                              const polyline_edge_const_iter& b) {
-  return a.idx <= b.idx;
+		const polyline_edge_const_iter& b)
+{
+	return a.idx <= b.idx;
 }
 inline bool operator>=(const polyline_edge_const_iter& a,
-                              const polyline_edge_const_iter& b) {
-  return a.idx >= b.idx;
+		const polyline_edge_const_iter& b)
+{
+	return a.idx >= b.idx;
 }
 
-inline polyline_edge_const_iter Polyline::ebegin() const {
-  return polyline_edge_const_iter(this, 0);
+inline polyline_edge_const_iter Polyline::ebegin() const
+{
+	return polyline_edge_const_iter(this, 0);
 }
-inline polyline_edge_const_iter Polyline::eend() const {
-  return polyline_edge_const_iter(this, (std::int64_t)edgeCount());
+inline polyline_edge_const_iter Polyline::eend() const
+{
+	return polyline_edge_const_iter(this, (std::int64_t)edgeCount());
 }
-inline polyline_edge_iter Polyline::ebegin() {
-  return polyline_edge_iter(this, 0);
+inline polyline_edge_iter Polyline::ebegin()
+{
+	return polyline_edge_iter(this, 0);
 }
-inline polyline_edge_iter Polyline::eend() {
-  return polyline_edge_iter(this, (std::int64_t)edgeCount());
+inline polyline_edge_iter Polyline::eend()
+{
+	return polyline_edge_iter(this, (std::int64_t)edgeCount());
 }
-}  // namespace line
-}  // namespace carve
+}
+} // namespace carve::line

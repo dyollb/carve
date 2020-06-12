@@ -42,13 +42,13 @@ class Polyhedron;
 
 namespace mesh {
 
-template <unsigned ndim>
+template<unsigned ndim>
 class Edge;
-template <unsigned ndim>
+template<unsigned ndim>
 class Face;
-template <unsigned ndim>
+template<unsigned ndim>
 class Mesh;
-template <unsigned ndim>
+template<unsigned ndim>
 class MeshSet;
 
 // A Vertex may participate in several meshes. If the Mesh belongs
@@ -74,532 +74,582 @@ class MeshSet;
 // via an edge or face in the mesh (implicit or explicit) of
 // interest, so not storing this information will not hurt,
 // overly.
-template <unsigned ndim>
-class Vertex : public tagable {
- public:
-  typedef carve::geom::vector<ndim> vector_t;
-  typedef MeshSet<ndim> owner_t;
-  typedef carve::geom::aabb<ndim> aabb_t;
+template<unsigned ndim>
+class Vertex : public tagable
+{
+public:
+	typedef carve::geom::vector<ndim> vector_t;
+	typedef MeshSet<ndim> owner_t;
+	typedef carve::geom::aabb<ndim> aabb_t;
 
-  carve::geom::vector<ndim> v;
+	carve::geom::vector<ndim> v;
 
-  explicit Vertex(const vector_t& _v) : tagable(), v(_v) {}
+	explicit Vertex(const vector_t& _v) : tagable(), v(_v) {}
 
-  Vertex() : tagable(), v() {}
+	Vertex() : tagable(), v() {}
 
-  aabb_t getAABB() const {
-    return aabb_t(v, carve::geom::vector<ndim>::ZERO());
-  }
+	aabb_t getAABB() const
+	{
+		return aabb_t(v, carve::geom::vector<ndim>::ZERO());
+	}
 };
 
-struct hash_vertex_pair {
-  template <unsigned ndim>
-  size_t operator()(const std::pair<Vertex<ndim>*, Vertex<ndim>*>& pair) const {
-    size_t r = (size_t)pair.first;
-    size_t s = (size_t)pair.second;
-    return r ^ ((s >> 16) | (s << 16));
-  }
-  template <unsigned ndim>
-  size_t operator()(
-      const std::pair<const Vertex<ndim>*, const Vertex<ndim>*>& pair) const {
-    size_t r = (size_t)pair.first;
-    size_t s = (size_t)pair.second;
-    return r ^ ((s >> 16) | (s << 16));
-  }
+struct hash_vertex_pair
+{
+	template<unsigned ndim>
+	size_t operator()(const std::pair<Vertex<ndim>*, Vertex<ndim>*>& pair) const
+	{
+		size_t r = (size_t)pair.first;
+		size_t s = (size_t)pair.second;
+		return r ^ ((s >> 16) | (s << 16));
+	}
+	template<unsigned ndim>
+	size_t operator()(
+			const std::pair<const Vertex<ndim>*, const Vertex<ndim>*>& pair) const
+	{
+		size_t r = (size_t)pair.first;
+		size_t s = (size_t)pair.second;
+		return r ^ ((s >> 16) | (s << 16));
+	}
 };
 
-struct vertex_distance {
-  template <unsigned ndim>
-  double operator()(const Vertex<ndim>& a, const Vertex<ndim>& b) const {
-    return carve::geom::distance(a.v, b.v);
-  }
+struct vertex_distance
+{
+	template<unsigned ndim>
+	double operator()(const Vertex<ndim>& a, const Vertex<ndim>& b) const
+	{
+		return carve::geom::distance(a.v, b.v);
+	}
 
-  template <unsigned ndim>
-  double operator()(const Vertex<ndim>* a, const Vertex<ndim>* b) const {
-    return carve::geom::distance(a->v, b->v);
-  }
+	template<unsigned ndim>
+	double operator()(const Vertex<ndim>* a, const Vertex<ndim>* b) const
+	{
+		return carve::geom::distance(a->v, b->v);
+	}
 };
 
 namespace detail {
-template <typename list_t>
+template<typename list_t>
 struct list_iter_t;
-template <typename list_t, typename mapping_t>
+template<typename list_t, typename mapping_t>
 struct mapped_list_iter_t;
-}
+} // namespace detail
 
 // The half-edge structure proper (Edge) is maintained by Face
 // instances. Together with Face instances, the half-edge
 // structure defines a simple mesh (either one or two faces
 // incident on each edge).
-template <unsigned ndim>
-class Edge : public tagable {
- public:
-  typedef Vertex<ndim> vertex_t;
-  typedef Face<ndim> face_t;
+template<unsigned ndim>
+class Edge : public tagable
+{
+public:
+	typedef Vertex<ndim> vertex_t;
+	typedef Face<ndim> face_t;
 
-  vertex_t* vert;
-  face_t* face;
-  Edge *prev, *next, *rev;
+	vertex_t* vert;
+	face_t* face;
+	Edge *prev, *next, *rev;
 
- private:
-  static void _link(Edge* a, Edge* b) {
-    a->next = b;
-    b->prev = a;
-  }
+private:
+	static void _link(Edge* a, Edge* b)
+	{
+		a->next = b;
+		b->prev = a;
+	}
 
-  static void _freeloop(Edge* s) {
-    Edge* e = s;
-    do {
-      Edge* n = e->next;
-      delete e;
-      e = n;
-    } while (e != s);
-  }
+	static void _freeloop(Edge* s)
+	{
+		Edge* e = s;
+		do
+		{
+			Edge* n = e->next;
+			delete e;
+			e = n;
+		} while (e != s);
+	}
 
-  static void _setloopface(Edge* s, face_t* f) {
-    Edge* e = s;
-    do {
-      e->face = f;
-      e = e->next;
-    } while (e != s);
-  }
+	static void _setloopface(Edge* s, face_t* f)
+	{
+		Edge* e = s;
+		do
+		{
+			e->face = f;
+			e = e->next;
+		} while (e != s);
+	}
 
-  static size_t _looplen(Edge* s) {
-    Edge* e = s;
-    face_t* f = s->face;
-    size_t c = 0;
-    do {
-      ++c;
-      CARVE_ASSERT(e->rev->rev == e);
-      CARVE_ASSERT(e->next->prev == e);
-      CARVE_ASSERT(e->face == f);
-      e = e->next;
-    } while (e != s);
-    return c;
-  }
+	static size_t _looplen(Edge* s)
+	{
+		Edge* e = s;
+		face_t* f = s->face;
+		size_t c = 0;
+		do
+		{
+			++c;
+			CARVE_ASSERT(e->rev->rev == e);
+			CARVE_ASSERT(e->next->prev == e);
+			CARVE_ASSERT(e->face == f);
+			e = e->next;
+		} while (e != s);
+		return c;
+	}
 
- public:
-  void validateLoop() {
-    Edge* e = this;
-    face_t* f = face;
-    size_t c = 0;
-    do {
-      ++c;
-      CARVE_ASSERT(e->rev == nullptr || e->rev->rev == e);
-      CARVE_ASSERT(e->next == e || e->next->vert != e->vert);
-      CARVE_ASSERT(e->prev == e || e->prev->vert != e->vert);
-      CARVE_ASSERT(e->next->prev == e);
-      CARVE_ASSERT(e->prev->next == e);
-      CARVE_ASSERT(e->face == f);
-      e = e->next;
-    } while (e != this);
-    CARVE_ASSERT(f == nullptr || c == f->n_edges);
-  }
+public:
+	void validateLoop()
+	{
+		Edge* e = this;
+		face_t* f = face;
+		size_t c = 0;
+		do
+		{
+			++c;
+			CARVE_ASSERT(e->rev == nullptr || e->rev->rev == e);
+			CARVE_ASSERT(e->next == e || e->next->vert != e->vert);
+			CARVE_ASSERT(e->prev == e || e->prev->vert != e->vert);
+			CARVE_ASSERT(e->next->prev == e);
+			CARVE_ASSERT(e->prev->next == e);
+			CARVE_ASSERT(e->face == f);
+			e = e->next;
+		} while (e != this);
+		CARVE_ASSERT(f == nullptr || c == f->n_edges);
+	}
 
-  size_t loopLen() { return _looplen(this); }
+	size_t loopLen() { return _looplen(this); }
 
-  Edge* mergeFaces();
+	Edge* mergeFaces();
 
-  Edge* removeHalfEdge();
+	Edge* removeHalfEdge();
 
-  // Remove and delete this edge.
-  Edge* removeEdge();
+	// Remove and delete this edge.
+	Edge* removeEdge();
 
-  // Unlink this edge from its containing edge loop. disconnect
-  // rev links. The rev links of the previous edge also change, as
-  // its successor vertex changes.
-  void unlink();
+	// Unlink this edge from its containing edge loop. disconnect
+	// rev links. The rev links of the previous edge also change, as
+	// its successor vertex changes.
+	void unlink();
 
-  // Insert this edge into a loop before other. If edge was
-  // already in a loop, it needs to be removed first.
-  void insertBefore(Edge* other);
+	// Insert this edge into a loop before other. If edge was
+	// already in a loop, it needs to be removed first.
+	void insertBefore(Edge* other);
 
-  // Insert this edge into a loop after other. If edge was
-  // already in a loop, it needs to be removed first.
-  void insertAfter(Edge* other);
+	// Insert this edge into a loop after other. If edge was
+	// already in a loop, it needs to be removed first.
+	void insertAfter(Edge* other);
 
-  size_t loopSize() const;
+	size_t loopSize() const;
 
-  vertex_t* v1() { return vert; }
-  vertex_t* v2() { return next->vert; }
+	vertex_t* v1() { return vert; }
+	vertex_t* v2() { return next->vert; }
 
-  const vertex_t* v1() const { return vert; }
-  const vertex_t* v2() const { return next->vert; }
+	const vertex_t* v1() const { return vert; }
+	const vertex_t* v2() const { return next->vert; }
 
-  Edge* perimNext() const;
-  Edge* perimPrev() const;
+	Edge* perimNext() const;
+	Edge* perimPrev() const;
 
-  double length2() const { return (v1()->v - v2()->v).length2(); }
+	double length2() const { return (v1()->v - v2()->v).length2(); }
 
-  double length() const { return (v1()->v - v2()->v).length(); }
+	double length() const { return (v1()->v - v2()->v).length(); }
 
-  Edge(vertex_t* _vert, face_t* _face);
+	Edge(vertex_t* _vert, face_t* _face);
 
-  ~Edge();
+	~Edge();
 };
 
 // A Face contains a pointer to the beginning of the half-edge
 // circular list that defines its boundary.
-template <unsigned ndim>
-class Face : public tagable {
- public:
-  typedef Vertex<ndim> vertex_t;
-  typedef Edge<ndim> edge_t;
-  typedef Mesh<ndim> mesh_t;
+template<unsigned ndim>
+class Face : public tagable
+{
+public:
+	typedef Vertex<ndim> vertex_t;
+	typedef Edge<ndim> edge_t;
+	typedef Mesh<ndim> mesh_t;
 
-  typedef typename Vertex<ndim>::vector_t vector_t;
-  typedef carve::geom::aabb<ndim> aabb_t;
-  typedef carve::geom::plane<ndim> plane_t;
-  typedef carve::geom::vector<2> (*project_t)(const vector_t&);
-  typedef vector_t (*unproject_t)(const carve::geom::vector<2>&,
-                                  const plane_t&);
+	typedef typename Vertex<ndim>::vector_t vector_t;
+	typedef carve::geom::aabb<ndim> aabb_t;
+	typedef carve::geom::plane<ndim> plane_t;
+	typedef carve::geom::vector<2> (*project_t)(const vector_t&);
+	typedef vector_t (*unproject_t)(const carve::geom::vector<2>&,
+			const plane_t&);
 
-  struct vector_mapping {
-    typedef typename vertex_t::vector_t value_type;
+	struct vector_mapping
+	{
+		typedef typename vertex_t::vector_t value_type;
 
-    value_type operator()(const carve::geom::vector<ndim>& v) const {
-      return v;
-    }
-    value_type operator()(const carve::geom::vector<ndim>* v) const {
-      return *v;
-    }
-    value_type operator()(const Edge<ndim>& e) const { return e.vert->v; }
-    value_type operator()(const Edge<ndim>* e) const { return e->vert->v; }
-    value_type operator()(const Vertex<ndim>& v) const { return v.v; }
-    value_type operator()(const Vertex<ndim>* v) const { return v->v; }
-  };
+		value_type operator()(const carve::geom::vector<ndim>& v) const
+		{
+			return v;
+		}
+		value_type operator()(const carve::geom::vector<ndim>* v) const
+		{
+			return *v;
+		}
+		value_type operator()(const Edge<ndim>& e) const { return e.vert->v; }
+		value_type operator()(const Edge<ndim>* e) const { return e->vert->v; }
+		value_type operator()(const Vertex<ndim>& v) const { return v.v; }
+		value_type operator()(const Vertex<ndim>* v) const { return v->v; }
+	};
 
-  struct projection_mapping {
-    typedef carve::geom::vector<2> value_type;
-    project_t proj;
-    explicit projection_mapping(project_t _proj) : proj(_proj) {}
-    value_type operator()(const carve::geom::vector<ndim>& v) const {
-      return proj(v);
-    }
-    value_type operator()(const carve::geom::vector<ndim>* v) const {
-      return proj(*v);
-    }
-    value_type operator()(const Edge<ndim>& e) const { return proj(e.vert->v); }
-    value_type operator()(const Edge<ndim>* e) const {
-      return proj(e->vert->v);
-    }
-    value_type operator()(const Vertex<ndim>& v) const { return proj(v.v); }
-    value_type operator()(const Vertex<ndim>* v) const { return proj(v->v); }
-  };
+	struct projection_mapping
+	{
+		typedef carve::geom::vector<2> value_type;
+		project_t proj;
+		explicit projection_mapping(project_t _proj) : proj(_proj) {}
+		value_type operator()(const carve::geom::vector<ndim>& v) const
+		{
+			return proj(v);
+		}
+		value_type operator()(const carve::geom::vector<ndim>* v) const
+		{
+			return proj(*v);
+		}
+		value_type operator()(const Edge<ndim>& e) const { return proj(e.vert->v); }
+		value_type operator()(const Edge<ndim>* e) const
+		{
+			return proj(e->vert->v);
+		}
+		value_type operator()(const Vertex<ndim>& v) const { return proj(v.v); }
+		value_type operator()(const Vertex<ndim>* v) const { return proj(v->v); }
+	};
 
-  edge_t* edge;
-  size_t n_edges;
-  mesh_t* mesh;
-  size_t id;
+	edge_t* edge;
+	size_t n_edges;
+	mesh_t* mesh;
+	size_t id;
 
-  plane_t plane;
-  project_t project;
-  unproject_t unproject;
+	plane_t plane;
+	project_t project;
+	unproject_t unproject;
 
- private:
-  Face& operator=(const Face& other);
+private:
+	Face& operator=(const Face& other);
 
- protected:
-  Face()
-      : edge(nullptr),
-        n_edges(0),
-        mesh(nullptr),
-        id(0),
-        plane(),
-        project(nullptr),
-        unproject(nullptr) {}
+protected:
+	Face()
+			: edge(nullptr),
+				n_edges(0),
+				mesh(nullptr),
+				id(0),
+				plane(),
+				project(nullptr),
+				unproject(nullptr) {}
 
-  Face(const Face& other)
-      : edge(nullptr),
-        n_edges(other.n_edges),
-        mesh(nullptr),
-        id(other.id),
-        plane(other.plane),
-        project(other.project),
-        unproject(other.unproject) {}
+	Face(const Face& other)
+			: edge(nullptr),
+				n_edges(other.n_edges),
+				mesh(nullptr),
+				id(other.id),
+				plane(other.plane),
+				project(other.project),
+				unproject(other.unproject) {}
 
-  CARVE_API project_t getProjector(bool positive_facing, int axis) const;
-  CARVE_API unproject_t getUnprojector(bool positive_facing, int axis) const;
+	CARVE_API project_t getProjector(bool positive_facing, int axis) const;
+	CARVE_API unproject_t getUnprojector(bool positive_facing, int axis) const;
 
- public:
-  typedef detail::list_iter_t<Edge<ndim> > edge_iter_t;
-  typedef detail::list_iter_t<const Edge<ndim> > const_edge_iter_t;
+public:
+	typedef detail::list_iter_t<Edge<ndim>> edge_iter_t;
+	typedef detail::list_iter_t<const Edge<ndim>> const_edge_iter_t;
 
-  edge_iter_t begin() { return edge_iter_t(edge, 0); }
-  edge_iter_t end() { return edge_iter_t(edge, n_edges); }
+	edge_iter_t begin() { return edge_iter_t(edge, 0); }
+	edge_iter_t end() { return edge_iter_t(edge, n_edges); }
 
-  const_edge_iter_t begin() const { return const_edge_iter_t(edge, 0); }
-  const_edge_iter_t end() const { return const_edge_iter_t(edge, n_edges); }
+	const_edge_iter_t begin() const { return const_edge_iter_t(edge, 0); }
+	const_edge_iter_t end() const { return const_edge_iter_t(edge, n_edges); }
 
-  bool containsPoint(const vector_t& p) const;
-  bool containsPointInProjection(const vector_t& p) const;
-  bool simpleLineSegmentIntersection(const carve::geom::linesegment<ndim>& line,
-                                     vector_t& intersection) const;
-  IntersectionClass lineSegmentIntersection(
-      const carve::geom::linesegment<ndim>& line, vector_t& intersection) const;
+	bool containsPoint(const vector_t& p) const;
+	bool containsPointInProjection(const vector_t& p) const;
+	bool simpleLineSegmentIntersection(const carve::geom::linesegment<ndim>& line,
+			vector_t& intersection) const;
+	IntersectionClass lineSegmentIntersection(
+			const carve::geom::linesegment<ndim>& line, vector_t& intersection) const;
 
-  aabb_t getAABB() const;
+	aabb_t getAABB() const;
 
-  bool recalc();
+	bool recalc();
 
-  void clearEdges();
+	void clearEdges();
 
-  // build an edge loop in forward orientation from an iterator pair
-  template <typename iter_t>
-  void loopFwd(iter_t vbegin, iter_t vend);
+	// build an edge loop in forward orientation from an iterator pair
+	template<typename iter_t>
+	void loopFwd(iter_t vbegin, iter_t vend);
 
-  // build an edge loop in reverse orientation from an iterator pair
-  template <typename iter_t>
-  void loopRev(iter_t vbegin, iter_t vend);
+	// build an edge loop in reverse orientation from an iterator pair
+	template<typename iter_t>
+	void loopRev(iter_t vbegin, iter_t vend);
 
-  // initialize a face from an ordered list of vertices.
-  template <typename iter_t>
-  void init(iter_t begin, iter_t end);
+	// initialize a face from an ordered list of vertices.
+	template<typename iter_t>
+	void init(iter_t begin, iter_t end);
 
-  // initialization of a triangular face.
-  void init(vertex_t* a, vertex_t* b, vertex_t* c);
+	// initialization of a triangular face.
+	void init(vertex_t* a, vertex_t* b, vertex_t* c);
 
-  // initialization of a quad face.
-  void init(vertex_t* a, vertex_t* b, vertex_t* c, vertex_t* d);
+	// initialization of a quad face.
+	void init(vertex_t* a, vertex_t* b, vertex_t* c, vertex_t* d);
 
-  void getVertices(std::vector<vertex_t*>& verts) const;
-  void getProjectedVertices(std::vector<carve::geom::vector<2> >& verts) const;
+	void getVertices(std::vector<vertex_t*>& verts) const;
+	void getProjectedVertices(std::vector<carve::geom::vector<2>>& verts) const;
 
-  projection_mapping projector() const { return projection_mapping(project); }
+	projection_mapping projector() const { return projection_mapping(project); }
 
-  std::pair<double, double> rangeInDirection(const vector_t& v,
-                                             const vector_t& b) const {
-    edge_t* e = edge;
-    double lo, hi;
-    lo = hi = carve::geom::dot(v, e->vert->v - b);
-    e = e->next;
-    for (; e != edge; e = e->next) {
-      double d = carve::geom::dot(v, e->vert->v - b);
-      lo = std::min(lo, d);
-      hi = std::max(hi, d);
-    }
-    return std::make_pair(lo, hi);
-  }
+	std::pair<double, double> rangeInDirection(const vector_t& v,
+			const vector_t& b) const
+	{
+		edge_t* e = edge;
+		double lo, hi;
+		lo = hi = carve::geom::dot(v, e->vert->v - b);
+		e = e->next;
+		for (; e != edge; e = e->next)
+		{
+			double d = carve::geom::dot(v, e->vert->v - b);
+			lo = std::min(lo, d);
+			hi = std::max(hi, d);
+		}
+		return std::make_pair(lo, hi);
+	}
 
-  size_t nVertices() const { return n_edges; }
+	size_t nVertices() const { return n_edges; }
 
-  size_t nEdges() const { return n_edges; }
+	size_t nEdges() const { return n_edges; }
 
-  vector_t centroid() const;
+	vector_t centroid() const;
 
-  CARVE_API static Face* closeLoop(edge_t* open_edge);
+	CARVE_API static Face* closeLoop(edge_t* open_edge);
 
-  explicit Face(edge_t* e) : edge(e), n_edges(0), mesh(nullptr) {
-    do {
-      e->face = this;
-      n_edges++;
-      e = e->next;
-    } while (e != edge);
-    recalc();
-  }
+	explicit Face(edge_t* e) : edge(e), n_edges(0), mesh(nullptr)
+	{
+		do
+		{
+			e->face = this;
+			n_edges++;
+			e = e->next;
+		} while (e != edge);
+		recalc();
+	}
 
-  Face(vertex_t* a, vertex_t* b, vertex_t* c)
-      : edge(nullptr), n_edges(0), mesh(nullptr) {
-    init(a, b, c);
-    recalc();
-  }
+	Face(vertex_t* a, vertex_t* b, vertex_t* c)
+			: edge(nullptr), n_edges(0), mesh(nullptr)
+	{
+		init(a, b, c);
+		recalc();
+	}
 
-  Face(vertex_t* a, vertex_t* b, vertex_t* c, vertex_t* d)
-      : edge(nullptr), n_edges(0), mesh(nullptr) {
-    init(a, b, c, d);
-    recalc();
-  }
+	Face(vertex_t* a, vertex_t* b, vertex_t* c, vertex_t* d)
+			: edge(nullptr), n_edges(0), mesh(nullptr)
+	{
+		init(a, b, c, d);
+		recalc();
+	}
 
-  template <typename iter_t>
-  Face(iter_t begin, iter_t end) : edge(nullptr), n_edges(0), mesh(nullptr) {
-    init(begin, end);
-    recalc();
-  }
+	template<typename iter_t>
+	Face(iter_t begin, iter_t end) : edge(nullptr), n_edges(0), mesh(nullptr)
+	{
+		init(begin, end);
+		recalc();
+	}
 
-  template <typename iter_t>
-  Face* create(iter_t beg, iter_t end, bool reversed) const;
+	template<typename iter_t>
+	Face* create(iter_t beg, iter_t end, bool reversed) const;
 
-  Face* clone(const vertex_t* old_base, vertex_t* new_base,
-              std::unordered_map<const edge_t*, edge_t*>& edge_map) const;
+	Face* clone(const vertex_t* old_base, vertex_t* new_base,
+			std::unordered_map<const edge_t*, edge_t*>& edge_map) const;
 
-  void remove() {
-    edge_t* e = edge;
-    do {
-      if (e->rev) {
-        e->rev->rev = nullptr;
-      }
-      e = e->next;
-    } while (e != edge);
-  }
+	void remove()
+	{
+		edge_t* e = edge;
+		do
+		{
+			if (e->rev)
+			{
+				e->rev->rev = nullptr;
+			}
+			e = e->next;
+		} while (e != edge);
+	}
 
-  void invert() {
-    // We invert the direction of the edges of the face in this
-    // way so that the edge rev pointers (if any) are still
-    // correct. It is expected that invert() will be called on
-    // every other face in the mesh, too, otherwise everything
-    // will get messed up.
+	void invert()
+	{
+		// We invert the direction of the edges of the face in this
+		// way so that the edge rev pointers (if any) are still
+		// correct. It is expected that invert() will be called on
+		// every other face in the mesh, too, otherwise everything
+		// will get messed up.
 
-    {
-      // advance vertices.
-      edge_t* e = edge;
-      vertex_t* va = e->vert;
-      do {
-        e->vert = e->next->vert;
-        e = e->next;
-      } while (e != edge);
-      edge->prev->vert = va;
-    }
+		{
+			// advance vertices.
+			edge_t* e = edge;
+			vertex_t* va = e->vert;
+			do
+			{
+				e->vert = e->next->vert;
+				e = e->next;
+			} while (e != edge);
+			edge->prev->vert = va;
+		}
 
-    {
-      // swap prev and next pointers.
-      edge_t* e = edge;
-      do {
-        edge_t* n = e->next;
-        std::swap(e->prev, e->next);
-        e = n;
-      } while (e != edge);
-    }
+		{
+			// swap prev and next pointers.
+			edge_t* e = edge;
+			do
+			{
+				edge_t* n = e->next;
+				std::swap(e->prev, e->next);
+				e = n;
+			} while (e != edge);
+		}
 
-    plane.negate();
+		plane.negate();
 
-    int da = carve::geom::largestAxis(plane.N);
+		int da = carve::geom::largestAxis(plane.N);
 
-    project = getProjector(plane.N.v[da] > 0, da);
-    unproject = getUnprojector(plane.N.v[da] > 0, da);
-  }
+		project = getProjector(plane.N.v[da] > 0, da);
+		unproject = getUnprojector(plane.N.v[da] > 0, da);
+	}
 
-  void canonicalize();
+	void canonicalize();
 
-  ~Face() { clearEdges(); }
+	~Face() { clearEdges(); }
 };
 
-struct MeshOptions {
-  bool opt_avoid_cavities;
+struct MeshOptions
+{
+	bool opt_avoid_cavities;
 
-  MeshOptions() : opt_avoid_cavities(false) {}
+	MeshOptions() : opt_avoid_cavities(false) {}
 
-  MeshOptions& avoid_cavities(bool val) {
-    opt_avoid_cavities = val;
-    return *this;
-  }
+	MeshOptions& avoid_cavities(bool val)
+	{
+		opt_avoid_cavities = val;
+		return *this;
+	}
 };
 
 namespace detail {
-class CARVE_API FaceStitcher {
-  FaceStitcher();
-  FaceStitcher(const FaceStitcher&);
-  FaceStitcher& operator=(const FaceStitcher&);
+class CARVE_API FaceStitcher
+{
+	FaceStitcher();
+	FaceStitcher(const FaceStitcher&);
+	FaceStitcher& operator=(const FaceStitcher&);
 
-  typedef Vertex<3> vertex_t;
-  typedef Edge<3> edge_t;
-  typedef Face<3> face_t;
+	typedef Vertex<3> vertex_t;
+	typedef Edge<3> edge_t;
+	typedef Face<3> face_t;
 
-  typedef std::pair<const vertex_t*, const vertex_t*> vpair_t;
-  typedef std::list<edge_t*> edgelist_t;
-  typedef std::unordered_map<vpair_t, edgelist_t, carve::mesh::hash_vertex_pair>
-      edge_map_t;
-  typedef std::unordered_map<const vertex_t*, std::set<const vertex_t*> >
-      edge_graph_t;
+	typedef std::pair<const vertex_t*, const vertex_t*> vpair_t;
+	typedef std::list<edge_t*> edgelist_t;
+	typedef std::unordered_map<vpair_t, edgelist_t, carve::mesh::hash_vertex_pair>
+			edge_map_t;
+	typedef std::unordered_map<const vertex_t*, std::set<const vertex_t*>>
+			edge_graph_t;
 
-  MeshOptions opts;
+	MeshOptions opts;
 
-  edge_map_t edges;
-  edge_map_t complex_edges;
+	edge_map_t edges;
+	edge_map_t complex_edges;
 
-  carve::djset::djset face_groups;
-  std::vector<bool> is_open;
+	carve::djset::djset face_groups;
+	std::vector<bool> is_open;
 
-  edge_graph_t edge_graph;
+	edge_graph_t edge_graph;
 
-  struct EdgeOrderData {
-    size_t group_id;
-    bool is_reversed;
-    carve::geom::vector<3> face_dir;
-    edge_t* edge;
+	struct EdgeOrderData
+	{
+		size_t group_id;
+		bool is_reversed;
+		carve::geom::vector<3> face_dir;
+		edge_t* edge;
 
-    EdgeOrderData(edge_t* _edge, size_t _group_id, bool _is_reversed)
-        : group_id(_group_id), is_reversed(_is_reversed) {
-      if (is_reversed) {
-        face_dir = -(_edge->face->plane.N);
-      } else {
-        face_dir = (_edge->face->plane.N);
-      }
-      edge = _edge;
-    }
+		EdgeOrderData(edge_t* _edge, size_t _group_id, bool _is_reversed)
+				: group_id(_group_id), is_reversed(_is_reversed)
+		{
+			if (is_reversed)
+			{
+				face_dir = -(_edge->face->plane.N);
+			}
+			else
+			{
+				face_dir = (_edge->face->plane.N);
+			}
+			edge = _edge;
+		}
 
-    struct TestGroups {
-      size_t fwd, rev;
+		struct TestGroups
+		{
+			size_t fwd, rev;
 
-      TestGroups(size_t _fwd, size_t _rev) : fwd(_fwd), rev(_rev) {}
+			TestGroups(size_t _fwd, size_t _rev) : fwd(_fwd), rev(_rev) {}
 
-      bool operator()(const EdgeOrderData& eo) const {
-        return eo.group_id == (eo.is_reversed ? rev : fwd);
-      }
-    };
+			bool operator()(const EdgeOrderData& eo) const
+			{
+				return eo.group_id == (eo.is_reversed ? rev : fwd);
+			}
+		};
 
-    struct Cmp {
-      carve::geom::vector<3> edge_dir;
-      carve::geom::vector<3> base_dir;
+		struct Cmp
+		{
+			carve::geom::vector<3> edge_dir;
+			carve::geom::vector<3> base_dir;
 
-      Cmp(const carve::geom::vector<3>& _edge_dir,
-          const carve::geom::vector<3>& _base_dir)
-          : edge_dir(_edge_dir), base_dir(_base_dir) {}
-      bool operator()(const EdgeOrderData& a, const EdgeOrderData& b) const;
-    };
-  };
+			Cmp(const carve::geom::vector<3>& _edge_dir,
+					const carve::geom::vector<3>& _base_dir)
+					: edge_dir(_edge_dir), base_dir(_base_dir) {}
+			bool operator()(const EdgeOrderData& a, const EdgeOrderData& b) const;
+		};
+	};
 
-  void extractConnectedEdges(std::vector<const vertex_t*>::iterator begin,
-                             std::vector<const vertex_t*>::iterator end,
-                             std::vector<std::vector<Edge<3>*> >& efwd,
-                             std::vector<std::vector<Edge<3>*> >& erev);
+	void extractConnectedEdges(std::vector<const vertex_t*>::iterator begin,
+			std::vector<const vertex_t*>::iterator end,
+			std::vector<std::vector<Edge<3>*>>& efwd,
+			std::vector<std::vector<Edge<3>*>>& erev);
 
-  size_t faceGroupID(const Face<3>* face);
-  size_t faceGroupID(const Edge<3>* edge);
+	size_t faceGroupID(const Face<3>* face);
+	size_t faceGroupID(const Edge<3>* edge);
 
-  void resolveOpenEdges();
+	void resolveOpenEdges();
 
-  void fuseEdges(std::vector<Edge<3>*>& fwd, std::vector<Edge<3>*>& rev);
+	void fuseEdges(std::vector<Edge<3>*>& fwd, std::vector<Edge<3>*>& rev);
 
-  void joinGroups(std::vector<std::vector<Edge<3>*> >& efwd,
-                  std::vector<std::vector<Edge<3>*> >& erev, size_t fwd_grp,
-                  size_t rev_grp);
+	void joinGroups(std::vector<std::vector<Edge<3>*>>& efwd,
+			std::vector<std::vector<Edge<3>*>>& erev, size_t fwd_grp,
+			size_t rev_grp);
 
-  void matchOrderedEdges(
-      const std::vector<std::vector<EdgeOrderData> >::iterator begin,
-      const std::vector<std::vector<EdgeOrderData> >::iterator end,
-      std::vector<std::vector<Edge<3>*> >& efwd,
-      std::vector<std::vector<Edge<3>*> >& erev);
+	void matchOrderedEdges(
+			const std::vector<std::vector<EdgeOrderData>>::iterator begin,
+			const std::vector<std::vector<EdgeOrderData>>::iterator end,
+			std::vector<std::vector<Edge<3>*>>& efwd,
+			std::vector<std::vector<Edge<3>*>>& erev);
 
-  void reorder(std::vector<EdgeOrderData>& ordering, size_t fwd_grp);
+	void reorder(std::vector<EdgeOrderData>& ordering, size_t fwd_grp);
 
-  void orderForwardAndReverseEdges(
-      std::vector<std::vector<Edge<3>*> >& efwd,
-      std::vector<std::vector<Edge<3>*> >& erev,
-      std::vector<std::vector<EdgeOrderData> >& result);
+	void orderForwardAndReverseEdges(
+			std::vector<std::vector<Edge<3>*>>& efwd,
+			std::vector<std::vector<Edge<3>*>>& erev,
+			std::vector<std::vector<EdgeOrderData>>& result);
 
-  void edgeIncidentGroups(
-      const vpair_t& e, const edge_map_t& all_edges,
-      std::pair<std::set<size_t>, std::set<size_t> >& groups);
+	void edgeIncidentGroups(
+			const vpair_t& e, const edge_map_t& all_edges,
+			std::pair<std::set<size_t>, std::set<size_t>>& groups);
 
-  void buildEdgeGraph(const edge_map_t& all_edges);
-  void extractPath(std::vector<const vertex_t*>& path);
-  void removePath(const std::vector<const vertex_t*>& path);
-  void matchSimpleEdges();
-  void construct();
+	void buildEdgeGraph(const edge_map_t& all_edges);
+	void extractPath(std::vector<const vertex_t*>& path);
+	void removePath(const std::vector<const vertex_t*>& path);
+	void matchSimpleEdges();
+	void construct();
 
-  template <typename iter_t>
-  void initEdges(iter_t begin, iter_t end);
+	template<typename iter_t>
+	void initEdges(iter_t begin, iter_t end);
 
-  template <typename iter_t>
-  void build(iter_t begin, iter_t end, std::vector<Mesh<3>*>& meshes);
+	template<typename iter_t>
+	void build(iter_t begin, iter_t end, std::vector<Mesh<3>*>& meshes);
 
- public:
-  explicit FaceStitcher(const MeshOptions& _opts);
+public:
+	explicit FaceStitcher(const MeshOptions& _opts);
 
-  template <typename iter_t>
-  void create(iter_t begin, iter_t end, std::vector<Mesh<3>*>& meshes);
+	template<typename iter_t>
+	void create(iter_t begin, iter_t end, std::vector<Mesh<3>*>& meshes);
 };
-}  // namespace detail
+} // namespace detail
 
 // A Mesh is a connected set of faces. It may be open (some edges
 // have NULL rev members), or closed. On destruction, a Mesh
@@ -609,273 +659,306 @@ class CARVE_API FaceStitcher {
 // the mesh. Touching at a vertex is not sufficient. This means
 // that the perimeter of an open mesh visits each vertex no more
 // than once.
-template <unsigned ndim>
-class Mesh {
- public:
-  typedef Vertex<ndim> vertex_t;
-  typedef Edge<ndim> edge_t;
-  typedef Face<ndim> face_t;
-  typedef carve::geom::aabb<ndim> aabb_t;
-  typedef MeshSet<ndim> meshset_t;
+template<unsigned ndim>
+class Mesh
+{
+public:
+	typedef Vertex<ndim> vertex_t;
+	typedef Edge<ndim> edge_t;
+	typedef Face<ndim> face_t;
+	typedef carve::geom::aabb<ndim> aabb_t;
+	typedef MeshSet<ndim> meshset_t;
 
-  std::vector<face_t*> faces;
+	std::vector<face_t*> faces;
 
-  // open_edges is a vector of all the edges in the mesh that
-  // don't have a matching edge in the opposite direction.
-  std::vector<edge_t*> open_edges;
+	// open_edges is a vector of all the edges in the mesh that
+	// don't have a matching edge in the opposite direction.
+	std::vector<edge_t*> open_edges;
 
-  // closed_edges is a vector of all the edges in the mesh that
-  // have a matching edge in the opposite direction, and whose
-  // address is lower than their counterpart. (i.e. for each pair
-  // of adjoining faces, one of the two half edges is stored in
-  // closed_edges).
-  std::vector<edge_t*> closed_edges;
+	// closed_edges is a vector of all the edges in the mesh that
+	// have a matching edge in the opposite direction, and whose
+	// address is lower than their counterpart. (i.e. for each pair
+	// of adjoining faces, one of the two half edges is stored in
+	// closed_edges).
+	std::vector<edge_t*> closed_edges;
 
-  bool is_negative;
+	bool is_negative;
 
-  meshset_t* meshset;
+	meshset_t* meshset;
 
- protected:
-  Mesh(std::vector<face_t*>& _faces, std::vector<edge_t*>& _open_edges,
-       std::vector<edge_t*>& _closed_edges, bool _is_negative);
+protected:
+	Mesh(std::vector<face_t*>& _faces, std::vector<edge_t*>& _open_edges,
+			std::vector<edge_t*>& _closed_edges, bool _is_negative);
 
- public:
-  explicit Mesh(std::vector<face_t*>& _faces);
+public:
+	explicit Mesh(std::vector<face_t*>& _faces);
 
-  ~Mesh();
+	~Mesh();
 
-  template <typename iter_t>
-  static void create(iter_t begin, iter_t end, std::vector<Mesh<ndim>*>& meshes,
-                     const MeshOptions& opts);
+	template<typename iter_t>
+	static void create(iter_t begin, iter_t end, std::vector<Mesh<ndim>*>& meshes,
+			const MeshOptions& opts);
 
-  aabb_t getAABB() const { return aabb_t(faces.begin(), faces.end()); }
+	aabb_t getAABB() const { return aabb_t(faces.begin(), faces.end()); }
 
-  bool isClosed() const { return open_edges.size() == 0; }
+	bool isClosed() const { return open_edges.size() == 0; }
 
-  bool isNegative() const { return is_negative; }
+	bool isNegative() const { return is_negative; }
 
-  double volume() const {
-    if (is_negative || !faces.size()) {
-      return 0.0;
-    }
+	double volume() const
+	{
+		if (is_negative || !faces.size())
+		{
+			return 0.0;
+		}
 
-    double vol = 0.0;
-    typename vertex_t::vector_t origin = faces[0]->edge->vert->v;
+		double vol = 0.0;
+		typename vertex_t::vector_t origin = faces[0]->edge->vert->v;
 
-    for (size_t f = 0; f < faces.size(); ++f) {
-      face_t* face = faces[f];
-      edge_t* e1 = face->edge;
-      for (edge_t* e2 = e1->next; e2->next != e1; e2 = e2->next) {
-        vol += carve::geom3d::tetrahedronVolume(e1->vert->v, e2->vert->v,
-                                                e2->next->vert->v, origin);
-      }
-    }
-    return vol;
-  }
+		for (size_t f = 0; f < faces.size(); ++f)
+		{
+			face_t* face = faces[f];
+			edge_t* e1 = face->edge;
+			for (edge_t* e2 = e1->next; e2->next != e1; e2 = e2->next)
+			{
+				vol += carve::geom3d::tetrahedronVolume(e1->vert->v, e2->vert->v,
+						e2->next->vert->v, origin);
+			}
+		}
+		return vol;
+	}
 
-  struct IsClosed {
-    bool operator()(const Mesh& mesh) const { return mesh.isClosed(); }
-    bool operator()(const Mesh* mesh) const { return mesh->isClosed(); }
-  };
+	struct IsClosed
+	{
+		bool operator()(const Mesh& mesh) const { return mesh.isClosed(); }
+		bool operator()(const Mesh* mesh) const { return mesh->isClosed(); }
+	};
 
-  struct IsNegative {
-    bool operator()(const Mesh& mesh) const { return mesh.isNegative(); }
-    bool operator()(const Mesh* mesh) const { return mesh->isNegative(); }
-  };
+	struct IsNegative
+	{
+		bool operator()(const Mesh& mesh) const { return mesh.isNegative(); }
+		bool operator()(const Mesh* mesh) const { return mesh->isNegative(); }
+	};
 
-  void cacheEdges();
+	void cacheEdges();
 
-  int orientationAtVertex(edge_t*);
-  void calcOrientation();
+	int orientationAtVertex(edge_t*);
+	void calcOrientation();
 
-  void recalc() {
-    for (size_t i = 0; i < faces.size(); ++i) {
-      faces[i]->recalc();
-    }
-    calcOrientation();
-  }
+	void recalc()
+	{
+		for (size_t i = 0; i < faces.size(); ++i)
+		{
+			faces[i]->recalc();
+		}
+		calcOrientation();
+	}
 
-  void invert() {
-    for (size_t i = 0; i < faces.size(); ++i) {
-      faces[i]->invert();
-    }
-    if (isClosed()) {
-      is_negative = !is_negative;
-    }
-  }
+	void invert()
+	{
+		for (size_t i = 0; i < faces.size(); ++i)
+		{
+			faces[i]->invert();
+		}
+		if (isClosed())
+		{
+			is_negative = !is_negative;
+		}
+	}
 
-  Mesh* clone(const vertex_t* old_base, vertex_t* new_base) const;
+	Mesh* clone(const vertex_t* old_base, vertex_t* new_base) const;
 };
 
 // A MeshSet manages vertex storage, and a collection of meshes.
 // It should be easy to turn a vertex pointer into its index in
 // its MeshSet vertex_storage.
-template <unsigned ndim>
-class MeshSet {
-  MeshSet();
-  MeshSet(const MeshSet&);
-  MeshSet& operator=(const MeshSet&);
+template<unsigned ndim>
+class MeshSet
+{
+	MeshSet();
+	MeshSet(const MeshSet&);
+	MeshSet& operator=(const MeshSet&);
 
-  template <typename iter_t>
-  void _init_from_faces(iter_t begin, iter_t end, const MeshOptions& opts);
+	template<typename iter_t>
+	void _init_from_faces(iter_t begin, iter_t end, const MeshOptions& opts);
 
- public:
-  typedef Vertex<ndim> vertex_t;
-  typedef Edge<ndim> edge_t;
-  typedef Face<ndim> face_t;
-  typedef Mesh<ndim> mesh_t;
-  typedef carve::geom::aabb<ndim> aabb_t;
+public:
+	typedef Vertex<ndim> vertex_t;
+	typedef Edge<ndim> edge_t;
+	typedef Face<ndim> face_t;
+	typedef Mesh<ndim> mesh_t;
+	typedef carve::geom::aabb<ndim> aabb_t;
 
-  std::vector<vertex_t> vertex_storage;
-  std::vector<mesh_t*> meshes;
+	std::vector<vertex_t> vertex_storage;
+	std::vector<mesh_t*> meshes;
 
- public:
-  template <typename face_type>
-  struct FaceIter
-      : public std::iterator<std::random_access_iterator_tag, face_type> {
-    typedef std::iterator<std::random_access_iterator_tag, face_type> super;
-    typedef typename super::difference_type difference_type;
+public:
+	template<typename face_type>
+	struct FaceIter
+			: public std::iterator<std::random_access_iterator_tag, face_type>
+	{
+		typedef std::iterator<std::random_access_iterator_tag, face_type> super;
+		typedef typename super::difference_type difference_type;
 
-    const MeshSet<ndim>* obj;
-    size_t mesh, face;
+		const MeshSet<ndim>* obj;
+		size_t mesh, face;
 
-    FaceIter(const MeshSet<ndim>* _obj, size_t _mesh, size_t _face);
+		FaceIter(const MeshSet<ndim>* _obj, size_t _mesh, size_t _face);
 
-    void fwd(size_t n);
-    void rev(size_t n);
-    void adv(int n);
+		void fwd(size_t n);
+		void rev(size_t n);
+		void adv(int n);
 
-    FaceIter operator++(int) {
-      FaceIter tmp = *this;
-      fwd(1);
-      return tmp;
-    }
-    FaceIter operator+(int v) {
-      FaceIter tmp = *this;
-      adv(v);
-      return tmp;
-    }
-    FaceIter& operator++() {
-      fwd(1);
-      return *this;
-    }
-    FaceIter& operator+=(int v) {
-      adv(v);
-      return *this;
-    }
+		FaceIter operator++(int)
+		{
+			FaceIter tmp = *this;
+			fwd(1);
+			return tmp;
+		}
+		FaceIter operator+(int v)
+		{
+			FaceIter tmp = *this;
+			adv(v);
+			return tmp;
+		}
+		FaceIter& operator++()
+		{
+			fwd(1);
+			return *this;
+		}
+		FaceIter& operator+=(int v)
+		{
+			adv(v);
+			return *this;
+		}
 
-    FaceIter operator--(int) {
-      FaceIter tmp = *this;
-      rev(1);
-      return tmp;
-    }
-    FaceIter operator-(int v) {
-      FaceIter tmp = *this;
-      adv(-v);
-      return tmp;
-    }
-    FaceIter& operator--() {
-      rev(1);
-      return *this;
-    }
-    FaceIter& operator-=(int v) {
-      adv(-v);
-      return *this;
-    }
+		FaceIter operator--(int)
+		{
+			FaceIter tmp = *this;
+			rev(1);
+			return tmp;
+		}
+		FaceIter operator-(int v)
+		{
+			FaceIter tmp = *this;
+			adv(-v);
+			return tmp;
+		}
+		FaceIter& operator--()
+		{
+			rev(1);
+			return *this;
+		}
+		FaceIter& operator-=(int v)
+		{
+			adv(-v);
+			return *this;
+		}
 
-    difference_type operator-(const FaceIter& other) const;
+		difference_type operator-(const FaceIter& other) const;
 
-    bool operator==(const FaceIter& other) const {
-      return obj == other.obj && mesh == other.mesh && face == other.face;
-    }
-    bool operator!=(const FaceIter& other) const { return !(*this == other); }
-    bool operator<(const FaceIter& other) const {
-      CARVE_ASSERT(obj == other.obj);
-      return mesh < other.mesh || (mesh == other.mesh && face < other.face);
-    }
-    bool operator>(const FaceIter& other) const { return other < *this; }
-    bool operator<=(const FaceIter& other) const { return !(other < *this); }
-    bool operator>=(const FaceIter& other) const { return !(*this < other); }
+		bool operator==(const FaceIter& other) const
+		{
+			return obj == other.obj && mesh == other.mesh && face == other.face;
+		}
+		bool operator!=(const FaceIter& other) const { return !(*this == other); }
+		bool operator<(const FaceIter& other) const
+		{
+			CARVE_ASSERT(obj == other.obj);
+			return mesh < other.mesh || (mesh == other.mesh && face < other.face);
+		}
+		bool operator>(const FaceIter& other) const { return other < *this; }
+		bool operator<=(const FaceIter& other) const { return !(other < *this); }
+		bool operator>=(const FaceIter& other) const { return !(*this < other); }
 
-    face_type operator*() const { return obj->meshes[mesh]->faces[face]; }
-  };
+		face_type operator*() const { return obj->meshes[mesh]->faces[face]; }
+	};
 
-  typedef FaceIter<const face_t*> const_face_iter;
-  typedef FaceIter<face_t*> face_iter;
+	typedef FaceIter<const face_t*> const_face_iter;
+	typedef FaceIter<face_t*> face_iter;
 
-  face_iter faceBegin() { return face_iter(this, 0, 0); }
-  face_iter faceEnd() { return face_iter(this, meshes.size(), 0); }
+	face_iter faceBegin() { return face_iter(this, 0, 0); }
+	face_iter faceEnd() { return face_iter(this, meshes.size(), 0); }
 
-  const_face_iter faceBegin() const { return const_face_iter(this, 0, 0); }
-  const_face_iter faceEnd() const {
-    return const_face_iter(this, meshes.size(), 0);
-  }
+	const_face_iter faceBegin() const { return const_face_iter(this, 0, 0); }
+	const_face_iter faceEnd() const
+	{
+		return const_face_iter(this, meshes.size(), 0);
+	}
 
-  aabb_t getAABB() const { return aabb_t(meshes.begin(), meshes.end()); }
+	aabb_t getAABB() const { return aabb_t(meshes.begin(), meshes.end()); }
 
-  template <typename func_t>
-  void transform(func_t func) {
-    for (size_t i = 0; i < vertex_storage.size(); ++i) {
-      vertex_storage[i].v = func(vertex_storage[i].v);
-    }
-    for (size_t i = 0; i < meshes.size(); ++i) {
-      meshes[i]->recalc();
-    }
-  }
+	template<typename func_t>
+	void transform(func_t func)
+	{
+		for (size_t i = 0; i < vertex_storage.size(); ++i)
+		{
+			vertex_storage[i].v = func(vertex_storage[i].v);
+		}
+		for (size_t i = 0; i < meshes.size(); ++i)
+		{
+			meshes[i]->recalc();
+		}
+	}
 
-  MeshSet(const std::vector<typename vertex_t::vector_t>& points,
-          size_t n_faces, const std::vector<int>& face_indices,
-          const MeshOptions& opts = MeshOptions());
+	MeshSet(const std::vector<typename vertex_t::vector_t>& points,
+			size_t n_faces, const std::vector<int>& face_indices,
+			const MeshOptions& opts = MeshOptions());
 
-  // Construct a mesh set from a set of disconnected faces. Takes
-  // posession of the face pointers.
-  explicit MeshSet(std::vector<face_t*>& faces, const MeshOptions& opts = MeshOptions());
+	// Construct a mesh set from a set of disconnected faces. Takes
+	// posession of the face pointers.
+	explicit MeshSet(std::vector<face_t*>& faces, const MeshOptions& opts = MeshOptions());
 
-  explicit MeshSet(std::list<face_t*>& faces, const MeshOptions& opts = MeshOptions());
+	explicit MeshSet(std::list<face_t*>& faces, const MeshOptions& opts = MeshOptions());
 
-  MeshSet(std::vector<vertex_t>& _vertex_storage,
-          std::vector<mesh_t*>& _meshes);
+	MeshSet(std::vector<vertex_t>& _vertex_storage,
+			std::vector<mesh_t*>& _meshes);
 
-  // This constructor consolidates and rewrites vertex pointers in
-  // each mesh, repointing them to local storage.
-  explicit MeshSet(std::vector<mesh_t*>& _meshes);
+	// This constructor consolidates and rewrites vertex pointers in
+	// each mesh, repointing them to local storage.
+	explicit MeshSet(std::vector<mesh_t*>& _meshes);
 
-  MeshSet* clone() const;
+	MeshSet* clone() const;
 
-  ~MeshSet();
+	~MeshSet();
 
-  bool isClosed() const {
-    for (size_t i = 0; i < meshes.size(); ++i) {
-      if (!meshes[i]->isClosed()) {
-        return false;
-      }
-    }
-    return true;
-  }
+	bool isClosed() const
+	{
+		for (size_t i = 0; i < meshes.size(); ++i)
+		{
+			if (!meshes[i]->isClosed())
+			{
+				return false;
+			}
+		}
+		return true;
+	}
 
-  void invert() {
-    for (size_t i = 0; i < meshes.size(); ++i) {
-      meshes[i]->invert();
-    }
-  }
+	void invert()
+	{
+		for (size_t i = 0; i < meshes.size(); ++i)
+		{
+			meshes[i]->invert();
+		}
+	}
 
-  void collectVertices();
+	void collectVertices();
 
-  void canonicalize();
+	void canonicalize();
 
-  void separateMeshes();
+	void separateMeshes();
 };
 
 CARVE_API carve::PointClass classifyPoint(
-    const carve::mesh::MeshSet<3>* meshset,
-    const carve::geom::RTreeNode<3, carve::mesh::Face<3>*>* face_rtree,
-    const carve::geom::vector<3>& v, bool even_odd = false,
-    const carve::mesh::Mesh<3>* mesh = nullptr,
-    const carve::mesh::Face<3>** hit_face = nullptr);
-}  // namespace mesh
+		const carve::mesh::MeshSet<3>* meshset,
+		const carve::geom::RTreeNode<3, carve::mesh::Face<3>*>* face_rtree,
+		const carve::geom::vector<3>& v, bool even_odd = false,
+		const carve::mesh::Mesh<3>* mesh = nullptr,
+		const carve::mesh::Face<3>** hit_face = nullptr);
+} // namespace mesh
 
 CARVE_API mesh::MeshSet<3>* meshFromPolyhedron(const poly::Polyhedron*, int manifold_id);
 CARVE_API poly::Polyhedron* polyhedronFromMesh(const mesh::MeshSet<3>*, int manifold_id);
-}  // namespace carve
+} // namespace carve
 
 #include <carve/mesh_impl.hpp>

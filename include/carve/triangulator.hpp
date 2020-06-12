@@ -60,15 +60,15 @@ namespace triangulate {
  *
  * @return A vector of vertex pointers.
  */
-template <typename project_t, typename vert_t>
+template<typename project_t, typename vert_t>
 static std::vector<vert_t> incorporateHolesIntoPolygon(
-    const project_t& project, const std::vector<vert_t>& f_loop,
-    const std::vector<std::vector<vert_t> >& h_loops);
+		const project_t& project, const std::vector<vert_t>& f_loop,
+		const std::vector<std::vector<vert_t>>& h_loops);
 
 CARVE_API void incorporateHolesIntoPolygon(
-    const std::vector<std::vector<carve::geom2d::P2> >& poly,
-    std::vector<std::pair<size_t, size_t> >& result, size_t poly_loop,
-    const std::vector<size_t>& hole_loops);
+		const std::vector<std::vector<carve::geom2d::P2>>& poly,
+		std::vector<std::pair<size_t, size_t>>& result, size_t poly_loop,
+		const std::vector<size_t>& hole_loops);
 
 /**
  * \brief Merge a set of holes into a polygon. (2d)
@@ -86,22 +86,24 @@ CARVE_API void incorporateHolesIntoPolygon(
  * @return A vector of pairs of <loop_number, index> that
  *         reference poly and define the result polygon loop.
  */
-CARVE_API std::vector<std::pair<size_t, size_t> > incorporateHolesIntoPolygon(
-    const std::vector<std::vector<carve::geom2d::P2> >& poly);
+CARVE_API std::vector<std::pair<size_t, size_t>> incorporateHolesIntoPolygon(
+		const std::vector<std::vector<carve::geom2d::P2>>& poly);
 
-CARVE_API std::vector<std::vector<std::pair<size_t, size_t> > > mergePolygonsAndHoles(
-    const std::vector<std::vector<carve::geom2d::P2> >& poly);
+CARVE_API std::vector<std::vector<std::pair<size_t, size_t>>> mergePolygonsAndHoles(
+		const std::vector<std::vector<carve::geom2d::P2>>& poly);
 
-struct tri_idx {
-  union {
-    unsigned v[3];
-    struct {
-      unsigned a, b, c;
-    };
-  };
+struct tri_idx
+{
+	union {
+		unsigned v[3];
+		struct
+		{
+			unsigned a, b, c;
+		};
+	};
 
-  tri_idx() : a(0), b(0), c(0) {}
-  tri_idx(unsigned _a, unsigned _b, unsigned _c) : a(_a), b(_b), c(_c) {}
+	tri_idx() : a(0), b(0), c(0) {}
+	tri_idx(unsigned _a, unsigned _b, unsigned _c) : a(_a), b(_b), c(_c) {}
 };
 
 /**
@@ -117,7 +119,7 @@ struct tri_idx {
  */
 
 CARVE_API void triangulate(const std::vector<carve::geom2d::P2>& poly,
-                 std::vector<tri_idx>& result);
+		std::vector<tri_idx>& result);
 
 /**
  * \brief Triangulate a polygon (templated).
@@ -131,9 +133,9 @@ CARVE_API void triangulate(const std::vector<carve::geom2d::P2>& poly,
  * @param [out] result A vector of triangles, represented as
  *                     indicies into poly.
  */
-template <typename project_t, typename vert_t>
+template<typename project_t, typename vert_t>
 void triangulate(const project_t& project, const std::vector<vert_t>& poly,
-                 std::vector<tri_idx>& result);
+		std::vector<tri_idx>& result);
 
 /**
  * \brief Improve a candidate triangulation of poly by minimising
@@ -152,9 +154,9 @@ void triangulate(const project_t& project, const std::vector<vert_t>& poly,
  *                       contents of the vector, returning an
  *                       improved triangulation.
  */
-template <typename project_t, typename vert_t>
+template<typename project_t, typename vert_t>
 void improve(const project_t& project, const std::vector<vert_t>& poly,
-             std::vector<tri_idx>& result);
+		std::vector<tri_idx>& result);
 
 /**
  * \brief Improve a candidate triangulation of poly by minimising
@@ -170,10 +172,11 @@ void improve(const project_t& project, const std::vector<vert_t>& poly,
  *                       improved triangulation.
  */
 static inline void improve(const std::vector<carve::geom2d::P2>& poly,
-                           std::vector<tri_idx>& result) {
-  improve(carve::geom2d::p2_adapt_ident(), poly, result);
+		std::vector<tri_idx>& result)
+{
+	improve(carve::geom2d::p2_adapt_ident(), poly, result);
 }
-}  // namespace triangulate
-}  // namespace carve
+}
+} // namespace carve::triangulate
 
 #include <carve/triangulator_impl.hpp>
