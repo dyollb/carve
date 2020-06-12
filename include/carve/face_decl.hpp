@@ -51,7 +51,7 @@ class Edge;
 template<unsigned ndim>
 struct p2_adapt_project
 {
-	using proj_t = carve::geom2d::P2 (*)(const carve::geom::vector<ndim> &);
+	using proj_t = carve::geom2d::P2 (*)(const carve::geom::vector<ndim>&);
 	proj_t proj;
 	p2_adapt_project(proj_t _proj) : proj(_proj) {}
 	carve::geom2d::P2 operator()(const carve::geom::vector<ndim>& v) const
@@ -83,8 +83,8 @@ public:
 	using aabb_t = carve::geom::aabb<ndim>;
 	using plane_t = carve::geom::plane<ndim>;
 
-	using project_t = carve::geom2d::P2 (*)(const vector_t &);
-	using unproject_t = vector_t (*)(const carve::geom2d::P2 &, const plane_t &);
+	using project_t = carve::geom2d::P2 (*)(const vector_t&);
+	using unproject_t = vector_t (*)(const carve::geom2d::P2&, const plane_t&);
 
 protected:
 	std::vector<const vertex_t*> vertices; // pointer into polyhedron.vertices
@@ -94,11 +94,11 @@ protected:
 	unproject_t getUnprojector(bool positive_facing, int axis);
 
 public:
-	using vertex_iter_t = typename std::vector<const vertex_t *>::iterator;
-	using const_vertex_iter_t = typename std::vector<const vertex_t *>::const_iterator;
+	using vertex_iter_t = typename std::vector<const vertex_t*>::iterator;
+	using const_vertex_iter_t = typename std::vector<const vertex_t*>::const_iterator;
 
-	using edge_iter_t = typename std::vector<const edge_t *>::iterator;
-	using const_edge_iter_t = typename std::vector<const edge_t *>::const_iterator;
+	using edge_iter_t = typename std::vector<const edge_t*>::iterator;
+	using const_edge_iter_t = typename std::vector<const edge_t*>::const_iterator;
 
 	obj_t* owner;
 

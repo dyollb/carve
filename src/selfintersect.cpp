@@ -810,7 +810,7 @@ int main(int argc, char** argv)
 		exit(1);
 	}
 
-	using face_rtree_t = carve::geom::RTreeNode<3, carve::mesh::Face<3> *>;
+	using face_rtree_t = carve::geom::RTreeNode<3, carve::mesh::Face<3>*>;
 	face_rtree_t* tree =
 			face_rtree_t::construct_STR(poly->faceBegin(), poly->faceEnd(), 4, 4);
 

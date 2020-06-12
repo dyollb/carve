@@ -269,8 +269,8 @@ public:
 	using vector_t = typename Vertex<ndim>::vector_t;
 	using aabb_t = carve::geom::aabb<ndim>;
 	using plane_t = carve::geom::plane<ndim>;
-	using project_t = carve::geom::vector<2> (*)(const vector_t &);
-	using unproject_t = vector_t (*)(const carve::geom::vector<2> &, const plane_t &);
+	using project_t = carve::geom::vector<2> (*)(const vector_t&);
+	using unproject_t = vector_t (*)(const carve::geom::vector<2>&, const plane_t&);
 
 	struct vector_mapping
 	{
@@ -327,12 +327,14 @@ private:
 protected:
 	Face()
 			: edge(nullptr),
-				
+
 				mesh(nullptr),
-				
+
 				plane(),
 				project(nullptr),
-				unproject(nullptr) {}
+				unproject(nullptr)
+	{
+	}
 
 	Face(const Face& other)
 			: edge(nullptr),
@@ -347,8 +349,8 @@ protected:
 	CARVE_API unproject_t getUnprojector(bool positive_facing, int axis) const;
 
 public:
-	using edge_iter_t = detail::list_iter_t<Edge<ndim> >;
-	using const_edge_iter_t = detail::list_iter_t<const Edge<ndim> >;
+	using edge_iter_t = detail::list_iter_t<Edge<ndim>>;
+	using const_edge_iter_t = detail::list_iter_t<const Edge<ndim>>;
 
 	edge_iter_t begin() { return edge_iter_t(edge, 0); }
 	edge_iter_t end() { return edge_iter_t(edge, n_edges); }
@@ -515,7 +517,7 @@ struct MeshOptions
 {
 	bool opt_avoid_cavities{false};
 
-	MeshOptions()  = default;
+	MeshOptions() = default;
 
 	MeshOptions& avoid_cavities(bool val)
 	{
@@ -535,10 +537,10 @@ class CARVE_API FaceStitcher
 	using edge_t = Edge<3>;
 	using face_t = Face<3>;
 
-	using vpair_t = std::pair<const vertex_t *, const vertex_t *>;
-	using edgelist_t = std::list<edge_t *>;
+	using vpair_t = std::pair<const vertex_t*, const vertex_t*>;
+	using edgelist_t = std::list<edge_t*>;
 	using edge_map_t = std::unordered_map<vpair_t, edgelist_t, carve::mesh::hash_vertex_pair>;
-	using edge_graph_t = std::unordered_map<const vertex_t *, std::set<const vertex_t *> >;
+	using edge_graph_t = std::unordered_map<const vertex_t*, std::set<const vertex_t*>>;
 
 	MeshOptions opts;
 
@@ -871,8 +873,8 @@ public:
 		face_type operator*() const { return obj->meshes[mesh]->faces[face]; }
 	};
 
-	using const_face_iter = FaceIter<const face_t *>;
-	using face_iter = FaceIter<face_t *>;
+	using const_face_iter = FaceIter<const face_t*>;
+	using face_iter = FaceIter<face_t*>;
 
 	face_iter faceBegin() { return face_iter(this, 0, 0); }
 	face_iter faceEnd() { return face_iter(this, meshes.size(), 0); }

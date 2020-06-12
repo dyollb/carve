@@ -212,7 +212,7 @@ struct Intersections
 	{
 		return intersects(e1->v1(), e2) || intersects(e1->v2(), e2) ||
 
-				intersects(IObj(e1), e2);
+					 intersects(IObj(e1), e2);
 	}
 
 	/**
@@ -227,7 +227,7 @@ struct Intersections
 	{
 		return intersects(e->v1(), f) || intersects(e->v2(), f) ||
 
-				intersects(IObj(e), f);
+					 intersects(IObj(e), f);
 	}
 
 	/**

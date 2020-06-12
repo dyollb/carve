@@ -102,7 +102,7 @@ struct tri_idx
 		};
 	};
 
-	tri_idx()  {}
+	tri_idx() {}
 	tri_idx(unsigned _a, unsigned _b, unsigned _c) : a(_a), b(_b), c(_c) {}
 };
 

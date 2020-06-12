@@ -44,7 +44,7 @@ struct IObj
 		intptr_t val;
 	};
 
-	IObj() :  val(0) {}
+	IObj() : val(0) {}
 	IObj(carve::mesh::MeshSet<3>::vertex_t* v)
 			: obtype(OBTYPE_VERTEX), vertex(v) {}
 	IObj(carve::mesh::MeshSet<3>::edge_t* e) : obtype(OBTYPE_EDGE), edge(e) {}
@@ -63,8 +63,8 @@ struct IObj_hash
 
 using IObjPairSet = std::unordered_set<std::pair<const IObj, const IObj>, IObj_hash>;
 
-using IObjVMap = std::unordered_map<IObj, carve::mesh::MeshSet<3>::vertex_t *, IObj_hash>;
-using IObjVMapSmall = std::map<IObj, carve::mesh::MeshSet<3>::vertex_t *>;
+using IObjVMap = std::unordered_map<IObj, carve::mesh::MeshSet<3>::vertex_t*, IObj_hash>;
+using IObjVMapSmall = std::map<IObj, carve::mesh::MeshSet<3>::vertex_t*>;
 
 class VertexIntersections
 		: public std::unordered_map<carve::mesh::MeshSet<3>::vertex_t*,

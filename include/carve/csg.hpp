@@ -49,7 +49,7 @@ class VertexPool
 	typedef carve::mesh::MeshSet<3>::vertex_t vertex_t;
 
 	const static unsigned blocksize = 1024;
-	using pool_t = std::list<std::vector<vertex_t> >;
+	using pool_t = std::list<std::vector<vertex_t>>;
 	pool_t pool;
 
 public:
@@ -168,8 +168,8 @@ public:
 	};
 
 private:
-	using face_rtree_t = carve::geom::RTreeNode<3, carve::mesh::Face<3> *>;
-	using face_pairs_t = std::unordered_map<carve::mesh::Face<3> *, std::vector<carve::mesh::Face<3> *> >;
+	using face_rtree_t = carve::geom::RTreeNode<3, carve::mesh::Face<3>*>;
+	using face_pairs_t = std::unordered_map<carve::mesh::Face<3>*, std::vector<carve::mesh::Face<3>*>>;
 
 	/// The computed intersection data.
 	Intersections intersections;

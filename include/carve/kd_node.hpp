@@ -324,7 +324,7 @@ public:
 		// q_t - the priority queue value type.
 		// q_t.first:  distance from object to query point.
 		// q_t.second: pointer to object
-		using q_t = std::pair<double, const data_t *>;
+		using q_t = std::pair<double, const data_t*>;
 
 		// the queue priority should sort from smallest distance to largest, and on
 		// equal distance, by object pointer.

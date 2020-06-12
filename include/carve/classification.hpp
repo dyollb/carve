@@ -105,8 +105,7 @@ struct ClassificationInfo
 	const carve::mesh::Mesh<3>* intersected_mesh{nullptr};
 	FaceClass classification{FACE_UNCLASSIFIED};
 
-	ClassificationInfo()
-			 = default;
+	ClassificationInfo() = default;
 	ClassificationInfo(const carve::mesh::Mesh<3>* _intersected_mesh,
 			FaceClass _classification)
 			: intersected_mesh(_intersected_mesh), classification(_classification) {}
@@ -135,8 +134,8 @@ struct PC2
 	}
 };
 
-using EdgeClassification = std::unordered_map<std::pair<const carve::mesh::MeshSet<3>::vertex_t *, const carve::mesh::MeshSet<3>::vertex_t *>, EC2, hash_pair>;
+using EdgeClassification = std::unordered_map<std::pair<const carve::mesh::MeshSet<3>::vertex_t*, const carve::mesh::MeshSet<3>::vertex_t*>, EC2, hash_pair>;
 
-using VertexClassification = std::unordered_map<const carve::mesh::Vertex<3> *, PC2>;
+using VertexClassification = std::unordered_map<const carve::mesh::Vertex<3>*, PC2>;
 }
 } // namespace carve::csg

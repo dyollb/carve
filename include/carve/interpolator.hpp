@@ -245,10 +245,10 @@ template<typename attr_t>
 class FaceVertexAttr : public Interpolator
 {
 public:
-	using key_t = std::pair<const meshset_t::face_t *, unsigned int>;
+	using key_t = std::pair<const meshset_t::face_t*, unsigned int>;
 
 protected:
-	using attrvmap_t = std::unordered_map<const meshset_t::vertex_t *, attr_t>;
+	using attrvmap_t = std::unordered_map<const meshset_t::vertex_t*, attr_t>;
 	using attrmap_t = std::unordered_map<key_t, attr_t, carve::hash_pair>;
 
 	attrmap_t attrs;
@@ -324,10 +324,10 @@ template<typename attr_t>
 class FaceEdgeAttr : public Interpolator
 {
 public:
-	using key_t = std::pair<const meshset_t::face_t *, unsigned int>;
+	using key_t = std::pair<const meshset_t::face_t*, unsigned int>;
 
 protected:
-	using vpair_t = std::pair<const meshset_t::vertex_t *, const meshset_t::vertex_t *>;
+	using vpair_t = std::pair<const meshset_t::vertex_t*, const meshset_t::vertex_t*>;
 
 	using attrmap_t = std::unordered_map<key_t, attr_t, carve::hash_pair>;
 	using edgedivmap_t = std::unordered_map<vpair_t, key_t, carve::hash_pair>;
@@ -451,7 +451,7 @@ template<typename attr_t>
 class FaceAttr : public Interpolator
 {
 public:
-	using key_t = const meshset_t::face_t *;
+	using key_t = const meshset_t::face_t*;
 
 protected:
 	struct key_hash

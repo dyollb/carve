@@ -119,7 +119,7 @@ public:
 		// doing improvement as a separate hook is much messier than
 		// just incorporating it into the triangulation hook.
 
-		using vert_map_t = std::map<carve::mesh::MeshSet<3>::vertex_t *, size_t>;
+		using vert_map_t = std::map<carve::mesh::MeshSet<3>::vertex_t*, size_t>;
 		std::vector<carve::mesh::MeshSet<3>::face_t*> out_faces;
 		vert_map_t vert_map;
 

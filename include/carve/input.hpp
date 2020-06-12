@@ -206,7 +206,7 @@ struct PolyhedronData : public VertexData
 
 struct PolylineSetData : public VertexData
 {
-	using polyline_data_t = std::pair<bool, std::vector<int> >;
+	using polyline_data_t = std::pair<bool, std::vector<int>>;
 	std::list<polyline_data_t> polylines;
 
 	PolylineSetData() : VertexData(), polylines() {}

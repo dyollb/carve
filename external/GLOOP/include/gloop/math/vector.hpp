@@ -44,7 +44,6 @@ namespace gloop {
     };
     
     V2(float _x, float _y) : x(_x), y(_y) { }
-    V2()  = default;
     V2(const float *_v) { memcpy(v, _v, sizeof(v)); }
   };
 

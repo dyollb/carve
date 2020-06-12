@@ -178,7 +178,7 @@ int main(int argc, char** argv)
 	std::cerr << "      : " << shared_edges.size()
 						<< " edges in the line of intersection" << std::endl;
 
-	using VVSMap = std::unordered_map<const carve::mesh::MeshSet<3>::vertex_t *, std::set<const carve::mesh::MeshSet<3>::vertex_t *> >;
+	using VVSMap = std::unordered_map<const carve::mesh::MeshSet<3>::vertex_t*, std::set<const carve::mesh::MeshSet<3>::vertex_t*>>;
 
 	VVSMap edge_graph;
 

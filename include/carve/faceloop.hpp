@@ -54,7 +54,7 @@ struct FaceLoopList
 	FaceLoop *head{nullptr}, *tail{nullptr};
 	unsigned count{0};
 
-	FaceLoopList()  = default;
+	FaceLoopList() = default;
 
 	void append(FaceLoop* f)
 	{

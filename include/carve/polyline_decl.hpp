@@ -138,7 +138,7 @@ struct Polyline
 
 struct CARVE_API PolylineSet
 {
-	using line_list = std::list<Polyline *>;
+	using line_list = std::list<Polyline*>;
 	using line_iter = line_list::iterator;
 	using const_line_iter = line_list::const_iterator;
 

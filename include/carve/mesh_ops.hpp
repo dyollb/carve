@@ -207,7 +207,7 @@ struct TriangulationData
 		}
 	};
 
-	using diag_t = std::pair<VertexInfo *, VertexInfo *>;
+	using diag_t = std::pair<VertexInfo*, VertexInfo*>;
 
 	proj_t proj;
 

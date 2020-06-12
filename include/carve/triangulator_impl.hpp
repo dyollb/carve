@@ -302,7 +302,7 @@ struct CARVE_API tri_pair_t
 	double score{0.0};
 	size_t idx;
 
-	tri_pair_t()  = default;
+	tri_pair_t() = default;
 
 	static inline unsigned N(unsigned i) { return (i + 1) % 3; }
 	static inline unsigned P(unsigned i) { return (i + 2) % 3; }
@@ -444,7 +444,7 @@ struct max_score
 
 struct CARVE_API tri_pairs_t
 {
-	using storage_t = std::unordered_map<vert_edge_t, tri_pair_t *, hash_vert_edge_t>;
+	using storage_t = std::unordered_map<vert_edge_t, tri_pair_t*, hash_vert_edge_t>;
 	storage_t storage;
 
 	tri_pairs_t() : storage(){};
@@ -711,7 +711,7 @@ static std::vector<vert_t> incorporateHolesIntoPolygon(
 {
 	using hole_t = std::vector<vert_t>;
 	using vert_iter = typename std::vector<vert_t>::const_iterator;
-	using hole_iter = typename std::vector<std::vector<vert_t> >::const_iterator;
+	using hole_iter = typename std::vector<std::vector<vert_t>>::const_iterator;
 
 	size_t N = f_loop.size();
 

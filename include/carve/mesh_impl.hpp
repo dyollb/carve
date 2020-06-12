@@ -42,8 +42,8 @@ struct list_iter_t
 	using iterator_category = std::bidirectional_iterator_tag;
 	using value_type = list_t;
 	using difference_type = ptrdiff_t;
-	using reference = value_type &;
-	using pointer = value_type *;
+	using reference = value_type&;
+	using pointer = value_type*;
 
 	list_t* curr;
 	int pos;
@@ -880,7 +880,7 @@ template<typename iter_t>
 void MeshSet<ndim>::_init_from_faces(iter_t begin, iter_t end,
 		const MeshOptions& opts)
 {
-	using map_t = std::unordered_map<const vertex_t *, size_t>;
+	using map_t = std::unordered_map<const vertex_t*, size_t>;
 	map_t vmap;
 
 	for (iter_t i = begin; i != end; ++i)
@@ -1252,7 +1252,7 @@ template<unsigned ndim>
 void MeshSet<ndim>::separateMeshes()
 {
 	size_t n;
-	using vmap_t = std::unordered_map<std::pair<mesh_t *, vertex_t *>, vertex_t *, carve::hash_pair>;
+	using vmap_t = std::unordered_map<std::pair<mesh_t*, vertex_t*>, vertex_t*, carve::hash_pair>;
 	vmap_t vmap;
 	typename vmap_t::iterator vmap_iter;
 

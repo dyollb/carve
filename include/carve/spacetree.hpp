@@ -120,7 +120,7 @@ public:
 		nodedata_t data;
 
 	private:
-		Node(const Node& node) = delete;						 // undefined.
+		Node(const Node& node) = delete;						// undefined.
 		Node& operator=(const Node& node) = delete; // undefined.
 
 		Node() = default;
