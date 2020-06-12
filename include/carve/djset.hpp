@@ -41,10 +41,10 @@ protected:
 	};
 
 	std::vector<elem> set;
-	size_t n_sets;
+	size_t n_sets{0};
 
 public:
-	djset() : set(), n_sets(0) {}
+	djset() : set() {}
 
 	djset(size_t N)
 	{

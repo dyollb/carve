@@ -45,7 +45,7 @@ namespace gloop {
   };
 
   class RefObj {
-    mutable int __refcount;
+    mutable int __refcount{0};
 
     RefObj(const RefObj &) = delete;
     RefObj &operator=(const RefObj &) = delete;
@@ -67,12 +67,12 @@ namespace gloop {
     int refcount() const {
       return __refcount;
     }
-    RefObj() : __refcount(0) {
+    RefObj()  {
     }
   };
 
   class MonitoredRefObj {
-    mutable int __refcount;
+    mutable int __refcount{0};
 
     MonitoredRefObj(const MonitoredRefObj &) = delete;
     MonitoredRefObj &operator=(const MonitoredRefObj &) = delete;
@@ -108,7 +108,7 @@ namespace gloop {
     int refcount() const {
       return __refcount;
     }
-    MonitoredRefObj() : __refcount(0) {
+    MonitoredRefObj()  {
     }
   };
 

@@ -277,11 +277,11 @@ namespace XCore{ namespace Modeling
 	protected:
 		DomainDescriptorList			m_domains;									///< list of domains to be processed
 		DomainList						m_outputs;									///< list of output domains
-		TagSysType						*m_tags;									///< tag for each face in the output domain
+		TagSysType						*m_tags{ nullptr };									///< tag for each face in the output domain
 		mutable ErrorManager			m_errors;									///< list of errors
 		mutable WarningManager			m_warnings;									///< list of warnings
-		bool							m_is_up_to_date;							///< flag to update output domain after changes
-		bool							m_enforce_user_priorities;					///< enforce user priority scheme
+		bool							m_is_up_to_date{ true };							///< flag to update output domain after changes
+		bool							m_enforce_user_priorities{ true };					///< enforce user priority scheme
 	};
 
 	// ============================================================================ //

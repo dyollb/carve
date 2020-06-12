@@ -364,7 +364,7 @@ namespace gloop {
 
 
   floatbuf_radiance_reader::floatbuf_radiance_reader() :
-  target(nullptr), width(0), height(0), depth(0), cvt(M3::IDENTITY()), cvt_set(false) {
+   cvt(M3::IDENTITY()) {
   }
 
   void floatbuf_radiance_reader::header(radiance_colour_format fmt,

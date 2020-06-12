@@ -102,11 +102,11 @@ const char* ENUM(PointClass p);
 
 struct ClassificationInfo
 {
-	const carve::mesh::Mesh<3>* intersected_mesh;
-	FaceClass classification;
+	const carve::mesh::Mesh<3>* intersected_mesh{nullptr};
+	FaceClass classification{FACE_UNCLASSIFIED};
 
 	ClassificationInfo()
-			: intersected_mesh(nullptr), classification(FACE_UNCLASSIFIED) {}
+			 {}
 	ClassificationInfo(const carve::mesh::Mesh<3>* _intersected_mesh,
 			FaceClass _classification)
 			: intersected_mesh(_intersected_mesh), classification(_classification) {}

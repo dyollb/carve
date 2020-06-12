@@ -58,12 +58,12 @@ inline bool single_bit_set(uint32_t v) {
 }
 
 struct EdgeSurface {
-  FaceLoop* fwd;
-  double fwd_ang;
-  FaceLoop* rev;
-  double rev_ang;
+  FaceLoop* fwd{nullptr};
+  double fwd_ang{0.0};
+  FaceLoop* rev{nullptr};
+  double rev_ang{0.0};
 
-  EdgeSurface() : fwd(nullptr), fwd_ang(0.0), rev(nullptr), rev_ang(0.0) {}
+  EdgeSurface()  {}
 };
 
 typedef std::map<const carve::mesh::MeshSet<3>::mesh_t*, EdgeSurface>

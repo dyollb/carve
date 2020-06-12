@@ -298,11 +298,11 @@ static inline vert_edge_t ordered_vert_edge_t(unsigned a, unsigned b)
 
 struct CARVE_API tri_pair_t
 {
-	carve::triangulate::tri_idx *a, *b;
-	double score;
+	carve::triangulate::tri_idx *a{nullptr}, *b{nullptr};
+	double score{0.0};
 	size_t idx;
 
-	tri_pair_t() : a(nullptr), b(nullptr), score(0.0) {}
+	tri_pair_t()  {}
 
 	static inline unsigned N(unsigned i) { return (i + 1) % 3; }
 	static inline unsigned P(unsigned i) { return (i + 2) % 3; }

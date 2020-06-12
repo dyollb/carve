@@ -313,9 +313,9 @@ public:
 	};
 
 	edge_t* edge;
-	size_t n_edges;
+	size_t n_edges{0};
 	mesh_t* mesh;
-	size_t id;
+	size_t id{0};
 
 	plane_t plane;
 	project_t project;
@@ -327,9 +327,9 @@ private:
 protected:
 	Face()
 			: edge(nullptr),
-				n_edges(0),
+				
 				mesh(nullptr),
-				id(0),
+				
 				plane(),
 				project(nullptr),
 				unproject(nullptr) {}
@@ -513,9 +513,9 @@ public:
 
 struct MeshOptions
 {
-	bool opt_avoid_cavities;
+	bool opt_avoid_cavities{false};
 
-	MeshOptions() : opt_avoid_cavities(false) {}
+	MeshOptions()  {}
 
 	MeshOptions& avoid_cavities(bool val)
 	{

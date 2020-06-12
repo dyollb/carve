@@ -803,10 +803,8 @@ namespace XCore { namespace Modeling
 	// Constructor(s) ============================================================= //
 
 	// ---------------------------------------------------------------------------- //
-	CMultiDomainPreprocessor::CMultiDomainPreprocessor() :
-		m_is_up_to_date( true ),
-		m_enforce_user_priorities( true ),
-		m_tags( nullptr )
+	CMultiDomainPreprocessor::CMultiDomainPreprocessor() 
+		
 	{ }
 
 	

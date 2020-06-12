@@ -415,10 +415,10 @@ struct RTreeNode
 	struct partition_info
 	{
 		double score;
-		size_t partition_pos;
+		size_t partition_pos{0};
 
 		partition_info()
-				: score(std::numeric_limits<double>::max()), partition_pos(0) {}
+				: score(std::numeric_limits<double>::max()) {}
 		partition_info(double _score, size_t _partition_pos)
 				: score(_score), partition_pos(_partition_pos) {}
 	};

@@ -148,10 +148,10 @@ struct GraphEdge {
 };
 
 struct GraphEdges {
-  GraphEdge* edges;
+  GraphEdge* edges{nullptr};
   carve::geom2d::P2 proj;
 
-  GraphEdges() : edges(nullptr), proj() {}
+  GraphEdges() :  proj() {}
 };
 
 struct Graph {

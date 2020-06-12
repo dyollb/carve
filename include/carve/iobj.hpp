@@ -35,7 +35,7 @@ struct IObj
 		OBTYPE_VERTEX = 1,
 		OBTYPE_EDGE = 2,
 		OBTYPE_FACE = 4
-	} obtype;
+	} obtype{OBTYPE_NONE};
 
 	union {
 		carve::mesh::MeshSet<3>::vertex_t* vertex;
@@ -44,7 +44,7 @@ struct IObj
 		intptr_t val;
 	};
 
-	IObj() : obtype(OBTYPE_NONE), val(0) {}
+	IObj() :  val(0) {}
 	IObj(carve::mesh::MeshSet<3>::vertex_t* v)
 			: obtype(OBTYPE_VERTEX), vertex(v) {}
 	IObj(carve::mesh::MeshSet<3>::edge_t* e) : obtype(OBTYPE_EDGE), edge(e) {}

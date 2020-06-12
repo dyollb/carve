@@ -138,9 +138,9 @@ struct VertexData : public Data
 struct PolyhedronData : public VertexData
 {
 	std::vector<int> faceIndices;
-	int faceCount;
+	int faceCount{0};
 
-	PolyhedronData() : VertexData(), faceIndices(), faceCount(0) {}
+	PolyhedronData() : VertexData(), faceIndices() {}
 
 	~PolyhedronData() override = default;
 

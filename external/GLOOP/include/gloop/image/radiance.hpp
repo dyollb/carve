@@ -184,10 +184,10 @@ namespace gloop {
   };
 
   struct floatbuf_radiance_reader : public radiance_reader {
-    float *target;
-    int width, height, depth;
+    float *target{nullptr};
+    int width{0}, height{0}, depth{0};
     M3 cvt;
-    bool cvt_set;
+    bool cvt_set{false};
 
     int stride(int axis) {
       int stride = 3;

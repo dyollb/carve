@@ -59,7 +59,7 @@ class MeshSimplifier
 
 	struct EdgeInfo
 	{
-		edge_t* edge;
+		edge_t* edge{nullptr};
 		double delta_v;
 
 		double c[4];
@@ -101,7 +101,7 @@ class MeshSimplifier
 
 		explicit EdgeInfo(edge_t* e) : edge(e) { update(); }
 
-		EdgeInfo() : edge(nullptr)
+		EdgeInfo()  
 		{
 			delta_v = 0.0;
 			c[0] = c[1] = c[2] = c[3] = 0.0;
@@ -1764,10 +1764,10 @@ public:
 
 	struct quantization_info_t
 	{
-		point_enumerator_t* pt;
+		point_enumerator_t* pt{nullptr};
 		std::set<face_t*> faces;
 
-		quantization_info_t() : pt(nullptr), faces() {}
+		quantization_info_t() :  faces() {}
 
 		~quantization_info_t()
 		{
