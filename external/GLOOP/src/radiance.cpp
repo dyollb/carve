@@ -364,7 +364,7 @@ namespace gloop {
 
 
   floatbuf_radiance_reader::floatbuf_radiance_reader() :
-  target(NULL), width(0), height(0), depth(0), cvt(M3::IDENTITY()), cvt_set(false) {
+  target(nullptr), width(0), height(0), depth(0), cvt(M3::IDENTITY()), cvt_set(false) {
   }
 
   void floatbuf_radiance_reader::header(radiance_colour_format fmt,
@@ -396,7 +396,7 @@ namespace gloop {
 
   float *floatbuf_radiance_reader::take_buffer() {
     float *result = target;
-    target = NULL;
+    target = nullptr;
     return result;
   }
 

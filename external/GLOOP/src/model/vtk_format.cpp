@@ -145,12 +145,12 @@ namespace gloop {
 
           if (polyhedron_points_done) {
             stream::reader_base *p_rd = findReader("polyhedron");
-            if (p_rd != NULL) p_rd->end();
+            if (p_rd != nullptr) p_rd->end();
             polyhedron_points_done = false;
           }
           if (polyline_points_done) {
             stream::reader_base *p_rd = findReader("polyline");
-            if (p_rd != NULL) p_rd->end();
+            if (p_rd != nullptr) p_rd->end();
             polyline_points_done = false;
           }
 
@@ -174,7 +174,7 @@ namespace gloop {
           } else if (str::startswith(s, "LINES")) {
             if (!polyline_points_done) {
               stream::reader_base *p_rd = findReader("polyline");
-              if (p_rd != NULL) p_rd->begin();
+              if (p_rd != nullptr) p_rd->begin();
               emitPoints(point_data, "polyline");
               polyline_points_done = true;
             }
@@ -207,7 +207,7 @@ namespace gloop {
           } else if (str::startswith(s, "POLYGONS") || str::startswith(s, "TRIANGLE_STRIPS")) {
             if (!polyhedron_points_done) {
               stream::reader_base *p_rd = findReader("polyhedron");
-              if (p_rd != NULL) p_rd->begin();
+              if (p_rd != nullptr) p_rd->begin();
               // std::cerr << "p_rd=" << p_rd << std::endl;
               emitPoints(point_data, "polyhedron");
               polyhedron_points_done = true;
@@ -253,12 +253,12 @@ namespace gloop {
       }
       if (polyhedron_points_done) {
         stream::reader_base *p_rd = findReader("polyhedron");
-        if (p_rd != NULL) p_rd->end();
+        if (p_rd != nullptr) p_rd->end();
         polyhedron_points_done = false;
       }
       if (polyline_points_done) {
         stream::reader_base *p_rd = findReader("polyline");
-        if (p_rd != NULL) p_rd->end();
+        if (p_rd != nullptr) p_rd->end();
         polyline_points_done = false;
       }
 
@@ -273,12 +273,12 @@ namespace gloop {
 
       if (polyhedron_points_done) {
         stream::reader_base *p_rd = findReader("polyhedron");
-        if (p_rd != NULL) p_rd->fail();
+        if (p_rd != nullptr) p_rd->fail();
         polyhedron_points_done = false;
       }
       if (polyline_points_done) {
         stream::reader_base *p_rd = findReader("polyline");
-        if (p_rd != NULL) p_rd->fail();
+        if (p_rd != nullptr) p_rd->fail();
         polyline_points_done = false;
       }
       return false;
@@ -338,17 +338,17 @@ namespace gloop {
         // std::string &blockname = (*blk).first;
         stream::block_t &block = (*blk).second;
         if (block.name == "polyhedron") {
-          if (block.wt != NULL) block.wt->begin();
+          if (block.wt != nullptr) block.wt->begin();
 
           {
             stream::named_element_t *elem = block.findElem("vertex");
-            if (!elem || elem->wt == NULL) continue;
+            if (!elem || elem->wt == nullptr) continue;
             stream::named_prop_t *px = elem->findProp("x");
             stream::named_prop_t *py = elem->findProp("y");
             stream::named_prop_t *pz = elem->findProp("z");
-            if (!px || px->wt == NULL ||
-                !py || py->wt == NULL ||
-                !pz || pz->wt == NULL) continue;
+            if (!px || px->wt == nullptr ||
+                !py || py->wt == nullptr ||
+                !pz || pz->wt == nullptr) continue;
 
             elem->wt->begin();
             size_t n_verts = elem->wt->length();
@@ -368,7 +368,7 @@ namespace gloop {
           {
             std::vector<uint32_t> vv;
             stream::named_element_t *elem = block.findElem("face");
-            if (!elem || elem->wt == NULL) continue;
+            if (!elem || elem->wt == nullptr) continue;
             stream::named_prop_t *v = elem->findProp("vertex_indices");
 
             elem->wt->begin();
@@ -399,20 +399,20 @@ namespace gloop {
             }
           }
 
-          if (block.wt != NULL) block.wt->end();
+          if (block.wt != nullptr) block.wt->end();
 
         } else if (block.name == "polyline") {
-          if (block.wt != NULL) block.wt->begin();
+          if (block.wt != nullptr) block.wt->begin();
 
           {
             stream::named_element_t *elem = block.findElem("vertex");
-            if (!elem || elem->wt == NULL) continue;
+            if (!elem || elem->wt == nullptr) continue;
             stream::named_prop_t *px = elem->findProp("x");
             stream::named_prop_t *py = elem->findProp("y");
             stream::named_prop_t *pz = elem->findProp("z");
-            if (!px || px->wt == NULL ||
-                !py || py->wt == NULL ||
-                !pz || pz->wt == NULL) continue;
+            if (!px || px->wt == nullptr ||
+                !py || py->wt == nullptr ||
+                !pz || pz->wt == nullptr) continue;
 
             elem->wt->begin();
             size_t n_verts = elem->wt->length();
@@ -432,7 +432,7 @@ namespace gloop {
           {
             std::vector<uint32_t> vv;
             stream::named_element_t *elem = block.findElem("polyline");
-            if (!elem || elem->wt == NULL) continue;
+            if (!elem || elem->wt == nullptr) continue;
             stream::named_prop_t *v = elem->findProp("vertex_indices");
             stream::named_prop_t *c = elem->findProp("closed");
 
@@ -478,7 +478,7 @@ namespace gloop {
             }
           }
 
-          if (block.wt != NULL) block.wt->end();
+          if (block.wt != nullptr) block.wt->end();
 
         }
       }

@@ -111,7 +111,7 @@ namespace gloop {
         str::split(std::back_inserter(r1), blocks[i], '/');
         for (size_t j = 0; j < std::min(rd_count, r1.size()); ++j) {
           if (v_rd[j]) {
-            size_t v = strtoul(r1[j].c_str(), NULL, 10);
+            size_t v = strtoul(r1[j].c_str(), nullptr, 10);
             v_rd[j]->next();
             v_rd[j]->_val((uint32_t)v - 1);
           }
@@ -242,7 +242,7 @@ namespace {
     mutable gloop::stream::named_prop_t *prop;
     std::string propname;
 
-    dbl(const char *pn, const char *defval = NULL) : has_default(false), def(), prop(NULL), propname(pn) {
+    dbl(const char *pn, const char *defval = nullptr) : has_default(false), def(), prop(nullptr), propname(pn) {
       if (defval) {
         def = defval;
         has_default = true;
@@ -251,14 +251,14 @@ namespace {
     virtual ~dbl() {}
     virtual bool setup(const gloop::stream::named_element_t *elem) const {
       prop = elem->findProp(propname);
-      if (prop == NULL && !has_default) return false;
-      if (prop != NULL && prop->wt == NULL) return false;
+      if (prop == nullptr && !has_default) return false;
+      if (prop != nullptr && prop->wt == nullptr) return false;
       return true;
     }
     virtual std::string next() const {
       double v;
       std::ostringstream s;
-      if (prop == NULL) {
+      if (prop == nullptr) {
         return def;
       }
       prop->wt->begin();
@@ -279,7 +279,7 @@ namespace {
     size_t v_base, vt_base, vn_base;
 
     face(size_t _v_base, size_t _vt_base, size_t _vn_base) :
-      v_prop(NULL), vt_prop(NULL), vn_prop(NULL),
+      v_prop(nullptr), vt_prop(nullptr), vn_prop(nullptr),
       n(0),
       v_base(_v_base), vt_base(_vt_base), vn_base(_vn_base) {
     }
@@ -287,11 +287,11 @@ namespace {
 
     virtual bool setup(const gloop::stream::named_element_t *elem) const {
       v_prop = elem->findProp("vertex_indices");
-      if (v_prop == NULL || v_prop->wt == NULL) return false;
+      if (v_prop == nullptr || v_prop->wt == nullptr) return false;
       vt_prop = elem->findProp("texture_indices");
-      if (vt_prop != NULL && vt_prop->wt == NULL) return false;
+      if (vt_prop != nullptr && vt_prop->wt == nullptr) return false;
       vn_prop = elem->findProp("normal_indices");
-      if (vn_prop != NULL && vn_prop->wt == NULL) return false;
+      if (vn_prop != nullptr && vn_prop->wt == nullptr) return false;
       return true;
     }
     virtual std::string next() const {
@@ -363,8 +363,8 @@ namespace {
                  const prop &p3 = null(),
                  const prop &p4 = null()) {
     gloop::stream::named_element_t *elem = block.findElem(elem_name);
-    if (elem == NULL) return 0;
-    if (elem->wt == NULL) return -1;
+    if (elem == nullptr) return 0;
+    if (elem->wt == nullptr) return -1;
     size_t n = elem->wt->length();
     elem->wt->begin();
     if (!p1.setup(elem)) { elem->wt->fail(); return -1; }
@@ -403,7 +403,7 @@ namespace gloop {
       for (std::list<std::pair<std::string, stream::block_t> >::iterator i = blocks.begin(); i != blocks.end(); ++i) {
         stream::block_t &block = (*i).second;
 
-        if (block.wt != NULL) block.wt->begin();
+        if (block.wt != nullptr) block.wt->begin();
         out << "g " << (*i).first << std::endl;
 
         if (block.name == "polyhedron") {
@@ -435,11 +435,11 @@ namespace gloop {
 
         }
 
-        if (block.wt != NULL) block.wt->end();
+        if (block.wt != nullptr) block.wt->end();
         continue;
 
       fail:
-        if (block.wt != NULL) block.wt->fail();
+        if (block.wt != nullptr) block.wt->fail();
         return false;
       }
       return true;

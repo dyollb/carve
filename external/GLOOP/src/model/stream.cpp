@@ -45,12 +45,12 @@ namespace gloop {
       for (named_prop_list_t::const_iterator i = props.begin(); i != props.end(); ++i) {
         if ((*i).name == n) return const_cast<named_prop_t *>(&*i);
       }
-      return NULL;
+      return nullptr;
     }
 
     named_prop_t &named_element_t::findOrCreateProp(const std::string &n) {
       named_prop_t *p = findProp(n);
-      if (p == NULL) {
+      if (p == nullptr) {
         props.push_back(named_prop_t(n));
         p = &props.back();
       }
@@ -62,12 +62,12 @@ namespace gloop {
       for (named_element_list_t::const_iterator i = elems.begin(); i != elems.end(); ++i) {
         if ((*i).name == n) return const_cast<named_element_t *>(&*i);
       }
-      return NULL;
+      return nullptr;
     }
 
     named_element_t &block_t::findOrCreateElem(const std::string &n) {
       named_element_t *e = findElem(n);
-      if (e == NULL) {
+      if (e == nullptr) {
         elems.push_back(named_element_t(n));
         e = &elems.back();
       }
@@ -79,12 +79,12 @@ namespace gloop {
       for (std::list<block_t>::const_iterator i = blocks.begin(); i != blocks.end(); ++i) {
         if ((*i).name == n) return const_cast<block_t *>(&*i);
       }
-      return NULL;
+      return nullptr;
     }
 
     block_t &model_reader::findOrCreateBlock(const std::string &n) {
       block_t *b = findBlock(n);
-      if (b == NULL) {
+      if (b == nullptr) {
         blocks.push_back(block_t(n));
         b = &blocks.back();
       }
@@ -93,7 +93,7 @@ namespace gloop {
 
     named_element_t *model_reader::findElem(const std::string &b, const std::string &e) const {
       block_t *block = findBlock(b);
-      if (!block) return NULL;
+      if (!block) return nullptr;
       return block->findElem(e);
     }
     named_element_t &model_reader::findOrCreateElem(const std::string &b, const std::string &e) {
@@ -102,9 +102,9 @@ namespace gloop {
 
     named_prop_t *model_reader::findProp(const std::string &b, const std::string &e, const std::string &p) const {
       block_t *block = findBlock(b);
-      if (!block) return NULL;
+      if (!block) return nullptr;
       named_element_t *elem = block->findElem(e);
-      if (!elem) return NULL;
+      if (!elem) return nullptr;
       return elem->findProp(p);
     }
     named_prop_t &model_reader::findOrCreateProp(const std::string &b, const std::string &e, const std::string &p) {

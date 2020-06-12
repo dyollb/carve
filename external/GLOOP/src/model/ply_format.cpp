@@ -287,7 +287,7 @@ namespace {
     gloop::stream::reader_base *rd;
     gloop::stream::writer_base *wt;
 
-    prop_info(const std::string &s) : name(), count_type(0), type(0), is_list(false), rd(NULL), wt(NULL) {
+    prop_info(const std::string &s) : name(), count_type(0), type(0), is_list(false), rd(nullptr), wt(nullptr) {
       std::istringstream in(s);
       std::string tok;
 
@@ -322,7 +322,7 @@ namespace {
     }
 
     bool writeBinary(std::ostream &out, bool byteswap) const {
-      if (wt == NULL) {
+      if (wt == nullptr) {
         return false;
       }
       char buf[8];
@@ -354,7 +354,7 @@ namespace {
     }
 
     bool writeAscii(std::ostream &out) const {
-      if (wt == NULL) {
+      if (wt == nullptr) {
         return false;
       }
       size_t len = 1;
@@ -384,7 +384,7 @@ namespace {
         in.read(buf, cts); if (in.gcount() != (std::streamsize)cts) return false;
         _read(buf, byteswap, count_type, len);
       }
-      if (rd == NULL) {
+      if (rd == nullptr) {
         in.seekg(len * sz, std::ios_base::cur);
       } else {
         rd->begin();
@@ -409,7 +409,7 @@ namespace {
       if (is_list) {
         if (!_parse(in, count_type, len)) return false;
       }
-      if (rd != NULL) {
+      if (rd != nullptr) {
         rd->begin();
         rd->length(len);
         for (size_t i = 0; i < len; ++i) {
@@ -473,7 +473,7 @@ namespace {
       return ok;
     }
 
-    elem_info(const std::string &s) : name(), count(0), props(), rd(NULL), wt(NULL) {
+    elem_info(const std::string &s) : name(), count(0), props(), rd(nullptr), wt(nullptr) {
       std::istringstream in(s);
       std::string tok;
 
@@ -552,12 +552,12 @@ namespace {
                  std::list<elem_info>::iterator b,
                  std::list<elem_info>::iterator e) {
     bool result = true;
-    if (base && base->rd != NULL) base->rd->begin();
+    if (base && base->rd != nullptr) base->rd->begin();
     while (b != e) {
-      gloop::stream::named_element_t *elem = NULL;
+      gloop::stream::named_element_t *elem = nullptr;
       if (base) elem = base->findElem((*b).name);
 
-      if (elem != NULL && elem->rd != NULL) {
+      if (elem != nullptr && elem->rd != nullptr) {
         (*b).rd = elem->rd.ptr();
         elem->rd->begin();
         elem->rd->length((*b).count);
@@ -565,7 +565,7 @@ namespace {
 
       for (size_t j = 0; j < (*b).props.size(); ++j) {
         prop_info &pi = (*b).props[j];
-        gloop::stream::named_prop_t *prop = NULL;
+        gloop::stream::named_prop_t *prop = nullptr;
         if (elem) prop = elem->findProp(pi.name);
         if (prop) pi.rd = prop->rd.ptr();
       }
@@ -594,7 +594,7 @@ namespace {
     }
 
   done:;
-    if (base && base->rd != NULL) {
+    if (base && base->rd != nullptr) {
       if (result) {
         base->rd->end();
       } else {
@@ -761,7 +761,7 @@ namespace gloop {
 
         for (stream::named_element_list_t::iterator j = block.elems.begin(); j != block.elems.end(); ++j) {
           stream::named_element_t &elem = *j;
-          if (elem.wt == NULL) continue;
+          if (elem.wt == nullptr) continue;
 
           elements.push_back(elem_info(elem.name));
           elem_info &ei = elements.back();
@@ -772,7 +772,7 @@ namespace gloop {
 
           for (stream::named_prop_list_t::iterator k = elem.props.begin(); k != elem.props.end(); ++k) {
             stream::named_prop_t &prop = *k;
-            if (prop.wt == NULL) continue;
+            if (prop.wt == nullptr) continue;
 
             ei.props.push_back(prop_info(prop.name));
             prop_info &pi = elements.back().props.back();

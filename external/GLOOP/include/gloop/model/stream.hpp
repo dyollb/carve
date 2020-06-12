@@ -217,7 +217,7 @@ namespace gloop {
       Ref<reader_base> rd;
       Ref<writer_base> wt;
 
-      named_prop_t(const std::string &n) : name(n), rd(NULL), wt(NULL) {}
+      named_prop_t(const std::string &n) : name(n), rd(nullptr), wt(nullptr) {}
     };
 
     typedef std::list<named_prop_t> named_prop_list_t;
@@ -229,7 +229,7 @@ namespace gloop {
       Ref<reader_base> rd;
       Ref<writer_base> wt;
 
-      named_element_t(const std::string &n) : name(n), props(), rd(NULL), wt(NULL) {}
+      named_element_t(const std::string &n) : name(n), props(), rd(nullptr), wt(nullptr) {}
 
       named_prop_t *findProp(const std::string &n) const;
       named_prop_t &findOrCreateProp(const std::string &n);
@@ -244,7 +244,7 @@ namespace gloop {
       Ref<reader_base> rd;
       Ref<writer_base> wt;
 
-      block_t(const std::string &n) : name(n), elems(), rd(NULL), wt(NULL) {}
+      block_t(const std::string &n) : name(n), elems(), rd(nullptr), wt(nullptr) {}
 
       named_element_t *findElem(const std::string &n) const;
       named_element_t &findOrCreateElem(const std::string &n);
@@ -268,15 +268,15 @@ namespace gloop {
 
       reader_base *findReader(const std::string &b, const std::string &e, const std::string &p) const {
         named_prop_t *prop = findProp(b, e, p); if (prop) return prop->rd.ptr();
-        return NULL;
+        return nullptr;
       }
       reader_base *findReader(const std::string &b, const std::string &e) const {
         named_element_t *elem = findElem(b, e); if (elem) return elem->rd.ptr();
-        return NULL;
+        return nullptr;
       }
       reader_base *findReader(const std::string &b) const {
         block_t *blk = findBlock(b); if (blk) return blk->rd.ptr();
-        return NULL;
+        return nullptr;
       }
 
       model_reader() {

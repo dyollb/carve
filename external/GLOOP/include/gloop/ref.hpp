@@ -139,7 +139,7 @@ namespace gloop {
     Ref(const Ref<U, S> &p) : pointee(NULL) {
       *this = p;
     }
-    Ref(const Ref &p) : pointee(NULL) {
+    Ref(const Ref &p) : pointee(nullptr) {
       *this = p;
     }
     Ref(typename R::ptr_type p) : pointee(p) {
