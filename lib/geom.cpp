@@ -53,7 +53,6 @@ vector<3> closestPoint(const tri<3>& tri, const vector<3>& pt) {
   const double c = dot(e1, e1);
   const double d = dot(e0, dp);
   const double e = dot(e1, dp);
-  const double f = dot(dp, dp);
 
   const double det = a * c - b * b;
 

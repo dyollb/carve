@@ -24,6 +24,12 @@ option(CARVE_USE_EXACT_PREDICATES        "Use Shewchuk's exact predicates, where
 option(CARVE_INTERSECT_GLU_TRIANGULATOR  "Include support for GLU triangulator in intersect" OFF)
 option(CARVE_GTEST_TESTS                 "Complie gtest, and dependent tests"                OFF)
 
+if(MSVC)
+  add_compile_options(/W4 /WX)
+else()
+  add_compile_options(-Wall)# -Wextra -pedantic -Werror)
+endif()
+
 if (MSVC AND NOT BUILD_SHARED_LIBS)
   # For MSVC, CMake sets certain flags to defaults we want to override.
   # This replacement code is taken from sample in the CMake Wiki at

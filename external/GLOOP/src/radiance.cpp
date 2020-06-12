@@ -44,10 +44,6 @@ namespace gloop {
     V2(CIE_x_w,CIE_y_w)
   };
 
-  static inline bool eq(float a, float b, float epsilon) {
-    return fabsf(a - b) < epsilon;
-  }
-
   static inline bool zero(float a, float epsilon) {
     return fabsf(a) < epsilon;
   }

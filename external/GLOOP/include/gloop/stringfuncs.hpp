@@ -28,7 +28,6 @@ namespace gloop {
     static inline bool startswith(
         const std::basic_string<_CharT, _Traits, _Alloc> &a,
         const std::basic_string<_CharT, _Traits, _Alloc> &b) {
-      using str_t = std::basic_string<_CharT, _Traits, _Alloc>;
       if (b.size() > a.size()) return false;
       return a.compare(0, b.size(), b) == 0;
     }
@@ -44,7 +43,6 @@ namespace gloop {
     static inline bool endswith(
         const std::basic_string<_CharT, _Traits, _Alloc> &a,
         const std::basic_string<_CharT, _Traits, _Alloc> &b) {
-      using str_t = std::basic_string<_CharT, _Traits, _Alloc>;
       if (b.size() > a.size()) return false;
       return a.compare(a.size() - b.size(), b.size(), b) == 0;
     }

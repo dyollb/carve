@@ -161,7 +161,7 @@ static bool endswith(const std::string& a, const std::string& b)
 int main(int argc, char** argv)
 {
 	options.parse(argc, argv);
-	carve::mesh::MeshSet<3>* poly;
+	carve::mesh::MeshSet<3>* poly = nullptr;
 
 	if (options.axis == Options::ERR)
 	{

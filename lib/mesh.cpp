@@ -815,7 +815,6 @@ FaceStitcher::FaceStitcher(const MeshOptions& _opts) : opts(_opts) {}
 mesh::MeshSet<3>* meshFromPolyhedron(const poly::Polyhedron* poly,
                                      int manifold_id) {
   using vertex_t = mesh::Vertex<3>;
-  using vector_t = mesh::Vertex<3>::vector_t;
   using edge_t = mesh::Edge<3>;
   using face_t = mesh::Face<3>;
   using mesh_t = mesh::Mesh<3>;
@@ -941,7 +940,6 @@ static void copyMeshFaces(
 // construct a Polyhedron from a MeshSet
 poly::Polyhedron* polyhedronFromMesh(const mesh::MeshSet<3>* mesh,
                                      int manifold_id) {
-  using poly_t = poly::Polyhedron;
   using vertex_t = poly::Polyhedron::vertex_t;
   using edge_t = poly::Polyhedron::edge_t;
   using face_t = poly::Polyhedron::face_t;

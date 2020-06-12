@@ -547,50 +547,6 @@ void generateCandidateOnSets(FLGroupList& a_grp, FLGroupList& b_grp,
 }
 }  // namespace
 
-static inline std::string CODE(const FaceLoopGroup* grp) {
-  const std::list<ClassificationInfo>& cinfo = (grp->classification);
-  if (cinfo.empty()) {
-    return "?";
-  }
-
-  FaceClass fc = FACE_UNCLASSIFIED;
-
-  for (std::list<ClassificationInfo>::const_iterator
-           i = grp->classification.begin(),
-           e = grp->classification.end();
-       i != e; ++i) {
-    if ((*i).intersected_mesh == nullptr) {
-      // classifier only returns global info
-      fc = (*i).classification;
-      break;
-    }
-
-    if ((*i).intersectedMeshIsClosed()) {
-      if ((*i).classification == FACE_UNCLASSIFIED) {
-        continue;
-      }
-      if (fc == FACE_UNCLASSIFIED) {
-        fc = (*i).classification;
-      } else if (fc != (*i).classification) {
-        return "X";
-      }
-    }
-  }
-  if (fc == FACE_IN) {
-    return "I";
-  }
-  if (fc == FACE_ON_ORIENT_IN) {
-    return "<";
-  }
-  if (fc == FACE_ON_ORIENT_OUT) {
-    return ">";
-  }
-  if (fc == FACE_OUT) {
-    return "O";
-  }
-  return "*";
-}
-
 void CSG::classifyFaceGroupsEdge(
     const V2Set& shared_edges, VertexClassification& vclass,
     carve::mesh::MeshSet<3>* poly_a, const face_rtree_t* poly_a_rtree,

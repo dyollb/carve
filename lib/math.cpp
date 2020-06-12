@@ -289,19 +289,6 @@ static void eig2(const Matrix3& m, double l, carve::geom::vector<3>& e1,
   e2.normalize();
 }
 
-static void eig3(const Matrix3& m, double l, carve::geom::vector<3>& e1,
-                 carve::geom::vector<3>& e2, carve::geom::vector<3>& e3) {
-  e1.x = 1.0;
-  e1.y = 0.0;
-  e1.z = 0.0;
-  e2.x = 0.0;
-  e2.y = 1.0;
-  e2.z = 0.0;
-  e3.x = 0.0;
-  e3.y = 0.0;
-  e3.z = 1.0;
-}
-
 void eigSolveSymmetric(const Matrix3& m, double& l1, carve::geom::vector<3>& e1,
                        double& l2, carve::geom::vector<3>& e2, double& l3,
                        carve::geom::vector<3>& e3) {
