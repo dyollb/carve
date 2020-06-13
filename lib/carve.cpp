@@ -23,7 +23,7 @@
 // SOFTWARE.
 
 #if defined(HAVE_CONFIG_H)
-#include <carve_config.h>
+#	include <carve_config.h>
 #endif
 
 #include <carve/carve.hpp>
@@ -33,4 +33,4 @@
 namespace carve {
 double EPSILON = DEF_EPSILON;
 double EPSILON2 = DEF_EPSILON * DEF_EPSILON;
-}
+} // namespace carve

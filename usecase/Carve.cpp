@@ -244,7 +244,6 @@ carve::mesh::MeshSet<3>* Boolean(carve::mesh::MeshSet<3>* a, carve::mesh::MeshSe
 std::vector<size_t> SelfIntersect(const QGenTriangleMesh& mesh)
 {
 	using vec3 = carve::geom::vector<3>;
-	using vec2 = carve::geom::vector<2>;
 
 	std::vector<size_t> tri_ids;
 	if (mesh.tris_count() == 0)
