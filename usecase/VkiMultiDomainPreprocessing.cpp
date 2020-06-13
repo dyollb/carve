@@ -35,6 +35,7 @@
 // Standard Template Library
 #include <algorithm>
 #include <exception>
+#include <memory>
 #include <sstream>
 #include <tuple>
 

@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 2.8)
 
-#project(carve-preprocessing)
-SET(CMAKE_CXX_STANDARD 11)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin/)
+project(carve-preprocessing)
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 #set(VTK_DIR /Users/lloyd/Code/builds/vtk-8.2)
 find_package(VTK REQUIRED)
