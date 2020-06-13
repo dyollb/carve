@@ -147,7 +147,7 @@ static bool endswith(const std::string& a, const std::string& b)
 
 carve::mesh::MeshSet<3>* readModel(const std::string& file)
 {
-	carve::mesh::MeshSet<3>* poly;
+	carve::mesh::MeshSet<3>* poly = nullptr;
 
 	if (file.empty())
 	{

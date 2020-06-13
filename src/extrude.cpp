@@ -525,8 +525,6 @@ carve::poly::Polyhedron* extrude(
 
 int main(int argc, char** argv)
 {
-	using loop_t = std::vector<carve::geom2d::P2>;
-
 	std::ifstream in(argv[1]);
 	unsigned file_num = 0;
 	while (in.good())
