@@ -29,7 +29,7 @@
 
 #pragma once
 
-#include <gloop/model/stream.hpp>
 #include <gloop/model/obj_format.hpp>
-#include <gloop/model/vtk_format.hpp>
 #include <gloop/model/ply_format.hpp>
+#include <gloop/model/stream.hpp>
+#include <gloop/model/vtk_format.hpp>

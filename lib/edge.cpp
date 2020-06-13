@@ -23,7 +23,7 @@
 // SOFTWARE.
 
 #if defined(HAVE_CONFIG_H)
-#include <carve_config.h>
+#	include <carve_config.h>
 #endif
 
 #include <carve/poly.hpp>

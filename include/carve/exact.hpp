@@ -428,7 +428,6 @@ static inline void prod_2_1(const double* a, const double* b, double* r)
 	double t3[2];
 	op<1, 1>::add(t1 + 1, t2, t3);
 	r[1] = t3[0];
-	double t4[2];
 	op<1, 1>::add_fast(t2 + 1, t3 + 1, r + 2);
 }
 
@@ -562,7 +561,6 @@ static inline void square_2(const double* a, double* r)
 	r[1] = t4[0];
 	double t5[2];
 	square(a[1], t5);
-	double t6[4];
 	op<2, 2>::add(t5, t4 + 1, r + 2);
 }
 } // namespace detail

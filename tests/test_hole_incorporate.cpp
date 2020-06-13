@@ -23,7 +23,7 @@
 // SOFTWARE.
 
 #if defined(HAVE_CONFIG_H)
-#include <carve_config.h>
+#	include <carve_config.h>
 #endif
 
 #include <carve/geom2d.hpp>
@@ -37,19 +37,19 @@
 #include <sstream>
 
 #if defined(__APPLE__)
-#include <GLUT/glut.h>
-#include <OpenGL/gl.h>
-#include <OpenGL/glu.h>
+#	include <GLUT/glut.h>
+#	include <OpenGL/gl.h>
+#	include <OpenGL/glu.h>
 #else
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glut.h>
+#	include <GL/gl.h>
+#	include <GL/glu.h>
+#	include <GL/glut.h>
 #endif
 
 #include <iostream>
 
 #if defined(__GNUC__)
-#define __stdcall
+#	define __stdcall
 #endif
 
 #if defined(GLU_TESS_CALLBACK_VARARGS)
@@ -58,121 +58,134 @@ typedef GLvoid(_stdcall* GLUTessCallback)(...);
 typedef void(__stdcall* GLUTessCallback)();
 #endif
 
-struct TestScene : public Scene {
-  GLuint d_list;
+struct TestScene : public Scene
+{
+	GLuint d_list;
 
-  bool key(unsigned char k, int x, int y) override { return true; }
+	bool key(unsigned char k, int x, int y) override { return true; }
 
-  GLvoid draw() override { glCallList(d_list); }
+	GLvoid draw() override { glCallList(d_list); }
 
-  TestScene(int argc, char** argv) : Scene(argc, argv) {
-    d_list = glGenLists(1);
-  }
+	TestScene(int argc, char** argv) : Scene(argc, argv)
+	{
+		d_list = glGenLists(1);
+	}
 
-  ~TestScene() override { glDeleteLists(d_list, 1); }
+	~TestScene() override { glDeleteLists(d_list, 1); }
 };
 
-int main(int argc, char** argv) {
-  TestScene* scene = new TestScene(argc, argv);
+int main(int argc, char** argv)
+{
+	TestScene* scene = new TestScene(argc, argv);
 
-  typedef std::vector<carve::geom2d::P2> loop_t;
-  std::vector<loop_t> poly;
+	typedef std::vector<carve::geom2d::P2> loop_t;
+	std::vector<loop_t> poly;
 
-  std::ifstream in(argv[1]);
-  while (in.good()) {
-    std::string s;
-    std::getline(in, s);
-    if (s == "BEGIN") {
-      poly.push_back(loop_t());
-    } else {
-      std::istringstream in_s(s);
-      double x, y;
-      in_s >> x >> y;
-      poly.back().push_back(carve::geom::VECTOR(x, y));
-    }
-  }
+	std::ifstream in(argv[1]);
+	while (in.good())
+	{
+		std::string s;
+		std::getline(in, s);
+		if (s == "BEGIN")
+		{
+			poly.push_back(loop_t());
+		}
+		else
+		{
+			std::istringstream in_s(s);
+			double x, y;
+			in_s >> x >> y;
+			poly.back().push_back(carve::geom::VECTOR(x, y));
+		}
+	}
 
-  std::vector<std::pair<size_t, size_t> > result;
-  std::vector<carve::geom2d::P2> merged;
-  std::vector<carve::triangulate::tri_idx> triangulated;
+	std::vector<std::pair<size_t, size_t>> result;
+	std::vector<carve::geom2d::P2> merged;
+	std::vector<carve::triangulate::tri_idx> triangulated;
 
-  try {
-    result = carve::triangulate::incorporateHolesIntoPolygon(poly);
-    merged.reserve(result.size());
-    for (size_t i = 0; i < result.size(); ++i) {
-      merged.push_back(poly[result[i].first][result[i].second]);
-    }
-    carve::triangulate::triangulate(merged, triangulated);
-    carve::triangulate::improve(merged, triangulated);
+	try
+	{
+		result = carve::triangulate::incorporateHolesIntoPolygon(poly);
+		merged.reserve(result.size());
+		for (size_t i = 0; i < result.size(); ++i)
+		{
+			merged.push_back(poly[result[i].first][result[i].second]);
+		}
+		carve::triangulate::triangulate(merged, triangulated);
+		carve::triangulate::improve(merged, triangulated);
+	}
+	catch (carve::exception exc)
+	{
+		std::cerr << "FAIL: " << exc.str() << std::endl;
+		return -1;
+	}
 
-  } catch (carve::exception exc) {
-    std::cerr << "FAIL: " << exc.str() << std::endl;
-    return -1;
-  }
+	carve::geom::aabb<2> aabb;
+	aabb.fit(merged.begin(), merged.end());
+	double scale = 20.0 / std::max(aabb.extent.x, aabb.extent.y);
 
-  carve::geom::aabb<2> aabb;
-  aabb.fit(merged.begin(), merged.end());
-  double scale = 20.0 / std::max(aabb.extent.x, aabb.extent.y);
+	glNewList(scene->d_list, GL_COMPILE);
 
-  glNewList(scene->d_list, GL_COMPILE);
+	glDisable(GL_LIGHTING);
 
-  glDisable(GL_LIGHTING);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-  glEnable(GL_BLEND);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glColor4f(0.2, 0.3, 0.4, 1.0);
 
-  glColor4f(0.2, 0.3, 0.4, 1.0);
+	glBegin(GL_TRIANGLES);
+	for (size_t i = 0; i != triangulated.size(); ++i)
+	{
+		double x, y;
+		x = (merged[triangulated[i].a].x - aabb.pos.x) * scale;
+		y = (merged[triangulated[i].a].y - aabb.pos.y) * scale;
+		glVertex3f(x, y, 0.0);
+		x = (merged[triangulated[i].b].x - aabb.pos.x) * scale;
+		y = (merged[triangulated[i].b].y - aabb.pos.y) * scale;
+		glVertex3f(x, y, 0.0);
+		x = (merged[triangulated[i].c].x - aabb.pos.x) * scale;
+		y = (merged[triangulated[i].c].y - aabb.pos.y) * scale;
+		glVertex3f(x, y, 0.0);
+	}
+	glEnd();
 
-  glBegin(GL_TRIANGLES);
-  for (size_t i = 0; i != triangulated.size(); ++i) {
-    double x, y;
-    x = (merged[triangulated[i].a].x - aabb.pos.x) * scale;
-    y = (merged[triangulated[i].a].y - aabb.pos.y) * scale;
-    glVertex3f(x, y, 0.0);
-    x = (merged[triangulated[i].b].x - aabb.pos.x) * scale;
-    y = (merged[triangulated[i].b].y - aabb.pos.y) * scale;
-    glVertex3f(x, y, 0.0);
-    x = (merged[triangulated[i].c].x - aabb.pos.x) * scale;
-    y = (merged[triangulated[i].c].y - aabb.pos.y) * scale;
-    glVertex3f(x, y, 0.0);
-  }
-  glEnd();
+	glColor4f(0.0, 0.0, 0.0, 0.1);
 
-  glColor4f(0.0, 0.0, 0.0, 0.1);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glDisable(GL_DEPTH_TEST);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glBegin(GL_TRIANGLES);
+	for (size_t i = 0; i != triangulated.size(); ++i)
+	{
+		double x, y;
+		x = (merged[triangulated[i].a].x - aabb.pos.x) * scale;
+		y = (merged[triangulated[i].a].y - aabb.pos.y) * scale;
+		glVertex3f(x, y, 0.0);
+		x = (merged[triangulated[i].b].x - aabb.pos.x) * scale;
+		y = (merged[triangulated[i].b].y - aabb.pos.y) * scale;
+		glVertex3f(x, y, 0.0);
+		x = (merged[triangulated[i].c].x - aabb.pos.x) * scale;
+		y = (merged[triangulated[i].c].y - aabb.pos.y) * scale;
+		glVertex3f(x, y, 0.0);
+	}
+	glEnd();
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glEnable(GL_DEPTH_TEST);
 
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  glDisable(GL_DEPTH_TEST);
-  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-  glBegin(GL_TRIANGLES);
-  for (size_t i = 0; i != triangulated.size(); ++i) {
-    double x, y;
-    x = (merged[triangulated[i].a].x - aabb.pos.x) * scale;
-    y = (merged[triangulated[i].a].y - aabb.pos.y) * scale;
-    glVertex3f(x, y, 0.0);
-    x = (merged[triangulated[i].b].x - aabb.pos.x) * scale;
-    y = (merged[triangulated[i].b].y - aabb.pos.y) * scale;
-    glVertex3f(x, y, 0.0);
-    x = (merged[triangulated[i].c].x - aabb.pos.x) * scale;
-    y = (merged[triangulated[i].c].y - aabb.pos.y) * scale;
-    glVertex3f(x, y, 0.0);
-  }
-  glEnd();
-  glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-  glEnable(GL_DEPTH_TEST);
+	glColor4f(1, 1, 1, 1);
+	glBegin(GL_LINE_LOOP);
+	for (size_t i = 0; i < merged.size(); ++i)
+	{
+		glVertex3f((merged[i].x - aabb.pos.x) * scale,
+				(merged[i].y - aabb.pos.y) * scale, 2.0);
+	}
+	glEnd();
 
-  glColor4f(1, 1, 1, 1);
-  glBegin(GL_LINE_LOOP);
-  for (size_t i = 0; i < merged.size(); ++i) {
-    glVertex3f((merged[i].x - aabb.pos.x) * scale,
-               (merged[i].y - aabb.pos.y) * scale, 2.0);
-  }
-  glEnd();
+	glEndList();
 
-  glEndList();
+	scene->run();
 
-  scene->run();
+	delete scene;
 
-  delete scene;
-
-  return 0;
+	return 0;
 }

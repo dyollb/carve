@@ -78,7 +78,7 @@ template<unsigned ndim>
 class Vertex : public tagable
 {
 public:
-	typedef carve::geom::vector<ndim> vector_t;
+	using vector_t = carve::geom::vector<ndim>;
 	using owner_t = MeshSet<ndim>;
 	using aabb_t = carve::geom::aabb<ndim>;
 

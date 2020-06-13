@@ -24,7 +24,8 @@
 
 #include <carve/geom.hpp>
 
-int main(int argc, char** argv) {
-  carve::geom::vector<4> v;
-  v.x = 1.0;
+int main(int argc, char** argv)
+{
+	carve::geom::vector<4> v;
+	v.x = 1.0;
 }

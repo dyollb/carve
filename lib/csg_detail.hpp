@@ -26,54 +26,60 @@
 
 #include <carve/carve.hpp>
 
+#include <carve/collection_types.hpp>
+#include <carve/faceloop.hpp>
+#include <carve/mesh.hpp>
 #include <carve/polyhedron_base.hpp>
 
 namespace carve {
 namespace csg {
 namespace detail {
 typedef std::map<
-    carve::mesh::MeshSet<3>::vertex_t*,
-    std::set<std::pair<carve::mesh::MeshSet<3>::face_t*, double> > >
-    EdgeIntInfo;
+		carve::mesh::MeshSet<3>::vertex_t*,
+		std::set<std::pair<carve::mesh::MeshSet<3>::face_t*, double>>>
+		EdgeIntInfo;
 
-using VSet = std::unordered_set<carve::mesh::MeshSet<3>::vertex_t *>;
-using FSet = std::unordered_set<carve::mesh::MeshSet<3>::face_t *>;
+using VSet = std::unordered_set<carve::mesh::MeshSet<3>::vertex_t*>;
+using FSet = std::unordered_set<carve::mesh::MeshSet<3>::face_t*>;
 
-using VSetSmall = std::set<carve::mesh::MeshSet<3>::vertex_t *>;
+using VSetSmall = std::set<carve::mesh::MeshSet<3>::vertex_t*>;
 using V2SetSmall = std::set<csg::V2>;
-using FSetSmall = std::set<carve::mesh::MeshSet<3>::face_t *>;
+using FSetSmall = std::set<carve::mesh::MeshSet<3>::face_t*>;
 
-using VVSMap = std::unordered_map<carve::mesh::MeshSet<3>::vertex_t *, VSetSmall>;
-using EIntMap = std::unordered_map<carve::mesh::MeshSet<3>::edge_t *, EdgeIntInfo>;
-using FVSMap = std::unordered_map<carve::mesh::MeshSet<3>::face_t *, VSetSmall>;
+using VVSMap = std::unordered_map<carve::mesh::MeshSet<3>::vertex_t*, VSetSmall>;
+using EIntMap = std::unordered_map<carve::mesh::MeshSet<3>::edge_t*, EdgeIntInfo>;
+using FVSMap = std::unordered_map<carve::mesh::MeshSet<3>::face_t*, VSetSmall>;
 
-using VFSMap = std::unordered_map<carve::mesh::MeshSet<3>::vertex_t *, FSetSmall>;
-using FV2SMap = std::unordered_map<carve::mesh::MeshSet<3>::face_t *, V2SetSmall>;
+using VFSMap = std::unordered_map<carve::mesh::MeshSet<3>::vertex_t*, FSetSmall>;
+using FV2SMap = std::unordered_map<carve::mesh::MeshSet<3>::face_t*, V2SetSmall>;
 
-using EVVMap = std::unordered_map<carve::mesh::MeshSet<3>::edge_t *, std::vector<carve::mesh::MeshSet<3>::vertex_t *> >;
+using EVVMap = std::unordered_map<carve::mesh::MeshSet<3>::edge_t*, std::vector<carve::mesh::MeshSet<3>::vertex_t*>>;
 
-using VEVecMap = std::unordered_map<carve::mesh::MeshSet<3>::vertex_t *, std::vector<carve::mesh::MeshSet<3>::edge_t *> >;
+using VEVecMap = std::unordered_map<carve::mesh::MeshSet<3>::vertex_t*, std::vector<carve::mesh::MeshSet<3>::edge_t*>>;
 
 class LoopEdges
-    : public std::unordered_map<V2, std::list<FaceLoop*>, hash_pair> {
-  using super = std::unordered_map<V2, std::list<FaceLoop *>, hash_pair>;
+		: public std::unordered_map<V2, std::list<FaceLoop*>, hash_pair>
+{
+	using super = std::unordered_map<V2, std::list<FaceLoop*>, hash_pair>;
 
- public:
-  void addFaceLoop(FaceLoop* fl);
-  void sortFaceLoopLists();
-  void removeFaceLoop(FaceLoop* fl);
+public:
+	void addFaceLoop(FaceLoop* fl);
+	void sortFaceLoopLists();
+	void removeFaceLoop(FaceLoop* fl);
 };
-}  // namespace detail
-}  // namespace csg
-}  // namespace carve
+}
+}
+} // namespace carve::csg::detail
 
 static inline std::ostream& operator<<(std::ostream& o,
-                                       const carve::csg::detail::FSet& s) {
-  const char* sep = "";
-  for (carve::csg::detail::FSet::const_iterator i = s.begin(); i != s.end();
-       ++i) {
-    o << sep << *i;
-    sep = ",";
-  }
-  return o;
+		const carve::csg::detail::FSet& s)
+{
+	const char* sep = "";
+	for (carve::csg::detail::FSet::const_iterator i = s.begin(); i != s.end();
+			 ++i)
+	{
+		o << sep << *i;
+		sep = ",";
+	}
+	return o;
 }

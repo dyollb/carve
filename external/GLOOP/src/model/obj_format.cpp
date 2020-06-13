@@ -27,13 +27,13 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
 // OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include <gloop/gloop.hpp>
 #include <gloop/gloop-model.hpp>
+#include <gloop/gloop.hpp>
 
-#include <iostream>
-#include <iomanip>
-#include <iterator>
 #include <algorithm>
+#include <iomanip>
+#include <iostream>
+#include <iterator>
 
 
 namespace gloop {

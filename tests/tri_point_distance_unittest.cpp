@@ -25,7 +25,7 @@
 #include <gtest/gtest.h>
 
 #if defined(HAVE_CONFIG_H)
-#include <carve_config.h>
+#	include <carve_config.h>
 #endif
 
 #include <carve/carve.hpp>

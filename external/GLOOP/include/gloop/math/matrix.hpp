@@ -29,7 +29,8 @@
 
 #pragma once
 
-#include <gloop/gloop-math.hpp>
+#include <gloop/math/quaternion.hpp>
+#include <gloop/math/vector.hpp>
 
 namespace gloop {
 

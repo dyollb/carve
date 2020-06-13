@@ -33,7 +33,7 @@
 #  pragma warning(disable:4201)
 #endif
 
+#include <gloop/exceptions.hpp>
 #include <gloop/ref.hpp>
 #include <gloop/stringfuncs.hpp>
-#include <gloop/exceptions.hpp>
 

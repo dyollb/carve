@@ -52,12 +52,7 @@
 #	pragma warning(disable : 4251)
 #endif
 
-#if defined(WIN32)
-#	include <carve/win32.h>
-#endif
-
 #include <cmath>
-
 #include <iomanip>
 #include <list>
 #include <map>

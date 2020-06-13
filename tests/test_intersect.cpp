@@ -23,7 +23,7 @@
 // SOFTWARE.
 
 #if defined(HAVE_CONFIG_H)
-#include <carve_config.h>
+#	include <carve_config.h>
 #endif
 
 #include <carve/convex_hull.hpp>
@@ -45,65 +45,73 @@
 #include <gloop/glu.hpp>
 #include <gloop/glut.hpp>
 
+#include <cassert>
+#include <ctime>
 #include <fstream>
 #include <set>
 #include <string>
 #include <utility>
-#include <cassert>
-#include <ctime>
 
 #ifdef WIN32
-#undef min
-#undef max
+#	undef min
+#	undef max
 #endif
 
-struct Options : public opt::Parser {
-  bool edge_classifier;
-  bool rescale;
-  bool output;
-  std::string output_file;
-  bool ascii;
+struct Options : public opt::Parser
+{
+	bool edge_classifier;
+	bool rescale;
+	bool output;
+	std::string output_file;
+	bool ascii;
 
-  std::vector<std::string> args;
+	std::vector<std::string> args;
 
-  void optval(const std::string& o, const std::string& v) override {
-    if (o == "--binary" || o == "-b") {
-      ascii = false;
-      return;
-    }
-    if (o == "--ascii" || o == "-a") {
-      ascii = true;
-      return;
-    }
-    if (o == "--rescale" || o == "-r") {
-      rescale = true;
-      return;
-    }
-    if (o == "--output" || o == "-o") {
-      output = true;
-      output_file = v;
-      return;
-    }
-    if (o == "--edge" || o == "-e") {
-      edge_classifier = true;
-      return;
-    }
-  }
+	void optval(const std::string& o, const std::string& v) override
+	{
+		if (o == "--binary" || o == "-b")
+		{
+			ascii = false;
+			return;
+		}
+		if (o == "--ascii" || o == "-a")
+		{
+			ascii = true;
+			return;
+		}
+		if (o == "--rescale" || o == "-r")
+		{
+			rescale = true;
+			return;
+		}
+		if (o == "--output" || o == "-o")
+		{
+			output = true;
+			output_file = v;
+			return;
+		}
+		if (o == "--edge" || o == "-e")
+		{
+			edge_classifier = true;
+			return;
+		}
+	}
 
-  void arg(const std::string& a) override { args.push_back(a); }
+	void arg(const std::string& a) override { args.push_back(a); }
 
-  Options() {
-    ascii = true;
-    rescale = false;
-    output = false;
-    edge_classifier = false;
+	Options()
+	{
+		ascii = true;
+		rescale = false;
+		output = false;
+		edge_classifier = false;
 
-    option("binary", 'b', false, "binary output");
-    option("ascii", 'a', false, "ascii output (default)");
-    option("rescale", 'r', false, "rescale prior to CSG operations");
-    option("output", 'o', true, "output result in .ply format");
-    option("edge", 'e', false, "use edge classifier");
-  }
+		option("binary", 'b', false, "binary output");
+		option("ascii", 'a', false, "ascii output (default)");
+		option("rescale", 'r', false, "rescale prior to CSG operations");
+		option("output", 'o', true, "output result in .ply format");
+		option("edge", 'e', false, "use edge classifier");
+	}
 };
 
 static Options options;
@@ -118,734 +126,794 @@ std::string data_path = "/Users/sargeant/projects/PERSONAL/CARVE/data/";
 std::string data_path = "../data/";
 #endif
 
-struct TestScene : public Scene {
-  GLuint draw_list_base;
-  std::vector<Option*> draw_flags;
-  std::vector<bool> wireframe_flags;
-  bool key(unsigned char k, int x, int y) override {
-    const char* t;
-    static const char* l = "1234567890!@#$%^&*()";
-    t = strchr(l, k);
-    if (t != nullptr) {
-      int layer = t - l;
-      if ((size_t)layer < draw_flags.size()) {
-        draw_flags[layer]->setChecked(!draw_flags[layer]->isChecked());
-      }
-    }
-    return true;
-  }
+struct TestScene : public Scene
+{
+	GLuint draw_list_base;
+	std::vector<Option*> draw_flags;
+	std::vector<bool> wireframe_flags;
+	bool key(unsigned char k, int x, int y) override
+	{
+		const char* t;
+		static const char* l = "1234567890!@#$%^&*()";
+		t = strchr(l, k);
+		if (t != nullptr)
+		{
+			int layer = t - l;
+			if ((size_t)layer < draw_flags.size())
+			{
+				draw_flags[layer]->setChecked(!draw_flags[layer]->isChecked());
+			}
+		}
+		return true;
+	}
 
-  GLvoid draw() override {
-    for (size_t i = 0; i < draw_flags.size(); ++i) {
-      if (draw_flags[i]->isChecked() && !wireframe_flags[i]) {
-        glCallList(draw_list_base + i);
-      }
-    }
+	GLvoid draw() override
+	{
+		for (size_t i = 0; i < draw_flags.size(); ++i)
+		{
+			if (draw_flags[i]->isChecked() && !wireframe_flags[i])
+			{
+				glCallList(draw_list_base + i);
+			}
+		}
 
-    GLfloat proj[16];
-    glGetFloatv(GL_PROJECTION_MATRIX, proj);
-    GLfloat p33 = proj[10];
-    proj[10] += 1e-5;
-    glMatrixMode(GL_PROJECTION);
-    glLoadMatrixf(proj);
+		GLfloat proj[16];
+		glGetFloatv(GL_PROJECTION_MATRIX, proj);
+		GLfloat p33 = proj[10];
+		proj[10] += 1e-5;
+		glMatrixMode(GL_PROJECTION);
+		glLoadMatrixf(proj);
 
-    for (size_t i = 0; i < draw_flags.size(); ++i) {
-      if (draw_flags[i]->isChecked() && wireframe_flags[i]) {
-        glCallList(draw_list_base + i);
-      }
-    }
+		for (size_t i = 0; i < draw_flags.size(); ++i)
+		{
+			if (draw_flags[i]->isChecked() && wireframe_flags[i])
+			{
+				glCallList(draw_list_base + i);
+			}
+		}
 
-    proj[10] = p33;
-    glMatrixMode(GL_PROJECTION);
-    glLoadMatrixf(proj);
+		proj[10] = p33;
+		glMatrixMode(GL_PROJECTION);
+		glLoadMatrixf(proj);
 
-    if (rays.size()) {
-      glBegin(GL_LINES);
-      for (size_t i = 0; i < rays.size(); ++i) {
-        carve::geom3d::Vector a = rays[i].v1, b = rays[i].v2;
+		if (rays.size())
+		{
+			glBegin(GL_LINES);
+			for (size_t i = 0; i < rays.size(); ++i)
+			{
+				carve::geom3d::Vector a = rays[i].v1, b = rays[i].v2;
 
-        glVertex3f(a.x, a.y, a.z);
-        glVertex3f(b.x, b.y, b.z);
-      }
-      glEnd();
-    }
-  }
+				glVertex3f(a.x, a.y, a.z);
+				glVertex3f(b.x, b.y, b.z);
+			}
+			glEnd();
+		}
+	}
 
-  void click(int button, int state, int x, int y) override {
-    //     if ((glutGetModifiers() & GLUT_ACTIVE_CTRL) != 0 && state ==
-    //     GLUT_DOWN) {
+	void click(int button, int state, int x, int y) override
+	{
+		//     if ((glutGetModifiers() & GLUT_ACTIVE_CTRL) != 0 && state ==
+		//     GLUT_DOWN) {
 
-    //       carve::geom3d::Ray r = getRay(x, y);
+		//       carve::geom3d::Ray r = getRay(x, y);
 
-    //       r.v = r.v / g_scale;
-    //       r.v = r.v - g_translation;
-    //       carve::geom3d::Vector from = r.v;
-    //       carve::geom3d::Vector to = r.v - r.D * 1000;
+		//       r.v = r.v / g_scale;
+		//       r.v = r.v - g_translation;
+		//       carve::geom3d::Vector from = r.v;
+		//       carve::geom3d::Vector to = r.v - r.D * 1000;
 
-    //       //rays.push_back(LineSegment(g_scale * (from + g_translation),
-    //       g_scale * (to + g_translation)));
-    //       std::vector<const carve::poly::Face<3> *> faces;
+		//       //rays.push_back(LineSegment(g_scale * (from + g_translation),
+		//       g_scale * (to + g_translation)));
+		//       std::vector<const carve::poly::Face<3> *> faces;
 
-    //       g_result->findFacesNear(carve::geom3d::LineSegment(from, to),
-    //       faces);
+		//       g_result->findFacesNear(carve::geom3d::LineSegment(from, to),
+		//       faces);
 
-    //       // see if any of the faces intersect our ray
-    //       for (size_t i = 0; i < faces.size();++i) {
-    //         const carve::poly::Face<3> *f = faces[i];
-    //         carve::geom3d::Vector pos;
-    //         if (f->lineSegmentIntersection(carve::geom3d::LineSegment(from,
-    //         to), pos) > 0) {
-    //           pos = g_scale * (pos + g_translation);
-    //           carve::geom3d::Vector fromWorld = g_scale * (from +
-    //           g_translation);
-    //           zoomTo(pos, 0.7 * (fromWorld - pos).length());
-    //         }
-    //       }
-    //     }
-  }
+		//       // see if any of the faces intersect our ray
+		//       for (size_t i = 0; i < faces.size();++i) {
+		//         const carve::poly::Face<3> *f = faces[i];
+		//         carve::geom3d::Vector pos;
+		//         if (f->lineSegmentIntersection(carve::geom3d::LineSegment(from,
+		//         to), pos) > 0) {
+		//           pos = g_scale * (pos + g_translation);
+		//           carve::geom3d::Vector fromWorld = g_scale * (from +
+		//           g_translation);
+		//           zoomTo(pos, 0.7 * (fromWorld - pos).length());
+		//         }
+		//       }
+		//     }
+	}
 
-  TestScene(int argc, char** argv, int n_dlist) : Scene(argc, argv) {
-    draw_list_base = glGenLists(n_dlist);
-  }
+	TestScene(int argc, char** argv, int n_dlist) : Scene(argc, argv)
+	{
+		draw_list_base = glGenLists(n_dlist);
+	}
 
-  ~TestScene() override { glDeleteLists(draw_list_base, draw_flags.size()); }
+	~TestScene() override { glDeleteLists(draw_list_base, draw_flags.size()); }
 
-  void _init() override {}
+	void _init() override {}
 };
 
-bool odd(int x, int y, int z) {
-  return ((x + y + z) & 1) == 1;
+bool odd(int x, int y, int z)
+{
+	return ((x + y + z) & 1) == 1;
 }
 
-bool even(int x, int y, int z) {
-  return ((x + y + z) & 1) == 0;
+bool even(int x, int y, int z)
+{
+	return ((x + y + z) & 1) == 0;
 }
 
-class Input {
- public:
-  Input() {
-    poly = nullptr;
-    op = carve::csg::CSG::UNION;
-    ownsPoly = true;
-  }
+class Input
+{
+public:
+	Input()
+	{
+		poly = nullptr;
+		op = carve::csg::CSG::UNION;
+		ownsPoly = true;
+	}
 
-  // Our copy constructor actually transfers ownership.
-  Input(const Input& i) {
-    poly = i.poly;
-    op = i.op;
-    i.ownsPoly = false;
-    ownsPoly = true;
-  }
+	// Our copy constructor actually transfers ownership.
+	Input(const Input& i)
+	{
+		poly = i.poly;
+		op = i.op;
+		i.ownsPoly = false;
+		ownsPoly = true;
+	}
 
-  Input(carve::mesh::MeshSet<3>* p, carve::csg::CSG::OP o,
-        bool becomeOwner = true) {
-    poly = p;
-    op = o;
-    ownsPoly = becomeOwner;
-  }
+	Input(carve::mesh::MeshSet<3>* p, carve::csg::CSG::OP o,
+			bool becomeOwner = true)
+	{
+		poly = p;
+		op = o;
+		ownsPoly = becomeOwner;
+	}
 
-  ~Input() {
-    if (ownsPoly) {
-      delete poly;
-    }
-  }
+	~Input()
+	{
+		if (ownsPoly)
+		{
+			delete poly;
+		}
+	}
 
-  carve::mesh::MeshSet<3>* poly;
-  carve::csg::CSG::OP op;
-  mutable bool ownsPoly;
+	carve::mesh::MeshSet<3>* poly;
+	carve::csg::CSG::OP op;
+	mutable bool ownsPoly;
 
- private:
+private:
 };
 
-void getInputsFromTest(int test, std::list<Input>& inputs) {
-  carve::csg::CSG::OP op = carve::csg::CSG::INTERSECTION;
-  carve::mesh::MeshSet<3>* a = nullptr;
-  carve::mesh::MeshSet<3>* b = nullptr;
-  carve::mesh::MeshSet<3>* c = nullptr;
+void getInputsFromTest(int test, std::list<Input>& inputs)
+{
+	carve::csg::CSG::OP op = carve::csg::CSG::INTERSECTION;
+	carve::mesh::MeshSet<3>* a = nullptr;
+	carve::mesh::MeshSet<3>* b = nullptr;
+	carve::mesh::MeshSet<3>* c = nullptr;
 
-  switch (test) {
-    case 0:
-      a = makeCube(carve::math::Matrix::SCALE(2.0, 2.0, 2.0));
-      b = makeCube(carve::math::Matrix::SCALE(2.0, 2.0, 2.0) *
-                   carve::math::Matrix::ROT(1.0, 1.0, 1.0, 1.0) *
-                   carve::math::Matrix::TRANS(1.0, 1.0, 1.0));
-      break;
-    case 1:
-      a = makeCube(carve::math::Matrix::SCALE(2.0, 2.0, 2.0));
-      b = makeCube(carve::math::Matrix::TRANS(1.0, 0.0, 0.0));
-      break;
+	switch (test)
+	{
+	case 0:
+		a = makeCube(carve::math::Matrix::SCALE(2.0, 2.0, 2.0));
+		b = makeCube(carve::math::Matrix::SCALE(2.0, 2.0, 2.0) *
+								 carve::math::Matrix::ROT(1.0, 1.0, 1.0, 1.0) *
+								 carve::math::Matrix::TRANS(1.0, 1.0, 1.0));
+		break;
+	case 1:
+		a = makeCube(carve::math::Matrix::SCALE(2.0, 2.0, 2.0));
+		b = makeCube(carve::math::Matrix::TRANS(1.0, 0.0, 0.0));
+		break;
 
-    case 2:
-      a = makeTorus(20, 20, 2.0, 1.0,
-                    carve::math::Matrix::ROT(0.5, 1.0, 1.0, 1.0));
-      b = makeTorus(20, 20, 2.0, 1.0,
-                    carve::math::Matrix::TRANS(0.0, 0.0, 0.0));
-      op = carve::csg::CSG::A_MINUS_B;
-      break;
+	case 2:
+		a = makeTorus(20, 20, 2.0, 1.0,
+				carve::math::Matrix::ROT(0.5, 1.0, 1.0, 1.0));
+		b = makeTorus(20, 20, 2.0, 1.0,
+				carve::math::Matrix::TRANS(0.0, 0.0, 0.0));
+		op = carve::csg::CSG::A_MINUS_B;
+		break;
 
-    case 4:
-      a = makeDoubleCube(carve::math::Matrix::SCALE(2.0, 2.0, 2.0));
-      b = makeTorus(20, 20, 2.0, 1.0,
-                    carve::math::Matrix::ROT(M_PI / 2.0, 0.1, 0.0, 0.0));
-      break;
+	case 4:
+		a = makeDoubleCube(carve::math::Matrix::SCALE(2.0, 2.0, 2.0));
+		b = makeTorus(20, 20, 2.0, 1.0,
+				carve::math::Matrix::ROT(M_PI / 2.0, 0.1, 0.0, 0.0));
+		break;
 
-    case 5:
-      a = makeCube(carve::math::Matrix::TRANS(0.0, 0.0, -0.5));
-      b = makeCube(carve::math::Matrix::TRANS(0.0, 0.0, +0.5));
-      break;
+	case 5:
+		a = makeCube(carve::math::Matrix::TRANS(0.0, 0.0, -0.5));
+		b = makeCube(carve::math::Matrix::TRANS(0.0, 0.0, +0.5));
+		break;
 
-    case 6:
-      a = makeCube();
-      b = makeCube(carve::math::Matrix::ROT(M_PI / 4.0, 0.0, 0.0, +1.0));
-      break;
+	case 6:
+		a = makeCube();
+		b = makeCube(carve::math::Matrix::ROT(M_PI / 4.0, 0.0, 0.0, +1.0));
+		break;
 
-    case 7:
-      a = makeCube();
-      b = makeCube(carve::math::Matrix::ROT(M_PI / 4.0, 0.0, 0.0, +1.0) *
-                   carve::math::Matrix::TRANS(0.0, 0.0, 1.0));
-      break;
+	case 7:
+		a = makeCube();
+		b = makeCube(carve::math::Matrix::ROT(M_PI / 4.0, 0.0, 0.0, +1.0) *
+								 carve::math::Matrix::TRANS(0.0, 0.0, 1.0));
+		break;
 
-    case 8:
-      a = makeCube();
-      b = makeCube(
-          carve::math::Matrix::ROT(M_PI / 4.0, 0.0, 0.0, +1.0) *
-          carve::math::Matrix::SCALE(sqrt(2.0) / 2.0, sqrt(2.0) / 2.0, 0.1) *
-          carve::math::Matrix::TRANS(0.0, 0.0, 0.1));
-      break;
+	case 8:
+		a = makeCube();
+		b = makeCube(
+				carve::math::Matrix::ROT(M_PI / 4.0, 0.0, 0.0, +1.0) *
+				carve::math::Matrix::SCALE(sqrt(2.0) / 2.0, sqrt(2.0) / 2.0, 0.1) *
+				carve::math::Matrix::TRANS(0.0, 0.0, 0.1));
+		break;
 
-    case 9:
-      a = makeCube();
-      b = makeSubdividedCube(3, 3, 3, nullptr,
-                             carve::math::Matrix::TRANS(0.0, 0.0, 0.5) *
-                                 carve::math::Matrix::SCALE(0.5, 0.5, 0.5));
-      break;
+	case 9:
+		a = makeCube();
+		b = makeSubdividedCube(3, 3, 3, nullptr,
+				carve::math::Matrix::TRANS(0.0, 0.0, 0.5) *
+						carve::math::Matrix::SCALE(0.5, 0.5, 0.5));
+		break;
 
-    case 12:
-      a = makeCube();
-      b = makeCube(
-          carve::math::Matrix::TRANS(.5, .0, 1.0) *
-          carve::math::Matrix::SCALE(sqrt(2.0) / 4.0, sqrt(2.0) / 4.0, 0.1) *
-          carve::math::Matrix::ROT(M_PI / 4.0, 0.0, 0.0, +1.0));
-      break;
+	case 12:
+		a = makeCube();
+		b = makeCube(
+				carve::math::Matrix::TRANS(.5, .0, 1.0) *
+				carve::math::Matrix::SCALE(sqrt(2.0) / 4.0, sqrt(2.0) / 4.0, 0.1) *
+				carve::math::Matrix::ROT(M_PI / 4.0, 0.0, 0.0, +1.0));
+		break;
 
-    case 13:
-      a = makeSubdividedCube(3, 3, 3, nullptr);
-      b = makeSubdividedCube(3, 3, 3, nullptr,
-                             carve::math::Matrix::TRANS(0.0, 0.0, 0.5) *
-                                 carve::math::Matrix::SCALE(0.5, 0.5, 0.5));
-      break;
+	case 13:
+		a = makeSubdividedCube(3, 3, 3, nullptr);
+		b = makeSubdividedCube(3, 3, 3, nullptr,
+				carve::math::Matrix::TRANS(0.0, 0.0, 0.5) *
+						carve::math::Matrix::SCALE(0.5, 0.5, 0.5));
+		break;
 
-    case 14:
-      a = makeSubdividedCube(3, 3, 3, odd);
-      b = makeSubdividedCube(3, 3, 3, even);
-      op = carve::csg::CSG::UNION;
-      break;
+	case 14:
+		a = makeSubdividedCube(3, 3, 3, odd);
+		b = makeSubdividedCube(3, 3, 3, even);
+		op = carve::csg::CSG::UNION;
+		break;
 
-    case 15:
-      a = makeSubdividedCube(3, 3, 1, odd);
-      b = makeSubdividedCube(3, 3, 1);
-      op = carve::csg::CSG::UNION;
-      break;
+	case 15:
+		a = makeSubdividedCube(3, 3, 1, odd);
+		b = makeSubdividedCube(3, 3, 1);
+		op = carve::csg::CSG::UNION;
+		break;
 
-    case 16:
-      a = readPLYasMesh(data_path + "cylinderx.ply");
-      b = readPLYasMesh(data_path + "cylindery.ply");
-      op = carve::csg::CSG::UNION;
-      break;
+	case 16:
+		a = readPLYasMesh(data_path + "cylinderx.ply");
+		b = readPLYasMesh(data_path + "cylindery.ply");
+		op = carve::csg::CSG::UNION;
+		break;
 
-    case 17:
-      a = readPLYasMesh(data_path + "coneup.ply");
-      b = readPLYasMesh(data_path + "conedown.ply");
-      op = carve::csg::CSG::UNION;
-      break;
+	case 17:
+		a = readPLYasMesh(data_path + "coneup.ply");
+		b = readPLYasMesh(data_path + "conedown.ply");
+		op = carve::csg::CSG::UNION;
+		break;
 
-    case 18:
-      a = readPLYasMesh(data_path + "coneup.ply");
-      b = readPLYasMesh(data_path + "conedown.ply");
-      op = carve::csg::CSG::A_MINUS_B;
-      break;
+	case 18:
+		a = readPLYasMesh(data_path + "coneup.ply");
+		b = readPLYasMesh(data_path + "conedown.ply");
+		op = carve::csg::CSG::A_MINUS_B;
+		break;
 
-    case 19:
-      a = readPLYasMesh(data_path + "sphere.ply");
-      b = readPLYasMesh(data_path + "sphere.ply");
-      op = carve::csg::CSG::UNION;
-      break;
+	case 19:
+		a = readPLYasMesh(data_path + "sphere.ply");
+		b = readPLYasMesh(data_path + "sphere.ply");
+		op = carve::csg::CSG::UNION;
+		break;
 
-    case 20:
-      a = readPLYasMesh(data_path + "sphere.ply");
-      b = readPLYasMesh(data_path + "sphere.ply");
-      op = carve::csg::CSG::A_MINUS_B;
-      break;
+	case 20:
+		a = readPLYasMesh(data_path + "sphere.ply");
+		b = readPLYasMesh(data_path + "sphere.ply");
+		op = carve::csg::CSG::A_MINUS_B;
+		break;
 
-    case 21:
-      a = readPLYasMesh(data_path + "sphere.ply");
-      b = readPLYasMesh(data_path + "sphere.ply",
-                        carve::math::Matrix::TRANS(0.01, 0.01, 0.01));
-      op = carve::csg::CSG::A_MINUS_B;
-      break;
+	case 21:
+		a = readPLYasMesh(data_path + "sphere.ply");
+		b = readPLYasMesh(data_path + "sphere.ply",
+				carve::math::Matrix::TRANS(0.01, 0.01, 0.01));
+		op = carve::csg::CSG::A_MINUS_B;
+		break;
 
-    case 22:
-      a = readPLYasMesh(data_path + "cylinderx.ply");
-      b = readPLYasMesh(data_path + "cylindery.ply");
-      op = carve::csg::CSG::UNION;
-      break;
+	case 22:
+		a = readPLYasMesh(data_path + "cylinderx.ply");
+		b = readPLYasMesh(data_path + "cylindery.ply");
+		op = carve::csg::CSG::UNION;
+		break;
 
-    case 23:
-      a = readPLYasMesh(data_path + "cylinderx.ply");
-      b = readPLYasMesh(data_path + "cylindery.ply");
-      c = readPLYasMesh(data_path + "cylinderz.ply");
-      op = carve::csg::CSG::UNION;
-      break;
+	case 23:
+		a = readPLYasMesh(data_path + "cylinderx.ply");
+		b = readPLYasMesh(data_path + "cylindery.ply");
+		c = readPLYasMesh(data_path + "cylinderz.ply");
+		op = carve::csg::CSG::UNION;
+		break;
 
-    case 24:
-      a = makeCube();
-      b = makeCube(carve::math::Matrix::ROT(1e-5, 1.0, 1.0, 0.0));
-      op = carve::csg::CSG::UNION;
-      break;
+	case 24:
+		a = makeCube();
+		b = makeCube(carve::math::Matrix::ROT(1e-5, 1.0, 1.0, 0.0));
+		op = carve::csg::CSG::UNION;
+		break;
 
-    case 25:
-      a = makeCube();
-      b = makeCube(carve::math::Matrix::ROT(1e-1, 1.0, 1.0, 0.0));
-      op = carve::csg::CSG::UNION;
-      break;
+	case 25:
+		a = makeCube();
+		b = makeCube(carve::math::Matrix::ROT(1e-1, 1.0, 1.0, 0.0));
+		op = carve::csg::CSG::UNION;
+		break;
 
-    case 26:
-      a = makeCube();
-      b = makeCube(carve::math::Matrix::ROT(1e-5, 1.0, 1.0, 0.0));
-      op = carve::csg::CSG::B_MINUS_A;
-      break;
+	case 26:
+		a = makeCube();
+		b = makeCube(carve::math::Matrix::ROT(1e-5, 1.0, 1.0, 0.0));
+		op = carve::csg::CSG::B_MINUS_A;
+		break;
 
-    case 27:
-      a = makeCube();
-      b = makeCube(carve::math::Matrix::ROT(1e-2, 1.0, 1.0, 0.0));
-      op = carve::csg::CSG::B_MINUS_A;
-      break;
+	case 27:
+		a = makeCube();
+		b = makeCube(carve::math::Matrix::ROT(1e-2, 1.0, 1.0, 0.0));
+		op = carve::csg::CSG::B_MINUS_A;
+		break;
 
-    case 28:
-      a = makeCube();
-      b = makeCube(carve::math::Matrix::ROT(1e-6, 1.0, 0.0, 0.0));
-      c = makeCube(carve::math::Matrix::ROT(2e-6, 1.0, 0.0, 0.0));
-      op = carve::csg::CSG::UNION;
-      break;
+	case 28:
+		a = makeCube();
+		b = makeCube(carve::math::Matrix::ROT(1e-6, 1.0, 0.0, 0.0));
+		c = makeCube(carve::math::Matrix::ROT(2e-6, 1.0, 0.0, 0.0));
+		op = carve::csg::CSG::UNION;
+		break;
 
-    case 29:
-      for (int i = 0; i < 30; i++) {
-        inputs.push_back(Input(
-            makeCube(carve::math::Matrix::ROT(i * M_TWOPI / 30, .4, .3, .7)),
-            carve::csg::CSG::UNION));
-      }
-      break;
+	case 29:
+		for (int i = 0; i < 30; i++)
+		{
+			inputs.push_back(Input(
+					makeCube(carve::math::Matrix::ROT(i * M_TWOPI / 30, .4, .3, .7)),
+					carve::csg::CSG::UNION));
+		}
+		break;
 
-    case 30:
-      inputs.push_back(Input(readPLYasMesh(data_path + "sphere.ply"),
-                             carve::csg::CSG::UNION));
-      inputs.push_back(
-          Input(readPLYasMesh(data_path + "sphere.ply",
-                              carve::math::Matrix::SCALE(0.9, 0.9, 0.9)),
-                carve::csg::CSG::A_MINUS_B));
-      inputs.push_back(
-          Input(makeCube(carve::math::Matrix::TRANS(5.5, 0.0, 0.0) *
-                         carve::math::Matrix::SCALE(5.0, 5.0, 5.0)),
-                carve::csg::CSG::A_MINUS_B));
-      break;
+	case 30:
+		inputs.push_back(Input(readPLYasMesh(data_path + "sphere.ply"),
+				carve::csg::CSG::UNION));
+		inputs.push_back(
+				Input(readPLYasMesh(data_path + "sphere.ply",
+									carve::math::Matrix::SCALE(0.9, 0.9, 0.9)),
+						carve::csg::CSG::A_MINUS_B));
+		inputs.push_back(
+				Input(makeCube(carve::math::Matrix::TRANS(5.5, 0.0, 0.0) *
+											 carve::math::Matrix::SCALE(5.0, 5.0, 5.0)),
+						carve::csg::CSG::A_MINUS_B));
+		break;
 
-    case 31:
-      inputs.push_back(Input(makeCube(), carve::csg::CSG::UNION));
-      inputs.push_back(
-          Input(makeCube(carve::math::Matrix::SCALE(0.9, 0.9, 0.9)),
-                carve::csg::CSG::A_MINUS_B));
-      inputs.push_back(
-          Input(makeCube(carve::math::Matrix::TRANS(5.5, 0.0, 0.0) *
-                         carve::math::Matrix::SCALE(5.0, 5.0, 5.0)),
-                carve::csg::CSG::A_MINUS_B));
-      break;
+	case 31:
+		inputs.push_back(Input(makeCube(), carve::csg::CSG::UNION));
+		inputs.push_back(
+				Input(makeCube(carve::math::Matrix::SCALE(0.9, 0.9, 0.9)),
+						carve::csg::CSG::A_MINUS_B));
+		inputs.push_back(
+				Input(makeCube(carve::math::Matrix::TRANS(5.5, 0.0, 0.0) *
+											 carve::math::Matrix::SCALE(5.0, 5.0, 5.0)),
+						carve::csg::CSG::A_MINUS_B));
+		break;
 
-    case 32:
-      inputs.push_back(
-          Input(readPLYasMesh(data_path + "ico.ply"), carve::csg::CSG::UNION));
-      inputs.push_back(
-          Input(readPLYasMesh(data_path + "ico.ply",
-                              carve::math::Matrix::SCALE(0.9, 0.9, 0.9)),
-                carve::csg::CSG::A_MINUS_B));
-      inputs.push_back(
-          Input(makeCube(carve::math::Matrix::TRANS(5.5, 0.0, 0.0) *
-                         carve::math::Matrix::SCALE(5.0, 5.0, 5.0)),
-                carve::csg::CSG::A_MINUS_B));
-      break;
+	case 32:
+		inputs.push_back(
+				Input(readPLYasMesh(data_path + "ico.ply"), carve::csg::CSG::UNION));
+		inputs.push_back(
+				Input(readPLYasMesh(data_path + "ico.ply",
+									carve::math::Matrix::SCALE(0.9, 0.9, 0.9)),
+						carve::csg::CSG::A_MINUS_B));
+		inputs.push_back(
+				Input(makeCube(carve::math::Matrix::TRANS(5.5, 0.0, 0.0) *
+											 carve::math::Matrix::SCALE(5.0, 5.0, 5.0)),
+						carve::csg::CSG::A_MINUS_B));
+		break;
 
-    case 33:
-      inputs.push_back(
-          Input(readPLYasMesh(data_path + "ico2.ply"), carve::csg::CSG::UNION));
-      inputs.push_back(
-          Input(readPLYasMesh(data_path + "ico2.ply",
-                              carve::math::Matrix::SCALE(0.9, 0.9, 0.9)),
-                carve::csg::CSG::A_MINUS_B));
-      inputs.push_back(
-          Input(makeCube(carve::math::Matrix::TRANS(5.5, 0.0, 0.0) *
-                         carve::math::Matrix::SCALE(5.0, 5.0, 5.0)),
-                carve::csg::CSG::A_MINUS_B));
-      break;
+	case 33:
+		inputs.push_back(
+				Input(readPLYasMesh(data_path + "ico2.ply"), carve::csg::CSG::UNION));
+		inputs.push_back(
+				Input(readPLYasMesh(data_path + "ico2.ply",
+									carve::math::Matrix::SCALE(0.9, 0.9, 0.9)),
+						carve::csg::CSG::A_MINUS_B));
+		inputs.push_back(
+				Input(makeCube(carve::math::Matrix::TRANS(5.5, 0.0, 0.0) *
+											 carve::math::Matrix::SCALE(5.0, 5.0, 5.0)),
+						carve::csg::CSG::A_MINUS_B));
+		break;
 
-    case 34:
-      inputs.push_back(
-          Input(readPLYasMesh(data_path + "cow2.ply"), carve::csg::CSG::UNION));
-      inputs.push_back(
-          Input(readPLYasMesh(data_path + "cow2.ply",
-                              carve::math::Matrix::TRANS(0.5, 0.5, 0.5)),
-                carve::csg::CSG::UNION));
-      break;
+	case 34:
+		inputs.push_back(
+				Input(readPLYasMesh(data_path + "cow2.ply"), carve::csg::CSG::UNION));
+		inputs.push_back(
+				Input(readPLYasMesh(data_path + "cow2.ply",
+									carve::math::Matrix::TRANS(0.5, 0.5, 0.5)),
+						carve::csg::CSG::UNION));
+		break;
 
-    case 35:
-      inputs.push_back(Input(readPLYasMesh(data_path + "201addon.ply"),
-                             carve::csg::CSG::UNION));
-      inputs.push_back(Input(readPLYasMesh(data_path + "addontun.ply"),
-                             carve::csg::CSG::UNION));
-      break;
+	case 35:
+		inputs.push_back(Input(readPLYasMesh(data_path + "201addon.ply"),
+				carve::csg::CSG::UNION));
+		inputs.push_back(Input(readPLYasMesh(data_path + "addontun.ply"),
+				carve::csg::CSG::UNION));
+		break;
 
-    case 36:
-      inputs.push_back(Input(readPLYasMesh(data_path + "../Bloc/block1.ply"),
-                             carve::csg::CSG::INTERSECTION));
-      inputs.push_back(Input(readPLYasMesh(data_path + "../Bloc/debug1.ply"),
-                             carve::csg::CSG::INTERSECTION));
-      inputs.push_back(Input(readPLYasMesh(data_path + "../Bloc/debug2.ply"),
-                             carve::csg::CSG::INTERSECTION));
-      break;
+	case 36:
+		inputs.push_back(Input(readPLYasMesh(data_path + "../Bloc/block1.ply"),
+				carve::csg::CSG::INTERSECTION));
+		inputs.push_back(Input(readPLYasMesh(data_path + "../Bloc/debug1.ply"),
+				carve::csg::CSG::INTERSECTION));
+		inputs.push_back(Input(readPLYasMesh(data_path + "../Bloc/debug2.ply"),
+				carve::csg::CSG::INTERSECTION));
+		break;
 
-    case 37:
-      a = readPLYasMesh("../data/sphere_one_point_moved.ply");
-      b = readPLYasMesh("../data/sphere.ply");
-      op = carve::csg::CSG::A_MINUS_B;
-      break;
-  }
+	case 37:
+		a = readPLYasMesh("../data/sphere_one_point_moved.ply");
+		b = readPLYasMesh("../data/sphere.ply");
+		op = carve::csg::CSG::A_MINUS_B;
+		break;
+	}
 
-  if (a != nullptr) {
-    inputs.push_back(Input(a, carve::csg::CSG::UNION));
-  }
-  if (b != nullptr) {
-    inputs.push_back(Input(b, op));
-  }
-  if (c != nullptr) {
-    inputs.push_back(Input(c, op));
-  }
+	if (a != nullptr)
+	{
+		inputs.push_back(Input(a, carve::csg::CSG::UNION));
+	}
+	if (b != nullptr)
+	{
+		inputs.push_back(Input(b, op));
+	}
+	if (c != nullptr)
+	{
+		inputs.push_back(Input(c, op));
+	}
 
-  //   glPointSize(4.0);
-  //   glEnable(GL_DEPTH_TEST);
-  //   glBegin(GL_POINTS);
-  //   for (int i = 0; i < 1000; i++) {
-  //     double x = 4.0 * random() / (double)RAND_MAX - 2;
-  //     double y = 4.0 * random() / (double)RAND_MAX - 2;
-  //     double z = 4.0 * random() / (double)RAND_MAX - 2;
-  //     switch (b->containsVertex(Vector(x, y, z))) {
-  //     case POINT_IN:  glColor4f(1,1,1,1); break;
-  //     case POINT_ON:  glColor4f(1,0,0,1); break;
-  //     case POINT_OUT: glColor4f(0,0,0,1); break;
-  //     }
-  //     glVertex3f(x,y,z);
-  //   }
-  //   glEnd();
+	//   glPointSize(4.0);
+	//   glEnable(GL_DEPTH_TEST);
+	//   glBegin(GL_POINTS);
+	//   for (int i = 0; i < 1000; i++) {
+	//     double x = 4.0 * random() / (double)RAND_MAX - 2;
+	//     double y = 4.0 * random() / (double)RAND_MAX - 2;
+	//     double z = 4.0 * random() / (double)RAND_MAX - 2;
+	//     switch (b->containsVertex(Vector(x, y, z))) {
+	//     case POINT_IN:  glColor4f(1,1,1,1); break;
+	//     case POINT_ON:  glColor4f(1,0,0,1); break;
+	//     case POINT_OUT: glColor4f(0,0,0,1); break;
+	//     }
+	//     glVertex3f(x,y,z);
+	//   }
+	//   glEnd();
 }
 
-static bool endswith(const std::string& a, const std::string& b) {
-  if (a.size() < b.size()) {
-    return false;
-  }
+static bool endswith(const std::string& a, const std::string& b)
+{
+	if (a.size() < b.size())
+	{
+		return false;
+	}
 
-  for (unsigned i = a.size(), j = b.size(); j;) {
-    if (tolower(a[--i]) != tolower(b[--j])) {
-      return false;
-    }
-  }
-  return true;
+	for (unsigned i = a.size(), j = b.size(); j;)
+	{
+		if (tolower(a[--i]) != tolower(b[--j]))
+		{
+			return false;
+		}
+	}
+	return true;
 }
 
 void testCSG(GLuint& dlist, std::list<Input>::const_iterator begin,
-             std::list<Input>::const_iterator end,
-             carve::mesh::MeshSet<3>*& finalResult, TestScene* scene) {
-  // Can't do anything with the terminating iterator
-  if (begin == end) {
-    return;
-  }
+		std::list<Input>::const_iterator end,
+		carve::mesh::MeshSet<3>*& finalResult, TestScene* scene)
+{
+	// Can't do anything with the terminating iterator
+	if (begin == end)
+	{
+		return;
+	}
 
-  bool result_is_temp = true;
+	bool result_is_temp = true;
 
-  // If this is the first time around, we use the first input as our first
-  // intermediate result.
-  if (finalResult == nullptr) {
-    finalResult = begin->poly;
-    result_is_temp = false;
-    ++begin;
-  }
+	// If this is the first time around, we use the first input as our first
+	// intermediate result.
+	if (finalResult == nullptr)
+	{
+		finalResult = begin->poly;
+		result_is_temp = false;
+		++begin;
+	}
 
-  OptionGroup* group = scene->createOptionGroup("CSG debug");
+	OptionGroup* group = scene->createOptionGroup("CSG debug");
 
-  while (begin != end) {
-    // Okay, we have a polyhedron in result that will be our first operand, and
-    // also our output,
-    // and we have a list of operations and second operands in our iterator
-    // list.
+	while (begin != end)
+	{
+		// Okay, we have a polyhedron in result that will be our first operand, and
+		// also our output,
+		// and we have a list of operations and second operands in our iterator
+		// list.
 
-    carve::mesh::MeshSet<3>* a = finalResult;
-    carve::mesh::MeshSet<3>* b = begin->poly;
-    carve::csg::CSG::OP op = begin->op;
+		carve::mesh::MeshSet<3>* a = finalResult;
+		carve::mesh::MeshSet<3>* b = begin->poly;
+		carve::csg::CSG::OP op = begin->op;
 
-    glNewList(dlist++, GL_COMPILE);
-    scene->draw_flags.push_back(
-        group->createOption("Debug data visible", false));
-    scene->wireframe_flags.push_back(true);
-    if (a && b) {
-      carve::mesh::MeshSet<3>* result = nullptr;
-      try {
-        result = carve::csg::CSG().compute(
-            a, b, op, nullptr, options.edge_classifier
-                                   ? carve::csg::CSG::CLASSIFY_EDGE
-                                   : carve::csg::CSG::CLASSIFY_NORMAL);
+		glNewList(dlist++, GL_COMPILE);
+		scene->draw_flags.push_back(
+				group->createOption("Debug data visible", false));
+		scene->wireframe_flags.push_back(true);
+		if (a && b)
+		{
+			carve::mesh::MeshSet<3>* result = nullptr;
+			try
+			{
+				result = carve::csg::CSG().compute(
+						a, b, op, nullptr, options.edge_classifier ? carve::csg::CSG::CLASSIFY_EDGE : carve::csg::CSG::CLASSIFY_NORMAL);
 
-        std::cerr << "result " << result << " has " << result->meshes.size()
-                  << " manifolds ("
-                  << std::count_if(result->meshes.begin(), result->meshes.end(),
-                                   carve::mesh::Mesh<3>::IsClosed())
-                  << " closed)" << std::endl;
+				std::cerr << "result " << result << " has " << result->meshes.size()
+									<< " manifolds ("
+									<< std::count_if(result->meshes.begin(), result->meshes.end(),
+												 carve::mesh::Mesh<3>::IsClosed())
+									<< " closed)" << std::endl;
 
-        std::cerr << "closed:    ";
-        for (size_t i = 0; i < result->meshes.size(); ++i) {
-          std::cerr << (result->meshes[i]->isClosed() ? '+' : '-');
-        }
-        std::cerr << std::endl;
+				std::cerr << "closed:    ";
+				for (size_t i = 0; i < result->meshes.size(); ++i)
+				{
+					std::cerr << (result->meshes[i]->isClosed() ? '+' : '-');
+				}
+				std::cerr << std::endl;
 
-        std::cerr << "negative:  ";
-        for (size_t i = 0; i < result->meshes.size(); ++i) {
-          std::cerr << (result->meshes[i]->isNegative() ? '+' : '-');
-        }
-        std::cerr << std::endl;
+				std::cerr << "negative:  ";
+				for (size_t i = 0; i < result->meshes.size(); ++i)
+				{
+					std::cerr << (result->meshes[i]->isNegative() ? '+' : '-');
+				}
+				std::cerr << std::endl;
 
-        writePLY(std::cout, result, true);
+				writePLY(std::cout, result, true);
 
-        // Place the result of this CSG into our final result, and get rid of
-        // our last one
-        std::swap(result, finalResult);
-        if (result_is_temp) {
-          delete result;
-        }
-        result_is_temp = true;
-
-      } catch (carve::exception e) {
-        std::cerr << "FAIL- " << e.str();
-        if (result_is_temp && finalResult) {
-          delete finalResult;
-        }
-        finalResult = nullptr;
-      }
-    }
-    ++begin;
-    glEndList();
-  }
+				// Place the result of this CSG into our final result, and get rid of
+				// our last one
+				std::swap(result, finalResult);
+				if (result_is_temp)
+				{
+					delete result;
+				}
+				result_is_temp = true;
+			}
+			catch (carve::exception e)
+			{
+				std::cerr << "FAIL- " << e.str();
+				if (result_is_temp && finalResult)
+				{
+					delete finalResult;
+				}
+				finalResult = nullptr;
+			}
+		}
+		++begin;
+		glEndList();
+	}
 }
 
-void testConvexHull() {
+void testConvexHull()
+{
 #define N 100
 
-  std::vector<carve::geom2d::P2> points;
+	std::vector<carve::geom2d::P2> points;
 #if defined(__APPLE__)
-  srandomdev();
+	srandomdev();
 #else
-  srandom(time(NULL));
+	srandom(time(NULL));
 #endif
-  points.reserve(100);
-  glPointSize(5.0);
-  glEnable(GL_POINT_SMOOTH);
+	points.reserve(100);
+	glPointSize(5.0);
+	glEnable(GL_POINT_SMOOTH);
 
-  glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 
-  glBegin(GL_POINTS);
-  for (int i = 0; i < 100; i++) {
-    double a = random() / double(RAND_MAX) * M_TWOPI;
-    double d = random() / double(RAND_MAX) * 10.0;
+	glBegin(GL_POINTS);
+	for (int i = 0; i < 100; i++)
+	{
+		double a = random() / double(RAND_MAX) * M_TWOPI;
+		double d = random() / double(RAND_MAX) * 10.0;
 
-    points.push_back(carve::geom::VECTOR(cos(a) * d, sin(a) * d));
+		points.push_back(carve::geom::VECTOR(cos(a) * d, sin(a) * d));
 
-    glVertex3f((GLfloat)points.back().x, (GLfloat)points.back().y, 0.1f);
-  }
-  glEnd();
+		glVertex3f((GLfloat)points.back().x, (GLfloat)points.back().y, 0.1f);
+	}
+	glEnd();
 
-  std::vector<int> result = carve::geom::convexHull(points);
+	std::vector<int> result = carve::geom::convexHull(points);
 
-  glBegin(GL_LINE_LOOP);
-  for (unsigned i = 0; i < result.size(); i++) {
-    glVertex3f((GLfloat)points[result[i]].x, (GLfloat)points[result[i]].y,
-               0.1f);
-  }
-  glEnd();
+	glBegin(GL_LINE_LOOP);
+	for (unsigned i = 0; i < result.size(); i++)
+	{
+		glVertex3f((GLfloat)points[result[i]].x, (GLfloat)points[result[i]].y,
+				0.1f);
+	}
+	glEnd();
 
-  glBegin(GL_LINES);
+	glBegin(GL_LINES);
 
-  glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
-  glVertex3f(0.0f, 0.0f, 0.1f);
-  glVertex3f(20.0f, 0.0f, 0.1f);
+	glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
+	glVertex3f(0.0f, 0.0f, 0.1f);
+	glVertex3f(20.0f, 0.0f, 0.1f);
 
-  glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
-  glVertex3f(0.0f, 0.0f, 0.1f);
-  glVertex3f(0.0f, 20.0f, 0.1f);
+	glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
+	glVertex3f(0.0f, 0.0f, 0.1f);
+	glVertex3f(0.0f, 20.0f, 0.1f);
 
-  glEnd();
+	glEnd();
 }
 
-void genSceneDisplayList(const std::list<Input>& inputs, TestScene* scene) {
-  std::list<Input>::const_iterator i = inputs.begin();
+void genSceneDisplayList(const std::list<Input>& inputs, TestScene* scene)
+{
+	std::list<Input>::const_iterator i = inputs.begin();
 
-  carve::geom3d::Vector min, max;
+	carve::geom3d::Vector min, max;
 
-  if (i != inputs.end()) {
-    carve::geom3d::AABB aabb = i->poly->getAABB();
-    min = aabb.min();
-    max = aabb.max();
+	if (i != inputs.end())
+	{
+		carve::geom3d::AABB aabb = i->poly->getAABB();
+		min = aabb.min();
+		max = aabb.max();
 
-    for (; i != inputs.end(); ++i) {
-      aabb = i->poly->getAABB();
+		for (; i != inputs.end(); ++i)
+		{
+			aabb = i->poly->getAABB();
 
-      assign_op(min, min, aabb.min(), carve::util::min_functor());
-      assign_op(max, max, aabb.max(), carve::util::max_functor());
-    }
-  } else {
-    min.fill(-1.0);
-    max.fill(+1.0);
-  }
+			assign_op(min, min, aabb.min(), carve::util::min_functor());
+			assign_op(max, max, aabb.max(), carve::util::max_functor());
+		}
+	}
+	else
+	{
+		min.fill(-1.0);
+		max.fill(+1.0);
+	}
 
-  std::cerr << "X: " << min.x << " - " << max.x << std::endl;
-  std::cerr << "Y: " << min.y << " - " << max.y << std::endl;
-  std::cerr << "Z: " << min.z << " - " << max.z << std::endl;
+	std::cerr << "X: " << min.x << " - " << max.x << std::endl;
+	std::cerr << "Y: " << min.y << " - " << max.y << std::endl;
+	std::cerr << "Z: " << min.z << " - " << max.z << std::endl;
 
-  double scale_fac = 40.0 / std::max(max.x - min.x, max.y - min.y);
+	double scale_fac = 40.0 / std::max(max.x - min.x, max.y - min.y);
 
-  g_translation = -carve::geom::VECTOR(
-      (min.x + max.x) / 2.0, (min.y + max.y) / 2.0, (min.z + max.z) / 2.0);
-  g_scale = scale_fac;
-  std::cerr << "scale fac: " << scale_fac << std::endl;
+	g_translation = -carve::geom::VECTOR(
+			(min.x + max.x) / 2.0, (min.y + max.y) / 2.0, (min.z + max.z) / 2.0);
+	g_scale = scale_fac;
+	std::cerr << "scale fac: " << scale_fac << std::endl;
 
-  g_result = nullptr;
+	g_result = nullptr;
 
-  GLuint currentList = scene->draw_list_base;
+	GLuint currentList = scene->draw_list_base;
 
-  testCSG(currentList, inputs.begin(), inputs.end(), g_result, scene);
+	testCSG(currentList, inputs.begin(), inputs.end(), g_result, scene);
 
-  {
-    OptionGroup* group;
-    group = scene->createOptionGroup("Result");
-    scene->draw_flags.push_back(group->createOption("Result visible", true));
-    scene->wireframe_flags.push_back(false);
-    glNewList(currentList++, GL_COMPILE);
-    if (g_result) {
-      glCullFace(GL_BACK);
-      drawMeshSet(g_result, 0.3f, 0.5f, 0.8f, 1.0f);
-      glCullFace(GL_FRONT);
-      drawMeshSet(g_result, 0.8f, 0.5f, 0.3f, 1.0f);
-      glCullFace(GL_BACK);
-    }
-    glEndList();
+	{
+		OptionGroup* group;
+		group = scene->createOptionGroup("Result");
+		scene->draw_flags.push_back(group->createOption("Result visible", true));
+		scene->wireframe_flags.push_back(false);
+		glNewList(currentList++, GL_COMPILE);
+		if (g_result)
+		{
+			glCullFace(GL_BACK);
+			drawMeshSet(g_result, 0.3f, 0.5f, 0.8f, 1.0f);
+			glCullFace(GL_FRONT);
+			drawMeshSet(g_result, 0.8f, 0.5f, 0.3f, 1.0f);
+			glCullFace(GL_BACK);
+		}
+		glEndList();
 
-    scene->draw_flags.push_back(group->createOption("Result wireframe", true));
-    scene->wireframe_flags.push_back(true);
-    glNewList(currentList++, GL_COMPILE);
-    if (g_result) {
-      drawMeshSetWireframe(g_result, -1, true, true);
-    }
-    glEndList();
-  }
+		scene->draw_flags.push_back(group->createOption("Result wireframe", true));
+		scene->wireframe_flags.push_back(true);
+		glNewList(currentList++, GL_COMPILE);
+		if (g_result)
+		{
+			drawMeshSetWireframe(g_result, -1, true, true);
+		}
+		glEndList();
+	}
 
-  {
-    OptionGroup* group = scene->createOptionGroup("Inputs");
-    char buf[1024];
-    int count = 0;
-    float H = 0.0, S = 1.0, V = 1.0;
+	{
+		OptionGroup* group = scene->createOptionGroup("Inputs");
+		char buf[1024];
+		int count = 0;
+		float H = 0.0, S = 1.0, V = 1.0;
 
-    for (std::list<Input>::const_iterator it = inputs.begin();
-         it != inputs.end(); ++it) {
-      H = fmod((H + .37), 1.0);
-      S = 0.5 + fmod((S - 0.37), 0.5);
-      cRGB colour = HSV2RGB(H, S, V);
+		for (std::list<Input>::const_iterator it = inputs.begin();
+				 it != inputs.end(); ++it)
+		{
+			H = fmod((H + .37), 1.0);
+			S = 0.5 + fmod((S - 0.37), 0.5);
+			cRGB colour = HSV2RGB(H, S, V);
 
-      count++;
-      sprintf(buf, "Input %d wireframe", count);
-      scene->draw_flags.push_back(group->createOption(buf, false));
-      scene->wireframe_flags.push_back(true);
-      glNewList(currentList++, GL_COMPILE);
-      drawMeshSetWireframe(it->poly, -1, true, true);
-      glEndList();
+			count++;
+			sprintf(buf, "Input %d wireframe", count);
+			scene->draw_flags.push_back(group->createOption(buf, false));
+			scene->wireframe_flags.push_back(true);
+			glNewList(currentList++, GL_COMPILE);
+			drawMeshSetWireframe(it->poly, -1, true, true);
+			glEndList();
 
-      sprintf(buf, "Input %d solid", count);
-      scene->draw_flags.push_back(group->createOption(buf, false));
-      scene->wireframe_flags.push_back(false);
-      glNewList(currentList++, GL_COMPILE);
-      drawMeshSet(it->poly, colour.r, colour.g, colour.b, true);
-      glEndList();
+			sprintf(buf, "Input %d solid", count);
+			scene->draw_flags.push_back(group->createOption(buf, false));
+			scene->wireframe_flags.push_back(false);
+			glNewList(currentList++, GL_COMPILE);
+			drawMeshSet(it->poly, colour.r, colour.g, colour.b, true);
+			glEndList();
 
-      sprintf(buf, "Input %d spatial index", count);
-      scene->draw_flags.push_back(group->createOption(buf, false));
-      scene->wireframe_flags.push_back(true);
-      glNewList(currentList++, GL_COMPILE);
-      //    drawOctree(it->poly->octree);
-      glEndList();
-    }
-  }
+			sprintf(buf, "Input %d spatial index", count);
+			scene->draw_flags.push_back(group->createOption(buf, false));
+			scene->wireframe_flags.push_back(true);
+			glNewList(currentList++, GL_COMPILE);
+			//    drawOctree(it->poly->octree);
+			glEndList();
+		}
+	}
 }
 
-static bool isInteger(const char* str) {
-  int count = 0;
-  while (*str) {
-    if (!isdigit(*str)) {
-      return false;
-    }
-    ++str;
-    ++count;
-  }
-  return count > 0;
+static bool isInteger(const char* str)
+{
+	int count = 0;
+	while (*str)
+	{
+		if (!isdigit(*str))
+		{
+			return false;
+		}
+		++str;
+		++count;
+	}
+	return count > 0;
 }
 
-int main(int argc, char** argv) {
-  installDebugHooks();
+int main(int argc, char** argv)
+{
+	installDebugHooks();
 
-  int test = 0;
-  int inputFilenamesStartAt = -1;
+	int test = 0;
+	int inputFilenamesStartAt = -1;
 
-  options.parse(argc, argv);
+	options.parse(argc, argv);
 
-  if (options.args.size() == 0) {
-    test = 0;
-  } else if (options.args.size() == 1 && isInteger(options.args[0].c_str())) {
-    test = atoi(options.args[0].c_str());
-  } else {
-    std::cerr << "invalid test: " << options.args[0] << std::endl;
-    exit(1);
-  }
+	if (options.args.size() == 0)
+	{
+		test = 0;
+	}
+	else if (options.args.size() == 1 && isInteger(options.args[0].c_str()))
+	{
+		test = atoi(options.args[0].c_str());
+	}
+	else
+	{
+		std::cerr << "invalid test: " << options.args[0] << std::endl;
+		exit(1);
+	}
 
-  {
-    std::list<Input> inputs;
+	{
+		std::list<Input> inputs;
 
-    static carve::TimingName MAIN_BLOCK("Application");
-    static carve::TimingName PARSE_BLOCK("Parse");
+		static carve::TimingName MAIN_BLOCK("Application");
+		static carve::TimingName PARSE_BLOCK("Parse");
 
-    carve::Timing::start(MAIN_BLOCK);
+		carve::Timing::start(MAIN_BLOCK);
 
-    carve::Timing::start(PARSE_BLOCK);
+		carve::Timing::start(PARSE_BLOCK);
 
-    getInputsFromTest(test, inputs);
+		getInputsFromTest(test, inputs);
 
-    carve::Timing::stop();
+		carve::Timing::stop();
 
-    //                                            inputs             result
-    //                                            debug
-    TestScene* scene = new TestScene(
-        argc, argv, (3 * inputs.size()) + 2 + (inputs.size() - 1));
-    scene->init();
-    genSceneDisplayList(inputs, scene);
+		//                                            inputs             result
+		//                                            debug
+		TestScene* scene = new TestScene(
+				argc, argv, (3 * inputs.size()) + 2 + (inputs.size() - 1));
+		scene->init();
+		genSceneDisplayList(inputs, scene);
 
-    carve::Timing::stop();
+		carve::Timing::stop();
 
-    carve::Timing::printTimings();
+		carve::Timing::printTimings();
 
-    scene->run();
+		scene->run();
 
-    delete scene;
-  }
+		delete scene;
+	}
 
-  return 0;
+	return 0;
 }
