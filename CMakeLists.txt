@@ -20,7 +20,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 option(BUILD_COVERAGE                    "Compile with gcov"                                 OFF)
-option(BUILD_SHARED_LIBS                 "Compile libcarve as shared"                        ON)
+option(BUILD_SHARED_LIBS                 "Compile libcarve as shared library/dll"            ON)
 option(CARVE_WITH_GUI                    "Compile gui code"                                  OFF)
 option(CARVE_DEBUG                       "Compile in debug code"                             OFF)
 option(CARVE_DEBUG_WRITE_PLY_DATA        "Write geometry output during debug"                OFF)
