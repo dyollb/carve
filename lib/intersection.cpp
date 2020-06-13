@@ -22,16 +22,20 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+// TODO BL: get rid of all carve_config.h calls and 'HAVE_CONFIG_H' macro
 #if defined(HAVE_CONFIG_H)
 #	include <carve_config.h>
 #endif
-
-#include <algorithm>
 
 #include <carve/carve.hpp>
 #include <carve/intersection.hpp>
 #include <carve/poly.hpp>
 #include <carve/timing.hpp>
+
+#include <algorithm>
+
+#define STR(x) #x
+#define XSTR(x) STR(x)
 
 void carve::csg::Intersections::collect(
 		const IObj& obj, std::vector<carve::mesh::MeshSet<3>::vertex_t*>* collect_v,

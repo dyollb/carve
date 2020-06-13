@@ -24,6 +24,8 @@
 
 #pragma once
 
+#include <iterator>
+
 namespace carve {
 
 template<typename set_t>

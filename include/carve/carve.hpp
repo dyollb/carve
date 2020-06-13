@@ -24,15 +24,7 @@
 
 #pragma once
 
-#if defined(CMAKE_BUILD)
-#	include <carve/config.h>
-#elif defined(XCODE_BUILD)
-#	include <carve/xcode_config.h>
-#elif defined(_MSC_VER)
-#	include <carve/vcpp_config.h>
-#else
-#	include <carve/config.h>
-#endif
+#include <carve/config.h>
 
 #if defined(WIN32) && !defined(CARVE_STATIC)
 #	if defined(carve_EXPORTS)
@@ -52,25 +44,10 @@
 #	pragma warning(disable : 4251)
 #endif
 
-#include <cmath>
-#include <iomanip>
-#include <list>
-#include <map>
-#include <set>
-#include <sstream>
-#include <string>
-#include <unordered_map>
-#include <unordered_set>
-#include <vector>
-
 #include <carve/collection.hpp>
-
 #include <carve/util.hpp>
 
-#include <cstdarg>
-
-#define STR(x) #x
-#define XSTR(x) STR(x)
+#include <sstream>
 
 /**
  * \brief Top level Carve namespace.

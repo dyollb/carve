@@ -29,6 +29,8 @@
 
 #include <carve/mesh.hpp>
 
+#include <unordered_set>
+
 namespace carve {
 namespace csg {
 

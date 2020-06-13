@@ -26,6 +26,8 @@
 
 #include <carve/math.hpp>
 
+#include <iomanip>
+
 namespace carve {
 namespace geom {
 

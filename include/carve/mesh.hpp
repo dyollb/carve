@@ -34,6 +34,8 @@
 #include <carve/tag.hpp>
 
 #include <iostream>
+#include <unordered_map>
+#include <set>
 
 namespace carve {
 namespace poly {

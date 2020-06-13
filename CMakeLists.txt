@@ -15,6 +15,10 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+
 option(BUILD_COVERAGE                    "Compile with gcov"                                 OFF)
 option(BUILD_SHARED_LIBS                 "Compile libcarve as shared"                        ON)
 option(CARVE_WITH_GUI                    "Compile gui code"                                  OFF)
@@ -25,7 +29,7 @@ option(CARVE_INTERSECT_GLU_TRIANGULATOR  "Include support for GLU triangulator i
 option(CARVE_GTEST_TESTS                 "Complie gtest, and dependent tests"                OFF)
 
 if(MSVC)
-  add_compile_options(/W4)# /WX)
+  add_compile_options(/W3 /D_SCL_SECURE_NO_WARNINGS)# /WX)
 else()
   add_compile_options(-Wall)# -Wextra -pedantic -Werror)
 endif()
