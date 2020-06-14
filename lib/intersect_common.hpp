@@ -24,7 +24,7 @@
 
 #pragma once
 
-static inline bool facesAreCoplanar(const carve::mesh::MeshSet<3>::face_t* a,
+inline bool facesAreCoplanar(const carve::mesh::MeshSet<3>::face_t* a,
 		const carve::mesh::MeshSet<3>::face_t* b)
 {
 	carve::geom3d::Ray temp;
@@ -42,7 +42,7 @@ static inline bool facesAreCoplanar(const carve::mesh::MeshSet<3>::face_t* a,
 namespace carve {
 namespace csg {
 
-static inline carve::mesh::MeshSet<3>::vertex_t* map_vertex(
+inline carve::mesh::MeshSet<3>::vertex_t* map_vertex(
 		const VVMap& vmap, carve::mesh::MeshSet<3>::vertex_t* v)
 {
 	VVMap::const_iterator i = vmap.find(v);
@@ -67,7 +67,7 @@ extern IntersectDebugHooks* g_debug;
 			}            \
 		} while (0)
 
-static inline void drawFaceLoopList(const FaceLoopList& ll, float rF, float gF,
+inline void drawFaceLoopList(const FaceLoopList& ll, float rF, float gF,
 		float bF, float aF, float rB, float gB,
 		float bB, float aB, bool lit)
 {
@@ -81,7 +81,7 @@ static inline void drawFaceLoopList(const FaceLoopList& ll, float rF, float gF,
 	}
 }
 
-static inline void drawFaceLoopListWireframe(const FaceLoopList& ll)
+inline void drawFaceLoopListWireframe(const FaceLoopList& ll)
 {
 	for (FaceLoop* flb = ll.head; flb; flb = flb->next)
 	{
@@ -92,7 +92,7 @@ static inline void drawFaceLoopListWireframe(const FaceLoopList& ll)
 }
 
 template<typename T>
-static inline void drawEdges(T begin, T end, float rB, float gB, float bB,
+inline void drawEdges(T begin, T end, float rB, float gB, float bB,
 		float aB, float rE, float gE, float bE, float aE,
 		float w)
 {
