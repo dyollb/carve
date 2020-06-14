@@ -60,8 +60,7 @@ int dbl_sign(double d)
 	return +1;
 }
 
-inline double orient3d_exact(const vec3& a, const vec3& b, const vec3& c,
-		const vec3& d)
+inline double orient3d_exact(const vec3& a, const vec3& b, const vec3& c, const vec3& d)
 {
 	return shewchuk::orient3d(a.v, b.v, c.v, d.v);
 }

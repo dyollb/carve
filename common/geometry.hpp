@@ -39,8 +39,10 @@
 #include <carve/matrix.hpp>
 #include <carve/poly.hpp>
 
-#ifdef WIN32
+#ifdef rad1
 #	undef rad1
+#endif
+#ifdef rad1
 #	undef rad2
 #endif
 

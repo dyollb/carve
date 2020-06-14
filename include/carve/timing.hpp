@@ -48,8 +48,8 @@ public:
    * Starts timing at the end of this constructor, using the given ID. To
    * associate an ID with a textual name, use Timing::registerID.
    */
-	TimingBlock(int id);
-	TimingBlock(const TimingName& name);
+	explicit TimingBlock(int id);
+	explicit TimingBlock(const TimingName& name);
 	~TimingBlock();
 };
 
