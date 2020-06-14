@@ -9,6 +9,9 @@ find_package(OpenGL)
 include_directories(${OPENGL_INCLUDE_DIR})
 
 add_library(gloop_math STATIC src/matrix.cpp src/quaternion.cpp)
+if(MSVC)
+	target_compile_definitions(gloop_math PRIVATE -D_USE_MATH_DEFINES)
+endif(MSVC)
 
 add_library(gloop_image STATIC src/radiance.cpp)
 

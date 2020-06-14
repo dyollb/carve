@@ -27,7 +27,7 @@
 #include "intersect_common.hpp"
 
 template<typename T>
-static int is_same(const std::vector<T>& a, const std::vector<T>& b)
+int is_same(const std::vector<T>& a, const std::vector<T>& b)
 {
 	if (a.size() != b.size())
 	{

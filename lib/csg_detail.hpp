@@ -71,8 +71,7 @@ public:
 }
 } // namespace carve::csg::detail
 
-static inline std::ostream& operator<<(std::ostream& o,
-		const carve::csg::detail::FSet& s)
+inline std::ostream& operator<<(std::ostream& o, const carve::csg::detail::FSet& s)
 {
 	const char* sep = "";
 	for (carve::csg::detail::FSet::const_iterator i = s.begin(); i != s.end();

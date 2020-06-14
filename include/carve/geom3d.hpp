@@ -38,7 +38,7 @@
 #	include <iostream>
 #endif
 
-#if defined CARVE_USE_EXACT_PREDICATES
+#if defined(CARVE_USE_EXACT_PREDICATES)
 #	include <carve/shewchuk_predicates.hpp>
 #endif
 
@@ -142,15 +142,13 @@ RayIntersectionClass rayRayIntersection(const Ray& r1, const Ray& r2,
 // return: +ve = d is below a,b,c
 //         -ve = d is above a,b,c
 //           0 = d is on a,b,c
-#if defined CARVE_USE_EXACT_PREDICATES
-inline double orient3d(const Vector& a, const Vector& b, const Vector& c,
-		const Vector& d)
+#if defined(CARVE_USE_EXACT_PREDICATES)
+inline double orient3d(const Vector& a, const Vector& b, const Vector& c, const Vector& d)
 {
 	return shewchuk::orient3d(a.v, b.v, c.v, d.v);
 }
 #else
-inline double orient3d(const Vector& a, const Vector& b, const Vector& c,
-		const Vector& d)
+inline double orient3d(const Vector& a, const Vector& b, const Vector& c, const Vector& d)
 {
 	return dotcross((a - d), (b - d), (c - d));
 }
@@ -234,12 +232,9 @@ inline int compareAngles(const Vector& direction, const Vector& base,
 #if defined(CARVE_USE_EXACT_PREDICATES)
 	// which is equivalent to the following (which eliminates a
 	// vector subtraction):
-	double d1 =
-			carve::geom3d::orient3d(direction, b, a, carve::geom::VECTOR(0, 0, 0));
-	double d2 =
-			carve::geom3d::orient3d(direction, a, base, carve::geom::VECTOR(0, 0, 0));
-	double d3 =
-			carve::geom3d::orient3d(direction, b, base, carve::geom::VECTOR(0, 0, 0));
+	double d1 = carve::geom3d::orient3d(direction, b, a, carve::geom::VECTOR(0, 0, 0));
+	double d2 = carve::geom3d::orient3d(direction, a, base, carve::geom::VECTOR(0, 0, 0));
+	double d3 = carve::geom3d::orient3d(direction, b, base, carve::geom::VECTOR(0, 0, 0));
 #else
 	// dotcross = a . (b x c)
 	double d1 = carve::geom::dotcross(direction, b, a);

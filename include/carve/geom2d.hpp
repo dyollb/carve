@@ -39,7 +39,7 @@
 #	include <iostream>
 #endif
 
-#if defined CARVE_USE_EXACT_PREDICATES
+#if defined(CARVE_USE_EXACT_PREDICATES)
 #	include <carve/shewchuk_predicates.hpp>
 #endif
 
@@ -71,7 +71,7 @@ using P2Vector = std::vector<P2>;
  *         zero, if c is colinear with a->b.
  *         negative, if c to the right of a->b.
  */
-#if defined CARVE_USE_EXACT_PREDICATES
+#if defined(CARVE_USE_EXACT_PREDICATES)
 inline double orient2d(const P2& a, const P2& b, const P2& c)
 {
 	return shewchuk::orient2d(a.v, b.v, c.v);

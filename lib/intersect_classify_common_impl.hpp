@@ -60,7 +60,7 @@ inline bool isSameRev(const V2Set& a, const V2Set& b)
 	return true;
 }
 
-static void performClassifySimpleOnFaceGroups(FLGroupList& a_groups,
+inline void performClassifySimpleOnFaceGroups(FLGroupList& a_groups,
 		FLGroupList& b_groups,
 		carve::mesh::MeshSet<3>* /* poly_a */,
 		carve::mesh::MeshSet<3>* /* poly_b */,
@@ -158,7 +158,7 @@ static void performClassifySimpleOnFaceGroups(FLGroupList& a_groups,
 }
 
 template<typename CLASSIFIER>
-static void performClassifyEasyFaceGroups(
+inline void performClassifyEasyFaceGroups(
 		FLGroupList& group, carve::mesh::MeshSet<3>* poly_a,
 		const carve::geom::RTreeNode<3, carve::mesh::Face<3>*>* poly_a_rtree,
 		VertexClassification& vclass, const CLASSIFIER& classifier,
@@ -209,7 +209,7 @@ static void performClassifyEasyFaceGroups(
 }
 
 template<typename CLASSIFIER>
-static void performClassifyHardFaceGroups(
+inline void performClassifyHardFaceGroups(
 		FLGroupList& group, carve::mesh::MeshSet<3>* poly_a,
 		const carve::geom::RTreeNode<3, carve::mesh::Face<3>*>* poly_a_rtree,
 		const CLASSIFIER& /* classifier */, CSG::Collector& collector,
@@ -353,7 +353,7 @@ void performFaceLoopWork(
 }
 
 template<typename CLASSIFIER>
-void performClassifyFaceGroups(
+inline void performClassifyFaceGroups(
 		FLGroupList& a_loops_grouped, FLGroupList& b_loops_grouped,
 		VertexClassification& vclass, carve::mesh::MeshSet<3>* poly_a,
 		const carve::geom::RTreeNode<3, carve::mesh::Face<3>*>* poly_a_rtree,
