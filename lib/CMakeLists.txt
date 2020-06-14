@@ -46,5 +46,15 @@ set_target_properties(carve PROPERTIES
                       SOVERSION "${carve_VERSION_MAJOR}.${carve_VERSION_MINOR}")
 
 install(TARGETS carve
-        LIBRARY DESTINATION "${CMAKE_INSTALL_PREFIX}/lib"
-        ARCHIVE DESTINATION "${CMAKE_INSTALL_PREFIX}/lib")
+        CONFIGURATIONS Debug
+		RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}/Debug/bin"
+		LIBRARY DESTINATION "${CMAKE_INSTALL_PREFIX}/Debug/lib"
+        ARCHIVE DESTINATION "${CMAKE_INSTALL_PREFIX}/Debug/lib")
+install(TARGETS carve
+        CONFIGURATIONS RelWithDebInfo;Release
+		RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}/Release/bin"
+		LIBRARY DESTINATION "${CMAKE_INSTALL_PREFIX}/Release/lib"
+        ARCHIVE DESTINATION "${CMAKE_INSTALL_PREFIX}/Release/lib")
+install(DIRECTORY "${carve_SOURCE_DIR}/include/carve" DESTINATION "${CMAKE_INSTALL_PREFIX}/include" FILES_MATCHING PATTERN "*.hpp")
+install(FILES "${carve_BINARY_DIR}/include/carve/config.h" DESTINATION "${CMAKE_INSTALL_PREFIX}/include/carve")
+

@@ -1,3 +1,5 @@
+if(BUILD_TESTING)
+
 PROJECT(carve_tests)
 
 include_directories("${carve_SOURCE_DIR}/include")
@@ -122,3 +124,5 @@ if (CARVE_GTEST_TESTS)
   cxx_test(shewchuk_unittest gtest_main)
   target_link_libraries(shewchuk_unittest carve)
 endif(CARVE_GTEST_TESTS)
+
+endif(BUILD_TESTING)

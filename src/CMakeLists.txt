@@ -1,3 +1,5 @@
+if(CARVE_APPS)
+
 include_directories("${carve_SOURCE_DIR}/include")
 include_directories("${carve_SOURCE_DIR}/external/GLOOP/include")
 include_directories("${carve_SOURCE_DIR}/external/GLUI/include")
@@ -62,3 +64,5 @@ foreach(tgt slice intersect triangulate convert)
   install(TARGETS ${tgt}
           RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
 endforeach(tgt)
+
+endif(CARVE_APPS)
