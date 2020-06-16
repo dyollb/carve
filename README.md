@@ -1,4 +1,7 @@
-# carve
+# Carve CSG Library
+
+[![Build Status](https://ci.appveyor.com/api/projects/status/github/dyollb/carve?branch=master&svg=true)](//https://github.com/dyollb/carve)
+
 Carve is a fast, robust constructive solid geometry library
 
 Carve provides code to perform boolean operations on polyhedral & triangle meshes.
