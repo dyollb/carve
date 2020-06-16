@@ -297,7 +297,7 @@ public:
 			}
 			return true;
 		}
-		catch (exception e)
+		catch (exception& e)
 		{
 			std::cerr << e.str() << std::endl;
 			help(std::cerr);

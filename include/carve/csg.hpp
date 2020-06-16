@@ -46,10 +46,10 @@ namespace csg {
 
 class VertexPool
 {
-	typedef carve::mesh::MeshSet<3>::vertex_t vertex_t;
-
 	const static unsigned blocksize = 1024;
+	using vertex_t = carve::mesh::MeshSet<3>::vertex_t;
 	using pool_t = std::list<std::vector<vertex_t>>;
+
 	pool_t pool;
 
 public:
@@ -158,7 +158,6 @@ public:
 		Collector(const Collector&) = delete;
 		Collector& operator=(const Collector&) = delete;
 
-	protected:
 	public:
 		virtual void collect(FaceLoopGroup* group, CSG::Hooks&) = 0;
 		virtual meshset_t* done(CSG::Hooks&) = 0;

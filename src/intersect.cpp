@@ -22,9 +22,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#if defined(HAVE_CONFIG_H)
-#	include <carve_config.h>
-#endif
 
 #include <carve/csg.hpp>
 #include <carve/csg_triangulator.hpp>
@@ -1054,9 +1051,9 @@ int main(int argc, char** argv)
 
 			result = p->eval(csg);
 		}
-		catch (carve::exception e)
+		catch (carve::exception& e)
 		{
-			std::cerr << "CSG failed, exception: " << e.str() << std::endl;
+			std::cerr << "CSG failed, exception: " << e.what() << std::endl;
 		}
 		duration = carve::Timing::stop();
 		std::cerr << "Eval time " << duration << " seconds" << std::endl;

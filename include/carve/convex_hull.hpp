@@ -37,13 +37,11 @@ namespace geom {
 std::vector<int> convexHull(const std::vector<carve::geom2d::P2>& points);
 
 template<typename project_t, typename polygon_container_t>
-std::vector<int> convexHull(const project_t& project,
-		const polygon_container_t& points)
+std::vector<int> convexHull(const project_t& project, const polygon_container_t& points)
 {
 	std::vector<carve::geom2d::P2> proj;
 	proj.reserve(points.size());
-	for (typename polygon_container_t::const_iterator i = points.begin();
-			 i != points.end(); ++i)
+	for (typename polygon_container_t::const_iterator i = points.begin(); i != points.end(); ++i)
 	{
 		proj.push_back(project(*i));
 	}
@@ -51,8 +49,7 @@ std::vector<int> convexHull(const project_t& project,
 }
 
 template<typename project_t, typename iter_t>
-std::vector<int> convexHull(const project_t& project, iter_t beg, iter_t end,
-		size_t size_hint = 0)
+std::vector<int> convexHull(const project_t& project, iter_t beg, iter_t end, size_t size_hint = 0)
 {
 	std::vector<carve::geom2d::P2> proj;
 	if (size_hint)

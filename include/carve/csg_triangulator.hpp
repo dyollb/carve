@@ -97,7 +97,7 @@ public:
 };
 } // namespace detail
 
-typedef detail::CarveTriangulator<false> CarveTriangulator;
+using CarveTriangulator = detail::CarveTriangulator<false>;
 using CarveTriangulatorWithImprovement = detail::CarveTriangulator<true>;
 
 class CarveTriangulationImprover : public csg::CSG::Hook

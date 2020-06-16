@@ -26,6 +26,8 @@
 
 #include <carve/math.hpp>
 
+#include <iomanip>
+
 namespace carve {
 namespace geom {
 
@@ -150,17 +152,6 @@ template<unsigned ndim>
 const double& vector<ndim>::operator[](unsigned i) const
 {
 	return this->v[i];
-}
-
-template<unsigned ndim>
-template<typename assign_t>
-vector<ndim>& vector<ndim>::operator=(const assign_t& t)
-{
-	for (unsigned i = 0; i < ndim; ++i)
-	{
-		this->v[i] = t[i];
-	}
-	return *this;
 }
 
 template<unsigned ndim>

@@ -102,8 +102,7 @@ inline double orient2d(const P2& a, const P2& b, const P2& c)
  *               if p lies on b->a or on b->c. This is so that
  *               internalToAngle(a,b,c,p) = !internalToAngle(c,b,a,p)
  */
-inline bool internalToAngle(const P2& a, const P2& b, const P2& c,
-		const P2& p)
+inline bool internalToAngle(const P2& a, const P2& b, const P2& c, const P2& p)
 {
 	bool reflex = (a < c) ? orient2d(b, a, c) <= 0.0 : orient2d(b, c, a) > 0.0;
 	double d1 = orient2d(b, a, p);
@@ -251,7 +250,7 @@ bool triangleIntersectsTriangle(const P2vec& tri_b, const P2vec& tri_a)
 	return true;
 }
 
-static inline double atan2(const P2& p)
+inline double atan2(const P2& p)
 {
 	return ::atan2(p.y, p.x);
 }
@@ -282,31 +281,23 @@ struct PolyIntersectionInfo
 	P2 ipoint;
 	size_t iobjnum;
 
-	PolyIntersectionInfo(IntersectionClass _iclass, const P2& _ipoint,
-			size_t _iobjnum)
+	PolyIntersectionInfo(IntersectionClass _iclass, const P2& _ipoint, size_t _iobjnum)
 			: iclass(_iclass), ipoint(_ipoint), iobjnum(_iobjnum) {}
 };
 
-bool lineSegmentIntersection_simple(const P2& l1v1, const P2& l1v2,
-		const P2& l2v1, const P2& l2v2);
-bool lineSegmentIntersection_simple(const LineSegment2& l1,
-		const LineSegment2& l2);
+CARVE_API bool lineSegmentIntersection_simple(const P2& l1v1, const P2& l1v2, const P2& l2v1, const P2& l2v2);
+CARVE_API bool lineSegmentIntersection_simple(const LineSegment2& l1, const LineSegment2& l2);
 
-LineIntersectionInfo lineSegmentIntersection(const P2& l1v1, const P2& l1v2,
-		const P2& l2v1, const P2& l2v2);
-LineIntersectionInfo lineSegmentIntersection(const LineSegment2& l1,
-		const LineSegment2& l2);
+CARVE_API LineIntersectionInfo lineSegmentIntersection(const P2& l1v1, const P2& l1v2, const P2& l2v1, const P2& l2v2);
+CARVE_API LineIntersectionInfo lineSegmentIntersection(const LineSegment2& l1, const LineSegment2& l2);
 
-int lineSegmentPolyIntersections(const std::vector<P2>& points,
-		LineSegment2 line,
+CARVE_API int lineSegmentPolyIntersections(const std::vector<P2>& points, LineSegment2 line,
 		std::vector<PolyInclusionInfo>& out);
 
-int sortedLineSegmentPolyIntersections(const std::vector<P2>& points,
-		LineSegment2 line,
+CARVE_API int sortedLineSegmentPolyIntersections(const std::vector<P2>& points, LineSegment2 line,
 		std::vector<PolyInclusionInfo>& out);
 
-static inline bool quadIsConvex(const P2& a, const P2& b, const P2& c,
-		const P2& d)
+inline bool quadIsConvex(const P2& a, const P2& b, const P2& c, const P2& d)
 {
 	double s_1, s_2;
 
@@ -323,19 +314,16 @@ static inline bool quadIsConvex(const P2& a, const P2& b, const P2& c,
 }
 
 template<typename T, typename adapt_t>
-inline bool quadIsConvex(const T& a, const T& b, const T& c, const T& d,
-		adapt_t adapt)
+inline bool quadIsConvex(const T& a, const T& b, const T& c, const T& d, adapt_t adapt)
 {
 	return quadIsConvex(adapt(a), adapt(b), adapt(c), adapt(d));
 }
 
-double signedArea(const std::vector<P2>& points);
+CARVE_API double signedArea(const std::vector<P2>& points);
 
-static inline double signedArea(const P2& a, const P2& b, const P2& c)
+inline double signedArea(const P2& a, const P2& b, const P2& c)
 {
-	return ((b.y + a.y) * (b.x - a.x) + (c.y + b.y) * (c.x - b.x) +
-						 (a.y + c.y) * (a.x - c.x)) /
-				 2.0;
+	return ((b.y + a.y) * (b.x - a.x) + (c.y + b.y) * (c.x - b.x) + (a.y + c.y) * (a.x - c.x)) / 2.0;
 }
 
 template<typename T, typename adapt_t>
@@ -379,11 +367,10 @@ double signedArea(iter_t begin, iter_t end, adapt_t adapt)
 	return A / 2.0;
 }
 
-bool pointInPolySimple(const std::vector<P2>& points, const P2& p);
+CARVE_API bool pointInPolySimple(const std::vector<P2>& points, const P2& p);
 
 template<typename T, typename adapt_t>
-bool pointInPolySimple(const std::vector<T>& points, adapt_t adapt,
-		const P2& p)
+bool pointInPolySimple(const std::vector<T>& points, adapt_t adapt, const P2& p)
 {
 	CARVE_ASSERT(!points.empty());
 	P2Vector::size_type l = points.size();
@@ -422,11 +409,10 @@ bool pointInPolySimple(const std::vector<T>& points, adapt_t adapt,
 	return !carve::math::ZERO(s);
 }
 
-PolyInclusionInfo pointInPoly(const std::vector<P2>& points, const P2& p);
+CARVE_API PolyInclusionInfo pointInPoly(const std::vector<P2>& points, const P2& p);
 
 template<typename T, typename adapt_t>
-PolyInclusionInfo pointInPoly(const std::vector<T>& points, adapt_t adapt,
-		const P2& p)
+PolyInclusionInfo pointInPoly(const std::vector<T>& points, adapt_t adapt, const P2& p)
 {
 	P2Vector::size_type l = points.size();
 	for (unsigned i = 0; i < l; i++)
@@ -460,7 +446,7 @@ PolyInclusionInfo pointInPoly(const std::vector<T>& points, adapt_t adapt,
 	return PolyInclusionInfo(POINT_OUT);
 }
 
-bool pickContainedPoint(const std::vector<P2>& poly, P2& result);
+CARVE_API bool pickContainedPoint(const std::vector<P2>& poly, P2& result);
 
 template<typename T, typename adapt_t>
 bool pickContainedPoint(const std::vector<T>& poly, adapt_t adapt, P2& result)

@@ -21,11 +21,6 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-
-#if defined(HAVE_CONFIG_H)
-#	include <carve_config.h>
-#endif
-
 #include <carve/mesh.hpp>
 #include <carve/mesh_impl.hpp>
 #include <carve/poly.hpp>
@@ -623,9 +618,7 @@ void FaceStitcher::matchOrderedEdges(
 		std::vector<std::vector<Edge<3>*>>& efwd,
 		std::vector<std::vector<Edge<3>*>>& erev)
 {
-	typedef std::unordered_map<std::pair<size_t, size_t>, size_t,
-			carve::hash_pair>
-			pair_counts_t;
+	using pair_counts_t = std::unordered_map<std::pair<size_t, size_t>, size_t, carve::hash_pair>;
 	for (;;)
 	{
 		pair_counts_t pair_counts;
@@ -947,8 +940,7 @@ FaceStitcher::FaceStitcher(const MeshOptions& _opts) : opts(_opts) {}
 
 // construct a MeshSet from a Polyhedron, maintaining on the
 // connectivity information in the Polyhedron.
-mesh::MeshSet<3>* meshFromPolyhedron(const poly::Polyhedron* poly,
-		int manifold_id)
+mesh::MeshSet<3>* meshFromPolyhedron(const poly::Polyhedron* poly, int manifold_id)
 {
 	using vertex_t = mesh::Vertex<3>;
 	using edge_t = mesh::Edge<3>;
@@ -1327,8 +1319,8 @@ carve::PointClass carve::mesh::classifyPoint(
 
 	for (;;)
 	{
-		double a1 = random() / double(RAND_MAX) * M_TWOPI;
-		double a2 = random() / double(RAND_MAX) * M_TWOPI;
+		double a1 = rand() / double(RAND_MAX) * M_TWOPI;
+		double a2 = rand() / double(RAND_MAX) * M_TWOPI;
 
 		carve::geom3d::Vector ray_dir =
 				carve::geom::VECTOR(sin(a1) * sin(a2), cos(a1) * sin(a2), cos(a2));

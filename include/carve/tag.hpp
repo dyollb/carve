@@ -38,6 +38,7 @@ protected:
 
 public:
 	tagable(const tagable&) : __tag(s_count - 1) {}
+	// TODO BL
 	tagable& operator=(const tagable&) { return *this; }
 
 	tagable() : __tag(s_count - 1) {}

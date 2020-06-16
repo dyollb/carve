@@ -52,8 +52,7 @@ void Face<ndim>::swap(Face<ndim>& other)
 
 template<unsigned ndim>
 template<typename iter_t>
-Face<ndim>* Face<ndim>::init(const Face<ndim>* base, iter_t vbegin, iter_t vend,
-		bool flipped)
+Face<ndim>* Face<ndim>::init(const Face<ndim>* base, iter_t vbegin, iter_t vend, bool flipped)
 {
 	CARVE_ASSERT(vbegin < vend);
 

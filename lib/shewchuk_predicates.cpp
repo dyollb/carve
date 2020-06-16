@@ -1,6 +1,3 @@
-#include <carve/shewchuk_predicates.hpp>
-namespace shewchuk {
-
 /*****************************************************************************/
 /*                                                                           */
 /*  Routines for Arbitrary Precision Floating-point Arithmetic               */
@@ -115,6 +112,8 @@ namespace shewchuk {
 /*    have questions.                                                        */
 /*                                                                           */
 /*****************************************************************************/
+
+#include <carve/shewchuk_predicates.hpp>
 
 #include <cmath>
 #include <cstdio>
@@ -371,6 +370,8 @@ namespace shewchuk {
 	Two_One_Sum(_k, _1, _j, _l, _2, x1);             \
 	Square(a1, _j, _1);                              \
 	Two_Two_Sum(_j, _1, _l, _2, x5, x4, x3, x2)
+
+namespace shewchuk {
 
 /* splitter = 2^ceiling(p / 2) + 1.  Used to split floats in half.           */
 static REAL splitter;

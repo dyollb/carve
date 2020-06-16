@@ -186,8 +186,7 @@ struct RTreeNode
 		}
 		else
 		{
-			typename std::vector<data_t>::iterator i =
-					std::remove(data.begin(), data.end(), val);
+			auto i = std::remove(data.begin(), data.end(), val);
 			if (i == data.end())
 			{
 				return false;

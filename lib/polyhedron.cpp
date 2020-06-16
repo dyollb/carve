@@ -21,11 +21,6 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-
-#if defined(HAVE_CONFIG_H)
-#	include <carve_config.h>
-#endif
-
 #if defined(CARVE_DEBUG)
 #	define DEBUG_CONTAINS_VERTEX
 #endif
@@ -994,8 +989,8 @@ PointClass Polyhedron::containsVertex(const carve::geom3d::Vector& v,
 
 	for (;;)
 	{
-		double a1 = random() / double(RAND_MAX) * M_TWOPI;
-		double a2 = random() / double(RAND_MAX) * M_TWOPI;
+		double a1 = rand() / double(RAND_MAX) * M_TWOPI;
+		double a2 = rand() / double(RAND_MAX) * M_TWOPI;
 
 		carve::geom3d::Vector ray_dir =
 				carve::geom::VECTOR(sin(a1) * sin(a2), cos(a1) * sin(a2), cos(a2));

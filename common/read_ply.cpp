@@ -22,10 +22,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#if defined(HAVE_CONFIG_H)
-#	include <carve_config.h>
-#endif
-
 #include "read_ply.hpp"
 
 #include <carve/input.hpp>
@@ -68,7 +64,7 @@ struct line_idx : public gloop::stream::reader<int>
 {
 	line* l;
 	explicit line_idx(line* _l) : l(_l) {}
-	virtual void length(size_t len)
+	void length(int len) override
 	{
 		if (l != nullptr)
 		{

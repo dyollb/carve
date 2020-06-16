@@ -22,9 +22,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#if defined(HAVE_CONFIG_H)
-#	include <carve_config.h>
-#endif
 
 #include <carve/carve.hpp>
 #include <carve/geom2d.hpp>
@@ -75,8 +72,8 @@ int main(int argc, char** argv)
 		writePLY(std::cout, p, true);
 		return 0;
 	}
-	catch (carve::exception e)
+	catch (carve::exception& e)
 	{
-		std::cerr << "exception: " << e.str() << std::endl;
+		std::cerr << "exception: " << e.what() << std::endl;
 	}
 }

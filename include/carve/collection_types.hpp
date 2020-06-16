@@ -29,6 +29,8 @@
 
 #include <carve/mesh.hpp>
 
+#include <unordered_set>
+
 namespace carve {
 namespace csg {
 
@@ -36,8 +38,7 @@ using V2 = std::pair<carve::mesh::MeshSet<3>::vertex_t*, carve::mesh::MeshSet<3>
 
 using F2 = std::pair<carve::mesh::MeshSet<3>::face_t*, carve::mesh::MeshSet<3>::face_t*>;
 
-static inline V2 ordered_edge(carve::mesh::MeshSet<3>::vertex_t* a,
-		carve::mesh::MeshSet<3>::vertex_t* b)
+static inline V2 ordered_edge(carve::mesh::MeshSet<3>::vertex_t* a, carve::mesh::MeshSet<3>::vertex_t* b)
 {
 	return V2(std::min(a, b), std::max(a, b));
 }

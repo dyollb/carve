@@ -100,7 +100,7 @@ const static unsigned MAX_SPLIT_DEPTH = 32;
 template<unsigned n_dim, typename nodedata_t>
 class SpatialSubdivTree
 {
-	typedef carve::geom::aabb<n_dim> aabb_t;
+	using aabb_t = carve::geom::aabb<n_dim>;
 	using vector_t = carve::geom::vector<n_dim>;
 
 public:

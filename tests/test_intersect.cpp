@@ -22,9 +22,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#if defined(HAVE_CONFIG_H)
-#	include <carve_config.h>
-#endif
 
 #include <carve/convex_hull.hpp>
 #include <carve/csg.hpp>
@@ -674,9 +671,9 @@ void testCSG(GLuint& dlist, std::list<Input>::const_iterator begin,
 				}
 				result_is_temp = true;
 			}
-			catch (carve::exception e)
+			catch (carve::exception& e)
 			{
-				std::cerr << "FAIL- " << e.str();
+				std::cerr << "FAIL- " << e.what();
 				if (result_is_temp && finalResult)
 				{
 					delete finalResult;

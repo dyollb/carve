@@ -24,11 +24,12 @@
 
 #pragma once
 
+#include <iterator>
+
 namespace carve {
 
 template<typename set_t>
-class set_insert_iterator
-		: public std::iterator<std::output_iterator_tag, void, void, void, void>
+class set_insert_iterator : public std::iterator<std::output_iterator_tag, void, void, void, void>
 {
 protected:
 	set_t* set;

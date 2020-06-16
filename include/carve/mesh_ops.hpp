@@ -71,7 +71,7 @@ double loopArea(carve::mesh::Edge<ndim>* edge, proj_t proj)
 template<unsigned ndim, typename proj_t>
 struct TriangulationData
 {
-	typedef Edge<ndim> edge_t;
+	using edge_t = Edge<ndim>;
 
 	struct VertexInfo
 	{

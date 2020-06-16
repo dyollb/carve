@@ -21,11 +21,6 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-
-#if defined(HAVE_CONFIG_H)
-#	include <carve_config.h>
-#endif
-
 #include <carve/csg.hpp>
 
 #include <iostream>
@@ -511,8 +506,6 @@ void classifyEasyFaces(FaceLoopList &face_loops,
                        int other_poly_num,
                        Intersections &intersections,
                        CSG::Collector &collector) {
-
-
   for (FaceLoop *i = face_loops.head; i;) {
     unsigned j;
 

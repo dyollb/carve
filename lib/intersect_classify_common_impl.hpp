@@ -105,24 +105,19 @@ inline void performClassifySimpleOnFaceGroups(FLGroupList& a_groups,
 
 	// Then, iterate through the FaceLoops hashed in the first map, and
 	// find candidate matches in the second map.
-	for (GroupLookup::iterator j = b_map.begin(), je = b_map.end(); j != je;
-			 ++j)
+	for (GroupLookup::iterator j = b_map.begin(), je = b_map.end(); j != je; ++j)
 	{
 		carve::mesh::MeshSet<3>::vertex_t* v = (*j).first;
 		GroupLookup::iterator i = a_map.find(v);
 
-		for (std::list<FLGroupList::iterator>::iterator bi = (*j).second.begin(),
-																										be = (*j).second.end();
-				 bi != be;)
+		for (std::list<FLGroupList::iterator>::iterator bi = (*j).second.begin(), be = (*j).second.end(); bi != be;)
 		{
 			FLGroupList::iterator b(*bi);
 			FaceLoop* f_b = (*b).face_loops.head;
 
 			// For each candidate match pair, see if their vertex pointers
 			// are the same, allowing for rotation and inversion.
-			for (std::list<FLGroupList::iterator>::iterator ai = (*i).second.begin(),
-																											ae = (*i).second.end();
-					 ai != ae; ++ai)
+			for (std::list<FLGroupList::iterator>::iterator ai = (*i).second.begin(), ae = (*i).second.end(); ai != ae; ++ai)
 			{
 				FLGroupList::iterator a(*ai);
 				FaceLoop* f_a = (*a).face_loops.head;
@@ -288,9 +283,7 @@ void performFaceLoopWork(
 		FLGroupList& b_loops_grouped, const CLASSIFIER& classifier,
 		CSG::Collector& collector, CSG::Hooks& hooks)
 {
-	for (FLGroupList::iterator i = b_loops_grouped.begin(),
-														 e = b_loops_grouped.end();
-			 i != e;)
+	for (FLGroupList::iterator i = b_loops_grouped.begin(), e = b_loops_grouped.end(); i != e;)
 	{
 		FaceClass fc;
 
@@ -362,12 +355,9 @@ inline void performClassifyFaceGroups(
 		const CLASSIFIER& classifier, CSG::Collector& collector,
 		CSG::Hooks& hooks)
 {
-	classifier.classifySimple(a_loops_grouped, b_loops_grouped, vclass, poly_a,
-			poly_b);
-	classifier.classifyEasy(a_loops_grouped, b_loops_grouped, vclass, poly_a,
-			poly_a_rtree, poly_b, poly_b_rtree);
-	classifier.classifyHard(a_loops_grouped, b_loops_grouped, vclass, poly_a,
-			poly_a_rtree, poly_b, poly_b_rtree);
+	classifier.classifySimple(a_loops_grouped, b_loops_grouped, vclass, poly_a, poly_b);
+	classifier.classifyEasy(a_loops_grouped, b_loops_grouped, vclass, poly_a, poly_a_rtree, poly_b, poly_b_rtree);
+	classifier.classifyHard(a_loops_grouped, b_loops_grouped, vclass, poly_a, poly_a_rtree, poly_b, poly_b_rtree);
 
 	{
 		GroupLookup a_map;
@@ -403,9 +393,7 @@ inline void performClassifyFaceGroups(
 				continue;
 			}
 
-			for (std::list<FLGroupList::iterator>::iterator ji = (*a).second.begin(),
-																											je = (*a).second.end();
-					 ji != je; ++ji)
+			for (std::list<FLGroupList::iterator>::iterator ji = (*a).second.begin(), je = (*a).second.end(); ji != je; ++ji)
 			{
 				j = (*ji);
 				if (isSameFwd((*i).perimeter, (*j).perimeter))

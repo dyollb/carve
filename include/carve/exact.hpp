@@ -771,8 +771,7 @@ exact_t operator+(const exact_t& a, const exact_t& b)
 	return r;
 }
 
-void diffprod(const double a, const double b, const double c, const double d,
-		double* r)
+void diffprod(const double a, const double b, const double c, const double d, double* r)
 {
 	// return ab - cd;
 	double ab[2], cd[2];
@@ -781,8 +780,7 @@ void diffprod(const double a, const double b, const double c, const double d,
 	detail::op<2, 2>::sub(ab, cd, r);
 }
 
-double orient3dexact(const double* pa, const double* pb, const double* pc,
-		const double* pd)
+double orient3dexact(const double* pa, const double* pb, const double* pc, const double* pd)
 {
 	using namespace detail;
 

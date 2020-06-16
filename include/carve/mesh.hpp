@@ -34,6 +34,8 @@
 #include <carve/tag.hpp>
 
 #include <iostream>
+#include <unordered_map>
+#include <set>
 
 namespace carve {
 namespace poly {
@@ -82,15 +84,17 @@ public:
 	using owner_t = MeshSet<ndim>;
 	using aabb_t = carve::geom::aabb<ndim>;
 
-	carve::geom::vector<ndim> v;
+	vector_t v;
 
-	explicit Vertex(const vector_t& _v) : tagable(), v(_v) {}
-
-	Vertex() : tagable(), v() {}
+	Vertex(const vector_t& _v) : v(_v) {}
+	Vertex() = default;
+	Vertex(const Vertex&) = default;
+	Vertex(Vertex&&) = default;
+	Vertex& operator=(const Vertex&) = default;
 
 	aabb_t getAABB() const
 	{
-		return aabb_t(v, carve::geom::vector<ndim>::ZERO());
+		return aabb_t(v, vector_t::ZERO());
 	}
 };
 
@@ -327,9 +331,7 @@ private:
 protected:
 	Face()
 			: edge(nullptr),
-
 				mesh(nullptr),
-
 				plane(),
 				project(nullptr),
 				unproject(nullptr)
@@ -691,12 +693,10 @@ protected:
 
 public:
 	explicit Mesh(std::vector<face_t*>& _faces);
-
 	~Mesh();
 
 	template<typename iter_t>
-	static void create(iter_t begin, iter_t end, std::vector<Mesh<ndim>*>& meshes,
-			const MeshOptions& opts);
+	static void create(iter_t begin, iter_t end, std::vector<Mesh<ndim>*>& meshes, const MeshOptions& opts);
 
 	aabb_t getAABB() const { return aabb_t(faces.begin(), faces.end()); }
 
@@ -910,8 +910,7 @@ public:
 
 	explicit MeshSet(std::list<face_t*>& faces, const MeshOptions& opts = MeshOptions());
 
-	MeshSet(std::vector<vertex_t>& _vertex_storage,
-			std::vector<mesh_t*>& _meshes);
+	MeshSet(std::vector<vertex_t>& _vertex_storage, std::vector<mesh_t*>& _meshes);
 
 	// This constructor consolidates and rewrites vertex pointers in
 	// each mesh, repointing them to local storage.

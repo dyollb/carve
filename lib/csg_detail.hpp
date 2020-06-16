@@ -34,10 +34,9 @@
 namespace carve {
 namespace csg {
 namespace detail {
-typedef std::map<
+using EdgeIntInfo = std::map<
 		carve::mesh::MeshSet<3>::vertex_t*,
-		std::set<std::pair<carve::mesh::MeshSet<3>::face_t*, double>>>
-		EdgeIntInfo;
+		std::set<std::pair<carve::mesh::MeshSet<3>::face_t*, double>>>;
 
 using VSet = std::unordered_set<carve::mesh::MeshSet<3>::vertex_t*>;
 using FSet = std::unordered_set<carve::mesh::MeshSet<3>::face_t*>;
@@ -57,8 +56,7 @@ using EVVMap = std::unordered_map<carve::mesh::MeshSet<3>::edge_t*, std::vector<
 
 using VEVecMap = std::unordered_map<carve::mesh::MeshSet<3>::vertex_t*, std::vector<carve::mesh::MeshSet<3>::edge_t*>>;
 
-class LoopEdges
-		: public std::unordered_map<V2, std::list<FaceLoop*>, hash_pair>
+class LoopEdges : public std::unordered_map<V2, std::list<FaceLoop*>, hash_pair>
 {
 	using super = std::unordered_map<V2, std::list<FaceLoop*>, hash_pair>;
 

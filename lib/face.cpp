@@ -22,10 +22,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#if defined(HAVE_CONFIG_H)
-#	include <carve_config.h>
-#endif
-
 #include <carve/poly.hpp>
 
 double CALC_X(const carve::geom::plane<3>& p, double y, double z)
@@ -134,10 +130,9 @@ Face<3>::project_t Face<3>::getProjector(bool positive_facing, int axis)
 }
 
 template<unsigned ndim>
-typename Face<ndim>::unproject_t Face<ndim>::getUnprojector(
-		bool positive_facing, int axis)
+typename Face<ndim>::unproject_t Face<ndim>::getUnprojector(bool positive_facing, int axis)
 {
-	return NULL;
+	return nullptr;
 }
 
 template<>
@@ -147,9 +142,7 @@ Face<3>::unproject_t Face<3>::getUnprojector(bool positive_facing, int axis)
 }
 
 template<unsigned ndim>
-Face<ndim>::Face(const std::vector<const vertex_t*>& _vertices,
-		bool delay_recalc)
-		: tagable()
+Face<ndim>::Face(const std::vector<const vertex_t*>& _vertices, bool delay_recalc)
 {
 	vertices = _vertices;
 	edges.resize(nVertices(), nullptr);
@@ -159,9 +152,7 @@ Face<ndim>::Face(const std::vector<const vertex_t*>& _vertices,
 }
 
 template<unsigned ndim>
-Face<ndim>::Face(const vertex_t* a, const vertex_t* b, const vertex_t* c,
-		bool delay_recalc)
-		: tagable()
+Face<ndim>::Face(const vertex_t* a, const vertex_t* b, const vertex_t* c, bool delay_recalc)
 {
 	vertices.reserve(3);
 	vertices.push_back(a);
@@ -174,9 +165,7 @@ Face<ndim>::Face(const vertex_t* a, const vertex_t* b, const vertex_t* c,
 }
 
 template<unsigned ndim>
-Face<ndim>::Face(const vertex_t* a, const vertex_t* b, const vertex_t* c,
-		const vertex_t* d, bool delay_recalc)
-		: tagable()
+Face<ndim>::Face(const vertex_t* a, const vertex_t* b, const vertex_t* c, const vertex_t* d, bool delay_recalc)
 {
 	vertices.reserve(4);
 	vertices.push_back(a);

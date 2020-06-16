@@ -41,20 +41,29 @@ else(MSVC)
 	set_source_files_properties(shewchuk_predicates.cpp PROPERTIES COMPILE_FLAGS -O0)
 endif(MSVC)
 
-set_target_properties(carve PROPERTIES
+set(PROJECT_NAME carve)
+set_target_properties(${PROJECT_NAME} PROPERTIES
                       VERSION   "${carve_VERSION_MAJOR}.${carve_VERSION_MINOR}.${carve_VERSION_PATCH}"
                       SOVERSION "${carve_VERSION_MAJOR}.${carve_VERSION_MINOR}")
 
-install(TARGETS carve
+install(TARGETS ${PROJECT_NAME}
         CONFIGURATIONS Debug
 		RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}/bin/Debug"
 		LIBRARY DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/Debug"
         ARCHIVE DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/Debug")
-install(TARGETS carve
+install(TARGETS ${PROJECT_NAME}
         CONFIGURATIONS RelWithDebInfo;Release
 		RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}/bin/Release"
 		LIBRARY DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/Release"
         ARCHIVE DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/Release")
+
+install(FILES "$<TARGET_FILE_DIR:${PROJECT_NAME}>/${PROJECT_NAME}.pdb" 
+		CONFIGURATIONS Debug
+		DESTINATION "${CMAKE_INSTALL_PREFIX}/bin/Debug" OPTIONAL)
+install(FILES "$<TARGET_FILE_DIR:${PROJECT_NAME}>/${PROJECT_NAME}.pdb" 
+		CONFIGURATIONS RelWithDebInfo;Release
+		DESTINATION "${CMAKE_INSTALL_PREFIX}/bin/Release" OPTIONAL)
+
 install(DIRECTORY "${carve_SOURCE_DIR}/include/carve" DESTINATION "${CMAKE_INSTALL_PREFIX}/include" FILES_MATCHING PATTERN "*.hpp")
 install(FILES "${carve_BINARY_DIR}/include/carve/config.h" DESTINATION "${CMAKE_INSTALL_PREFIX}/include/carve")
 

@@ -23,7 +23,6 @@ namespace gloop {
       operator std::string() const { return accum.str(); }
     };
 
-
     template<typename _CharT, typename _Traits, typename _Alloc>
     static inline bool startswith(
         const std::basic_string<_CharT, _Traits, _Alloc> &a,
@@ -178,9 +177,6 @@ namespace gloop {
         *iter++ = str_t(s, rx, y - rx);
       }
     }
-
-
-
 
     template<typename _CharT, typename _Traits, typename _Alloc>
     static inline std::vector<std::basic_string<_CharT, _Traits, _Alloc> > split(

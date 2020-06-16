@@ -24,9 +24,6 @@
 
 #include <gtest/gtest.h>
 
-#if defined(HAVE_CONFIG_H)
-#	include <carve_config.h>
-#endif
 
 #include "../lib/shewchuk_predicates.cpp"
 #include <carve/carve.hpp>

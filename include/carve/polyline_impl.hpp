@@ -29,7 +29,7 @@ namespace line {
 
 inline PolylineEdge::PolylineEdge(Polyline* _parent, size_t _edgenum,
 		Vertex* _v1, Vertex* _v2)
-		: tagable(), parent(_parent), edgenum(_edgenum), v1(_v1), v2(_v2) {}
+		: parent(_parent), edgenum(_edgenum), v1(_v1), v2(_v2) {}
 
 inline carve::geom3d::AABB PolylineEdge::aabb() const
 {

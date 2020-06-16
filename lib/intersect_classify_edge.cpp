@@ -22,10 +22,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#if defined(HAVE_CONFIG_H)
-#	include <carve_config.h>
-#endif
-
 #if defined(HAVE_STDINT_H)
 #	include <cstdint>
 #endif

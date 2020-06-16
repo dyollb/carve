@@ -47,7 +47,7 @@ public:
 	kd_node* parent;
 	axis_pos splitpos;
 
-	typedef vector<ndim> vector_t;
+	using vector_t = vector<ndim>;
 	using container_t = std::list<data_t>;
 
 	container_t data;
@@ -225,8 +225,7 @@ public:
 		return true;
 	}
 
-	bool split(axis_pos split_at = axis_pos(-1,
-								 std::numeric_limits<double>::max()))
+	bool split(axis_pos split_at = axis_pos(-1, std::numeric_limits<double>::max()))
 	{
 		inserter_t inserter;
 		return split(split_at, inserter);

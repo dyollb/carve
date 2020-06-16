@@ -24,15 +24,7 @@
 
 #pragma once
 
-#if defined(CMAKE_BUILD)
-#	include <carve/config.h>
-#elif defined(XCODE_BUILD)
-#	include <carve/xcode_config.h>
-#elif defined(_MSC_VER)
-#	include <carve/vcpp_config.h>
-#else
-#	include <carve/config.h>
-#endif
+#include <carve/config.h>
 
 #if defined(WIN32) && !defined(CARVE_STATIC)
 #	if defined(carve_EXPORTS)
@@ -52,25 +44,11 @@
 #	pragma warning(disable : 4251)
 #endif
 
-#include <cmath>
-#include <iomanip>
-#include <list>
-#include <map>
-#include <set>
-#include <sstream>
-#include <string>
-#include <unordered_map>
-#include <unordered_set>
-#include <vector>
-
 #include <carve/collection.hpp>
-
 #include <carve/util.hpp>
 
-#include <cstdarg>
-
-#define STR(x) #x
-#define XSTR(x) STR(x)
+#include <stdexcept>
+#include <sstream>
 
 /**
  * \brief Top level Carve namespace.
@@ -90,47 +68,16 @@ inline std::string fmtstring(const char* fmt, ...);
 /**
  * \brief Base class for all Carve exceptions.
  */
-struct exception
+class exception : public std::runtime_error
 {
-private:
-	mutable std::string err;
-	mutable std::ostringstream accum;
-
 public:
-	explicit exception(const std::string& e) : err(e), accum() {}
-	exception() : err(), accum() {}
-	exception(const exception& e) : err(e.str()), accum() {}
-	exception& operator=(const exception& e)
-	{
-		if (this != &e)
-		{
-			err = e.str();
-			accum.str("");
-		}
-		return *this;
-	}
+	using std::runtime_error::runtime_error;
 
-	const std::string& str() const
-	{
-		if (!accum.str().empty())
-		{
-			err += accum.str();
-			accum.str("");
-		}
-		return err;
-	}
-
-	template<typename T>
-	exception& operator<<(const T& t)
-	{
-		accum << t;
-		return *this;
-	}
+	/** \brief For API backwards compatibility */
+	std::string str() const { return std::string(what()); }
 };
 
-template<typename iter_t,
-		typename order_t =
-				std::less<typename std::iterator_traits<iter_t>::value_type>>
+template<typename iter_t, typename order_t = std::less<typename std::iterator_traits<iter_t>::value_type>>
 struct index_sort
 {
 	iter_t base;
@@ -146,8 +93,7 @@ struct index_sort
 };
 
 template<typename iter_t, typename order_t>
-index_sort<iter_t, order_t> make_index_sort(const iter_t& base,
-		const order_t& order)
+index_sort<iter_t, order_t> make_index_sort(const iter_t& base, const order_t& order)
 {
 	return index_sort<iter_t, order_t>(base, order);
 }
@@ -204,7 +150,7 @@ static inline void setEpsilon(double ep)
 template<typename T>
 struct identity_t
 {
-	typedef T argument_type;
+	using argument_type = T;
 	using result_type = T;
 	const T& operator()(const T& t) const { return t; }
 };
@@ -299,15 +245,17 @@ inline double rangeSeparation(const std::pair<double, double>& a,
 #endif
 
 #if !defined(CARVE_NODEBUG)
-#	define CARVE_ASSERT(x)                                                     \
-		MACRO_BEGIN if (!(x)) throw carve::exception() << __FILE__ << ":"         \
-																									 << __LINE__ << "  " << #x; \
+#	define CARVE_ASSERT(x)														\
+		MACRO_BEGIN if (!(x)) { std::stringstream os__; os__ << __FILE__ << ":"	\
+													<< __LINE__ << "  " << #x;	\
+								throw carve::exception(os__.str()); }			\
 		MACRO_END
 #else
 #	define CARVE_ASSERT(X)
 #endif
 
-#define CARVE_FAIL(x)                                                         \
-	MACRO_BEGIN throw carve::exception() << __FILE__ << ":" << __LINE__ << "  " \
-																			 << #x;                                 \
+#define CARVE_FAIL(x)															\
+	MACRO_BEGIN { std::stringstream os__; os__ << __FILE__ << ":"				\
+												<< __LINE__ << "  " << #x;		\
+							throw carve::exception(os__.str()); }				\
 	MACRO_END

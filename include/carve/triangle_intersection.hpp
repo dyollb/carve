@@ -43,14 +43,14 @@ enum TriangleInt {
 	TR_INT_TRI = 4	 // intersection due to identical triangle.
 };
 
-TriangleInt triangle_intersection(const vector<2> tri_a[3],
+CARVE_API TriangleInt triangle_intersection(const vector<2> tri_a[3],
 		const vector<2> tri_b[3]);
-TriangleInt triangle_intersection(const vector<3> tri_a[3],
+CARVE_API TriangleInt triangle_intersection(const vector<3> tri_a[3],
 		const vector<3> tri_b[3]);
 
-bool triangle_intersection_simple(const vector<2> tri_a[3],
+CARVE_API bool triangle_intersection_simple(const vector<2> tri_a[3],
 		const vector<2> tri_b[3]);
-bool triangle_intersection_simple(const vector<3> tri_a[3],
+CARVE_API bool triangle_intersection_simple(const vector<3> tri_a[3],
 		const vector<3> tri_b[3]);
 
 CARVE_API TriangleIntType triangle_intersection_exact(const vector<2> tri_a[3],
@@ -58,9 +58,9 @@ CARVE_API TriangleIntType triangle_intersection_exact(const vector<2> tri_a[3],
 CARVE_API TriangleIntType triangle_intersection_exact(const vector<3> tri_a[3],
 		const vector<3> tri_b[3]);
 
-TriangleIntType triangle_linesegment_intersection_exact(
+CARVE_API TriangleIntType triangle_linesegment_intersection_exact(
 		const vector<2> tri_a[3], const vector<2> line_b[2]);
-TriangleIntType triangle_point_intersection_exact(const vector<2> tri_a[3],
+CARVE_API TriangleIntType triangle_point_intersection_exact(const vector<2> tri_a[3],
 		const vector<2>& pt_b);
 }
 } // namespace carve::geom

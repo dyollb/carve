@@ -50,13 +50,12 @@ public:
 	using obj_t = Object;
 
 	vector_t v;
-	obj_t* owner;
+	obj_t* owner = nullptr;
 
-	Vertex() : tagable(), v() {}
-
+	Vertex() = default;
 	~Vertex() = default;
 
-	explicit Vertex(const vector_t& _v) : tagable(), v(_v) {}
+	explicit Vertex(const vector_t& _v) : v(_v) {}
 };
 
 struct hash_vertex_ptr

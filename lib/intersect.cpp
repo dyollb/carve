@@ -21,11 +21,6 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-
-#if defined(HAVE_CONFIG_H)
-#	include <carve_config.h>
-#endif
-
 #include <carve/csg.hpp>
 #include <carve/pointset.hpp>
 #include <carve/polyline.hpp>
@@ -59,8 +54,7 @@ void carve::csg::VertexPool::reset()
 	pool.clear();
 }
 
-carve::csg::VertexPool::vertex_t* carve::csg::VertexPool::get(
-		const vertex_t::vector_t& v)
+carve::csg::VertexPool::vertex_t* carve::csg::VertexPool::get(const vertex_t::vector_t& v)
 {
 	if (pool.empty() || pool.back().size() == blocksize)
 	{

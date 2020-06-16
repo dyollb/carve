@@ -47,7 +47,7 @@ namespace mesh {
 
 class MeshSimplifier
 {
-	typedef carve::mesh::MeshSet<3> meshset_t;
+	using meshset_t = carve::mesh::MeshSet<3>;
 	using mesh_t = carve::mesh::Mesh<3>;
 	using vertex_t = mesh_t::vertex_t;
 	using vector_t = vertex_t::vector_t;

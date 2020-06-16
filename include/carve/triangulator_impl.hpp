@@ -30,6 +30,8 @@
 #	include <iostream>
 #endif
 
+#include <unordered_map>
+
 namespace carve {
 namespace triangulate {
 namespace detail {

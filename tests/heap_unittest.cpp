@@ -24,13 +24,11 @@
 
 #include <gtest/gtest.h>
 
-#if defined(HAVE_CONFIG_H)
-#	include <carve_config.h>
-#endif
 
 #include <carve/carve.hpp>
 #include <carve/heap.hpp>
 
+#include <functional>
 #include <map>
 
 struct record_t

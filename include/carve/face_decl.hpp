@@ -100,7 +100,7 @@ public:
 	using edge_iter_t = typename std::vector<const edge_t*>::iterator;
 	using const_edge_iter_t = typename std::vector<const edge_t*>::const_iterator;
 
-	obj_t* owner;
+	obj_t* owner = nullptr;
 
 	aabb_t aabb;
 	plane_t plane_eqn;
@@ -110,12 +110,9 @@ public:
 	project_t project;
 	unproject_t unproject;
 
-	explicit Face(const std::vector<const vertex_t*>& _vertices,
-			bool delay_recalc = false);
-	Face(const vertex_t* a, const vertex_t* b, const vertex_t* c,
-			bool delay_recalc = false);
-	Face(const vertex_t* a, const vertex_t* b, const vertex_t* c,
-			const vertex_t* d, bool delay_recalc = false);
+	explicit Face(const std::vector<const vertex_t*>& _vertices, bool delay_recalc = false);
+	Face(const vertex_t* a, const vertex_t* b, const vertex_t* c, bool delay_recalc = false);
+	Face(const vertex_t* a, const vertex_t* b, const vertex_t* c, const vertex_t* d, bool delay_recalc = false);
 
 	template<typename iter_t>
 	Face(const Face* base, iter_t vbegin, iter_t vend, bool flipped)
@@ -123,8 +120,7 @@ public:
 		init(base, vbegin, vend, flipped);
 	}
 
-	Face(const Face* base, const std::vector<const vertex_t*>& _vertices,
-			bool flipped)
+	Face(const Face* base, const std::vector<const vertex_t*>& _vertices, bool flipped)
 	{
 		init(base, _vertices, flipped);
 	}
@@ -136,13 +132,11 @@ public:
 
 	template<typename iter_t>
 	Face* init(const Face* base, iter_t vbegin, iter_t vend, bool flipped);
-	Face* init(const Face* base, const std::vector<const vertex_t*>& _vertices,
-			bool flipped);
+	Face* init(const Face* base, const std::vector<const vertex_t*>& _vertices, bool flipped);
 
 	template<typename iter_t>
 	Face* create(iter_t vbegin, iter_t vend, bool flipped) const;
-	Face* create(const std::vector<const vertex_t*>& _vertices,
-			bool flipped) const;
+	Face* create(const std::vector<const vertex_t*>& _vertices, bool flipped) const;
 
 	Face* clone(bool flipped = false) const;
 	void invert();

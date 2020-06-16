@@ -84,11 +84,17 @@ struct vector : public base<ndim>
 {
 	enum { __ndim = ndim };
 
-	static vector ZERO();
+	vector() { setZero(); }
+	explicit vector(noinit_t) {}
+
+	double& operator[](unsigned i);
+	const double& operator[](unsigned i) const;
+
 	double length2() const;
 	double length() const;
 	vector<ndim>& normalize();
 	vector<ndim> normalized() const;
+	static vector ZERO();
 	bool exactlyZero() const;
 	bool isZero(double epsilon = EPSILON) const;
 	void setZero();
@@ -99,16 +105,9 @@ struct vector : public base<ndim>
 	vector<ndim> invscaled(double d) const;
 	vector<ndim>& negate();
 	vector<ndim> negated() const;
-	double& operator[](unsigned i);
-	const double& operator[](unsigned i) const;
-	template<typename assign_t>
-	vector<ndim>& operator=(const assign_t& t);
 	std::string asStr() const;
 
 	aabb<ndim> getAABB() const;
-
-	vector() { setZero(); }
-	explicit vector(noinit_t) {}
 };
 
 template<unsigned ndim>
@@ -406,8 +405,7 @@ template<unsigned ndim, typename val_t>
 double distance2(const sphere<ndim>& sphere, const val_t& point);
 
 template<unsigned ndim>
-static inline vector<ndim> closestPoint(const sphere<ndim>& sphere,
-		const vector<ndim>& point);
+static inline vector<ndim> closestPoint(const sphere<ndim>& sphere, const vector<ndim>& point);
 
 // ========================================================================
 template<unsigned ndim>
@@ -434,8 +432,7 @@ std::ostream& operator<<(std::ostream& o, const vector<ndim>& v);
 template<unsigned ndim>
 std::ostream& operator<<(std::ostream& o, const carve::geom::plane<ndim>& p);
 template<unsigned ndim>
-std::ostream& operator<<(std::ostream& o,
-		const carve::geom::sphere<ndim>& sphere);
+std::ostream& operator<<(std::ostream& o, const carve::geom::sphere<ndim>& sphere);
 template<unsigned ndim>
 std::ostream& operator<<(std::ostream& o, const carve::geom::tri<ndim>& tri);
 

@@ -116,10 +116,10 @@ struct FaceLoopList
 
 	~FaceLoopList()
 	{
-		FaceLoop *a = head, *b;
+		FaceLoop *a = head;
 		while (a)
 		{
-			b = a;
+			FaceLoop *b = a;
 			a = a->next;
 			delete b;
 		}
@@ -133,11 +133,9 @@ struct FaceLoopGroup
 	V2Set perimeter;
 	std::list<ClassificationInfo> classification;
 
-	explicit FaceLoopGroup(const carve::mesh::MeshSet<3>* _src)
-			: src(_src) {}
+	explicit FaceLoopGroup(const carve::mesh::MeshSet<3>* _src) : src(_src) {}
 
-	FaceClass classificationAgainst(
-			const carve::mesh::MeshSet<3>::mesh_t* mesh) const;
+	FaceClass classificationAgainst(const carve::mesh::MeshSet<3>::mesh_t* mesh) const;
 };
 
 using FLGroupList = std::list<FaceLoopGroup>;

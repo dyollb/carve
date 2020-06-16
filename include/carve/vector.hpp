@@ -191,8 +191,7 @@ vec_cmp_gt_z<adapt_t> vec_gt_z(adapt_t& adapt)
 }
 
 template<typename iter_t, typename adapt_t>
-void sortInDirectionOfRay(const Vector& ray_dir, iter_t begin, iter_t end,
-		adapt_t adapt)
+void sortInDirectionOfRay(const Vector& ray_dir, iter_t begin, iter_t end, adapt_t adapt)
 {
 	switch (carve::geom::largestAxis(ray_dir))
 	{
