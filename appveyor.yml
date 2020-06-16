@@ -17,7 +17,7 @@ configuration:
 
 #Cmake will autodetect the compiler, but we set the arch
 before_build:
-  - cmake -H. -BBuild -A%PLATFORM%
+  - cmake -H. -BBuild -A%PLATFORM% -DCMAKE_INSTALL_PREFIX=%APPVEYOR_BUILD_FOLDER%\carve_dev
 
 # build with MSBuild
 build:
@@ -28,3 +28,10 @@ build:
 test_script:
   - cd Build
   - ctest -V -j 2 -C %CONFIGURATION%
+
+after_build:
+  - 7z a CarveLib.zip %APPVEYOR_BUILD_FOLDER%\carve_dev\*
+
+artifacts:
+  - path: CarveLib.zip
+    name: CarveLib
