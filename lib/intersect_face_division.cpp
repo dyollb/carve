@@ -247,9 +247,7 @@ struct Graph
 				if (j != vi->end())
 				{
 					out << "   (int) ";
-					for (carve::csg::IObjPairSet::const_iterator k = (*j).second.begin(),
-																											 ke = (*j).second.end();
-							 k != ke; ++k)
+					for (carve::csg::IObjPairSet::const_iterator k = (*j).second.begin(), ke = (*j).second.end(); k != ke; ++k)
 					{
 						if ((*k).first < (*k).second)
 						{

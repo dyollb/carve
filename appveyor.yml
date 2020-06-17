@@ -16,25 +16,21 @@ configuration:
   - Debug
   - RelWithDebInfo
 
+# cmake will autodetect the compiler, but we set the arch
+before_build:
+  - cmake -H. -BBuild -A%PLATFORM% -DCMAKE_INSTALL_PREFIX=installdir
+
 for:
 -
   matrix:
     only:
       - image: Ubuntu
   environment:
-    CC: clang-9
-    CXX: clang++-9
+    CC: clang
+    CXX: clang++
     CXXFLAGS: -stdlib=libc++
   before_build:
     - cmake -H. -BBuild -DCMAKE_INSTALL_PREFIX=installdir
-
--
-  matrix:
-    only:
-      - image: Visual Studio 201*
-  # cmake will autodetect the compiler, but we set the arch
-  before_build:
-    - cmake -H. -BBuild -A%PLATFORM% -DCMAKE_INSTALL_PREFIX=installdir
 
 build_script:
   - cmd: cmake --build Build --target ALL_BUILD --config %CONFIGURATION% -- /nologo /verbosity:minimal /maxcpucount

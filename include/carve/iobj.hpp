@@ -48,8 +48,35 @@ struct IObj
 	IObj(carve::mesh::MeshSet<3>::vertex_t* v) : obtype(OBTYPE_VERTEX), vertex(v) {}
 	IObj(carve::mesh::MeshSet<3>::edge_t* e) : obtype(OBTYPE_EDGE), edge(e) {}
 	IObj(carve::mesh::MeshSet<3>::face_t* f) : obtype(OBTYPE_FACE), face(f) {}
-	IObj(const IObj&) = default;
-	IObj& operator=(const IObj&) = default;
+	IObj(const IObj& rhs)
+	{
+		*this = rhs;
+	}
+	IObj& operator=(const IObj& rhs)
+	{
+		if (this != &rhs)
+		{
+			obtype = rhs.obtype;
+			switch (obtype)
+			{
+			case OBTYPE_NONE:
+				val = rhs.val;
+				break;
+			case OBTYPE_VERTEX:
+				vertex = rhs.vertex;
+				break;
+			case OBTYPE_EDGE:
+				edge = rhs.edge;
+				break;
+			case OBTYPE_FACE:
+				face = rhs.face;
+				break;
+			default:
+				break;
+			}
+		}
+		return *this;
+	}
 	char typeChar() const { return "NVExF"[obtype]; }
 };
 
