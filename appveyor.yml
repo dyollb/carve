@@ -1,9 +1,10 @@
 # version string format -- This will be overwritten later anyway
 version: "{build}"
 
-os:
-  - Visual Studio 2017
+image:
+  - Visual Studio 2019
   - Visual Studio 2015
+  - Ubuntu
 
 # Win32 and x64 are CMake-compatible solution platform names.
 # This allows us to pass %PLATFORM% to CMake -A.
@@ -15,13 +16,27 @@ configuration:
   - Debug
   - RelWithDebInfo
 
+for:
+-
+  matrix:
+    only:
+      - image: Ubuntu
+  environment:
+    CC: clang-9
+    CXX: clang++-9
+    CXXFLAGS: -stdlib=libc++
+-
+  matrix:
+    only:
+      - image: Visual Studio 201*
+
 #Cmake will autodetect the compiler, but we set the arch
 before_build:
   - cmake -H. -BBuild -A%PLATFORM% -DCMAKE_INSTALL_PREFIX=installdir
 
 build_script:
-  - cmake --build Build --target ALL_BUILD --config %CONFIGURATION% -- /nologo /verbosity:minimal /maxcpucount
-  - cmake --build Build --target INSTALL --config %CONFIGURATION% -- /nologo /verbosity:minimal /maxcpucount
+  - cmd: cmake --build Build --target ALL_BUILD --config %CONFIGURATION% -- /nologo /verbosity:minimal /maxcpucount
+  - cmd: cmake --build Build --target INSTALL --config %CONFIGURATION% -- /nologo /verbosity:minimal /maxcpucount
 
 after_build:
   - cd %APPVEYOR_BUILD_FOLDER%
@@ -33,5 +48,4 @@ test_script:
   - ctest -V -j 2 -C %CONFIGURATION%
 
 artifacts:
-  - path: %BUILD_ARCHIVE%
-    name: CarveLib
+  - path: '*.zip'
