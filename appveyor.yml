@@ -25,14 +25,16 @@ for:
     CC: clang-9
     CXX: clang++-9
     CXXFLAGS: -stdlib=libc++
+  before_build:
+    - cmake -H. -BBuild -DCMAKE_INSTALL_PREFIX=installdir
+
 -
   matrix:
     only:
       - image: Visual Studio 201*
-
-#Cmake will autodetect the compiler, but we set the arch
-before_build:
-  - cmake -H. -BBuild -A%PLATFORM% -DCMAKE_INSTALL_PREFIX=installdir
+  # cmake will autodetect the compiler, but we set the arch
+  before_build:
+    - cmake -H. -BBuild -A%PLATFORM% -DCMAKE_INSTALL_PREFIX=installdir
 
 build_script:
   - cmd: cmake --build Build --target ALL_BUILD --config %CONFIGURATION% -- /nologo /verbosity:minimal /maxcpucount
