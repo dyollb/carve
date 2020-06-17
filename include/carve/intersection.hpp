@@ -36,8 +36,7 @@ namespace csg {
  * \brief Storage for computed intersections between vertices, edges and faces.
  *
  */
-struct Intersections
-		: public std::unordered_map<IObj, IObjVMapSmall, IObj_hash>
+struct Intersections : public std::unordered_map<IObj, IObjVMapSmall, IObj_hash>
 {
 	using vertex_t = carve::mesh::MeshSet<3>::vertex_t;
 	using edge_t = carve::mesh::MeshSet<3>::edge_t;
