@@ -17,21 +17,21 @@ configuration:
 
 #Cmake will autodetect the compiler, but we set the arch
 before_build:
-  - cmake -H. -BBuild -A%PLATFORM% -DCMAKE_INSTALL_PREFIX=%APPVEYOR_BUILD_FOLDER%\carve_dev
+  - cmake -H. -BBuild -A%PLATFORM% -DCMAKE_INSTALL_PREFIX=installdir
 
-# build with MSBuild
-build:
-  project: Build\carve.sln        # path to Visual Studio solution or project
-  parallel: true                  # enable MSBuild parallel builds
-  verbosity: normal               # MSBuild verbosity level {quiet|minimal|normal|detailed}
+build_script:
+  - cmake --build Build --target ALL_BUILD --config %CONFIGURATION% -- /nologo /verbosity:minimal /maxcpucount
+  - cmake --build Build --target INSTALL --config %CONFIGURATION% -- /nologo /verbosity:minimal /maxcpucount
+
+after_build:
+  - cd %APPVEYOR_BUILD_FOLDER%
+  - set BUILD_ARCHIVE=%APPVEYOR_PROJECT_NAME%-%CONFIGURATION%.zip
+  - cmd: 7z a %BUILD_ARCHIVE% installdir
 
 test_script:
   - cd Build
   - ctest -V -j 2 -C %CONFIGURATION%
 
-after_build:
-  - 7z a CarveLib.zip %APPVEYOR_BUILD_FOLDER%\carve_dev\*
-
 artifacts:
-  - path: CarveLib.zip
+  - path: %BUILD_ARCHIVE%
     name: CarveLib
