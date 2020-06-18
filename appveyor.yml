@@ -34,7 +34,7 @@ after_build:
   - cmd: 7z a %BUILD_ARCHIVE% installdir
 
 test_script:
-  - cmd: cd %APPVEYOR_BUILD_FOLDER% Build
+  - cmd: cd Build
   - cmd: ctest -V -j 2 -C %CONFIGURATION%
 
 artifacts:
