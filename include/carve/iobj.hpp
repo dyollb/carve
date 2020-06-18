@@ -87,19 +87,20 @@ struct IObj_hash
 	{
 		return (size_t)i.first.val ^ (size_t)i.second.val;
 	}
+	inline size_t operator()(const std::pair<IObj, IObj>& i) const
+	{
+		return (size_t)i.first.val ^ (size_t)i.second.val;
+	}
 };
 
-using IObjPairSet = std::unordered_set<std::pair<const IObj, const IObj>, IObj_hash>;
+using IObjPairSet = std::unordered_set<std::pair<IObj, IObj>, IObj_hash>;
 
 using IObjVMap = std::unordered_map<IObj, carve::mesh::MeshSet<3>::vertex_t*, IObj_hash>;
 using IObjVMapSmall = std::map<IObj, carve::mesh::MeshSet<3>::vertex_t*>;
 
-class VertexIntersections : public std::unordered_map<carve::mesh::MeshSet<3>::vertex_t*, IObjPairSet>
-{
-};
+using VertexIntersections = std::unordered_map<carve::mesh::MeshSet<3>::vertex_t*, IObjPairSet>;
 
-static inline bool operator==(const carve::csg::IObj& a,
-		const carve::csg::IObj& b)
+static inline bool operator==(const carve::csg::IObj& a, const carve::csg::IObj& b)
 {
 	return a.obtype == b.obtype && a.val == b.val;
 }

@@ -27,10 +27,11 @@
 #include <carve/carve.hpp>
 
 #include <carve/geom3d.hpp>
-
 #include <carve/edge_decl.hpp>
 #include <carve/face_decl.hpp>
 #include <carve/vertex_decl.hpp>
+
+#include <cstddef>
 
 namespace carve {
 namespace poly {

@@ -81,10 +81,8 @@ struct PolylineEdge : public tagable
 
 struct Polyline
 {
-	bool closed;
+	bool closed{false};
 	std::vector<PolylineEdge*> edges;
-
-	Polyline();
 
 	size_t vertexCount() const;
 

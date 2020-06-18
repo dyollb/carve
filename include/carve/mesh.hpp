@@ -339,7 +339,8 @@ protected:
 	}
 
 	Face(const Face& other)
-			: edge(nullptr),
+			: tagable(other), 
+				edge(nullptr),
 				n_edges(other.n_edges),
 				mesh(nullptr),
 				id(other.id),
@@ -646,6 +647,7 @@ class CARVE_API FaceStitcher
 
 public:
 	explicit FaceStitcher(const MeshOptions& _opts);
+	~FaceStitcher() = default;
 
 	template<typename iter_t>
 	void create(iter_t begin, iter_t end, std::vector<Mesh<3>*>& meshes);

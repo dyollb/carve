@@ -3,13 +3,15 @@ cmake_minimum_required(VERSION 2.6)
 project(glew)
 
 find_package(OpenGL)
+if(OPENGL_FOUND)
 
-include_directories("${glew_SOURCE_DIR}/include")
+  include_directories("${glew_SOURCE_DIR}/include")
 
-add_library(glew STATIC src/glew.c)
+  add_library(glew STATIC src/glew.c)
 
-add_definitions(-DGLEW_STATIC)
+  add_definitions(-DGLEW_STATIC)
 
-include_directories(${OPENGL_INCLUDE_DIR})
+  include_directories(${OPENGL_INCLUDE_DIR})
 
-target_link_libraries(glew ${OPENGL_LIBRARIES})
+  target_link_libraries(glew ${OPENGL_LIBRARIES})
+endif(OPENGL_FOUND)

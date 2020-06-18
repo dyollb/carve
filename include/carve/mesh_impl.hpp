@@ -29,6 +29,7 @@
 #include <carve/geom3d.hpp>
 
 #include <algorithm>
+#include <cstddef>
 #include <deque>
 #include <iostream>
 
@@ -627,7 +628,8 @@ void FaceStitcher::initEdges(iter_t begin, iter_t end)
 		edge_t* e = face->edge;
 		do
 		{
-			edges[vpair_t(e->v1(), e->v2())].push_back(e);
+			vpair_t key(e->v1(), e->v2());
+			edges[key].push_back(e);
 			e = e->next;
 			if (e->rev)
 			{

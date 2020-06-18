@@ -54,8 +54,8 @@ struct RTreeNode
 
 	struct data_aabb_t
 	{
-		aabb_t bbox;
-		data_t data;
+		aabb_t bbox = {};
+		data_t data = {};
 
 		data_aabb_t() = default;
 		data_aabb_t(const data_t& _data) : bbox(aabb_calc_t()(_data)), data(_data) {}

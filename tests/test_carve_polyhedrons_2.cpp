@@ -109,7 +109,11 @@ int main()
 
 	// std::cout << "Tetrahedron is ... \n" << tetrahedron;
 	// std::cout << "Triangle is ... \n" << triangle;
-	// std::cout << "Intersection is ... \n" << *is_poly;
+	if (is_poly)
+	{
+		// BL, add proper checks
+		std::cout << "Intersection is ... \n" << is_poly->isClosed();
+	}
 
 	return 0;
 }

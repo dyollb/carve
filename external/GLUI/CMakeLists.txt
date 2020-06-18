@@ -1,19 +1,20 @@
 cmake_minimum_required(VERSION 2.6)
 
 find_package(OpenGL)
-find_package(GLUT)
+if(OPENGL_FOUND)
+  find_package(GLUT)
 
-project(glui)
+  project(glui)
 
-include_directories("${glui_SOURCE_DIR}/include")
+  include_directories("${glui_SOURCE_DIR}/include")
 
-add_definitions(-DGLUI_NO_LIB_PRAGMA)
-add_definitions(-DGLUI_USE_STATIC_LIB)
+  add_definitions(-DGLUI_NO_LIB_PRAGMA)
+  add_definitions(-DGLUI_USE_STATIC_LIB)
 
-include_directories(${OPENGL_INCLUDE_DIR})
-include_directories(${GLUT_INCLUDE_DIR})
+  include_directories(${OPENGL_INCLUDE_DIR})
+  include_directories(${GLUT_INCLUDE_DIR})
 
-add_library(glui STATIC 
+  add_library(glui STATIC 
             src/algebra3.cpp
             src/arcball.cpp
             src/arcball.h
@@ -49,4 +50,5 @@ add_library(glui STATIC
             src/quaternion.cpp
             src/viewmodel.cpp)
 
-target_link_libraries(glui ${OPENGL_LIBRARIES} ${GLUT_LIBRARY})
+  target_link_libraries(glui ${OPENGL_LIBRARIES} ${GLUT_LIBRARY})
+endif(OPENGL_FOUND)

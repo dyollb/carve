@@ -221,8 +221,9 @@ public:
 			{
 				for (size_t i = 0; i < n_children; ++i)
 				{
+					const auto& aabb = children[i].aabb;
 					typename std::vector<obj_t>::iterator mid = std::partition(
-							beg, end, std::bind1st(intersection_test, children[i].aabb));
+							beg, end, [&aabb](const carve::poly::Vertex<3>* v){ return intersection_test(aabb, v); } );
 					children[i].insertVector(beg, mid);
 				}
 			}

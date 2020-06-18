@@ -76,8 +76,6 @@ inline PolylineEdge* PolylineEdge::nextEdge() const
 	}
 }
 
-inline Polyline::Polyline() : edges() {}
-
 inline size_t Polyline::vertexCount() const
 {
 	return edgeCount() + (closed ? 0 : 1);
