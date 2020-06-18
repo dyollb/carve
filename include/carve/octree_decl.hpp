@@ -28,7 +28,6 @@
 
 #include <carve/aabb.hpp>
 #include <carve/geom3d.hpp>
-
 #include <carve/polyhedron_base.hpp>
 
 namespace carve {

@@ -28,4 +28,3 @@
 
 #include <carve/pointset_decl.hpp>
 #include <carve/pointset_impl.hpp>
-#include <carve/pointset_iter.hpp>

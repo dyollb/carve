@@ -27,7 +27,6 @@
 #include <carve/carve.hpp>
 
 #include <carve/geom3d.hpp>
-
 #include <carve/collection_types.hpp>
 #include <carve/octree_decl.hpp>
 #include <carve/polyhedron_base.hpp>

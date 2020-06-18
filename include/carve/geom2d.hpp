@@ -28,7 +28,6 @@
 
 #include <carve/math.hpp>
 #include <carve/math_constants.hpp>
-
 #include <carve/geom.hpp>
 
 #include <algorithm>

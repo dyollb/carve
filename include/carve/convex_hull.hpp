@@ -24,13 +24,13 @@
 
 #pragma once
 
-#include <algorithm>
-#include <list>
-#include <vector>
-
 #include <carve/carve.hpp>
 
 #include <carve/geom2d.hpp>
+
+#include <algorithm>
+#include <list>
+#include <vector>
 
 namespace carve {
 namespace geom {

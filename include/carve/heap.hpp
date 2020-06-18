@@ -23,6 +23,7 @@
 // SOFTWARE.
 
 #pragma once
+
 namespace carve {
 namespace heap {
 namespace detail {

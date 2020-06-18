@@ -24,16 +24,16 @@
 
 #pragma once
 
-#include <iterator>
-#include <limits>
-#include <list>
-
 #include <carve/aabb.hpp>
 #include <carve/carve.hpp>
 #include <carve/geom.hpp>
 #include <carve/geom3d.hpp>
 #include <carve/kd_node.hpp>
 #include <carve/tag.hpp>
+
+#include <iterator>
+#include <limits>
+#include <list>
 
 namespace carve {
 namespace line {

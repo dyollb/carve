@@ -24,6 +24,8 @@
 
 #pragma once
 
+#include <carve/carve.hpp>
+
 #include <carve/timing.hpp>
 
 #include <cassert>

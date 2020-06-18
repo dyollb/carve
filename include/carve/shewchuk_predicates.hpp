@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "carve.hpp"
+#include <carve/carve.hpp>
 
 namespace shewchuk {
 CARVE_API double orient2dfast(const double* pa, const double* pb, const double* pc);

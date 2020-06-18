@@ -22,10 +22,13 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+#include <carve/carve.hpp>
+
 #include <carve/csg.hpp>
-#include <carve/poly.hpp>
+#include <carve/face_decl.hpp>
 #include <carve/tag.hpp>
 #include <carve/triangulator.hpp>
+
 #include <deque>
 
 namespace carve {

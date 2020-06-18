@@ -25,11 +25,11 @@
 #pragma once
 
 #include <carve/carve.hpp>
+
 #include <carve/geom.hpp>
-
 #include <carve/math_constants.hpp>
-#include <cmath>
 
+#include <cmath>
 #include <list>
 #include <map>
 #include <vector>

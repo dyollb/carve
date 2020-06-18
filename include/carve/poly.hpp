@@ -27,5 +27,4 @@
 #include <carve/carve.hpp>
 
 #include <carve/poly_decl.hpp>
-
 #include <carve/poly_impl.hpp>

@@ -24,6 +24,8 @@
 
 #pragma once
 
+#include <carve/carve.hpp>
+
 #include <carve/polyline_decl.hpp>
 
 #include <cstdint>

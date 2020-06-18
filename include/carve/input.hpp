@@ -24,14 +24,15 @@
 
 #pragma once
 
-#include <map>
-#include <string>
-
 #include <carve/carve.hpp>
+
 #include <carve/mesh.hpp>
 #include <carve/pointset.hpp>
 #include <carve/poly.hpp>
 #include <carve/polyline.hpp>
+
+#include <map>
+#include <string>
 
 namespace carve {
 namespace input {

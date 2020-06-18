@@ -24,8 +24,9 @@
 
 #pragma once
 
-#include <carve/aabb.hpp>
 #include <carve/carve.hpp>
+
+#include <carve/aabb.hpp>
 #include <carve/geom.hpp>
 
 #include <limits>

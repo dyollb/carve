@@ -24,12 +24,12 @@
 
 #pragma once
 
-#include <cstring>
-
 #include <carve/carve.hpp>
 
 #include <carve/geom.hpp>
 #include <carve/math.hpp>
+
+#include <cstring>
 
 namespace carve {
 namespace math {

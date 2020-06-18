@@ -29,9 +29,8 @@
 #include <carve/aabb.hpp>
 #include <carve/geom.hpp>
 
-#include <iostream>
-
 #include <cmath>
+#include <iostream>
 #include <limits>
 
 namespace carve {
