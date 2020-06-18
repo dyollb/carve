@@ -39,7 +39,7 @@ build_script:
   - cmd: cmake --build Build --target INSTALL --config %CONFIGURATION% -- /nologo /verbosity:minimal /maxcpucount
 
 after_build:
-  - cd %APPVEYOR_BUILD_FOLDER%
+  - cd Build
   - set BUILD_ARCHIVE=%APPVEYOR_PROJECT_NAME%-%CONFIGURATION%.zip
   - cmd: 7z a %BUILD_ARCHIVE% installdir
 
@@ -49,3 +49,13 @@ test_script:
 
 artifacts:
   - path: '*.zip'
+
+# do nothing for Ubuntu
+for:
+-
+  matrix:
+    only:
+      - image: Ubuntu
+  after_build:
+  test_script:
+  artifacts:
