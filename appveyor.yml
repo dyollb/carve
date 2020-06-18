@@ -4,7 +4,6 @@ version: "{build}"
 image:
   - Visual Studio 2019
   - Visual Studio 2015
-  - Ubuntu
 
 # Win32 and x64 are CMake-compatible solution platform names.
 # This allows us to pass %PLATFORM% to CMake -A.
@@ -16,40 +15,27 @@ configuration:
   - Debug
   - RelWithDebInfo
 
+matrix:
+  exclude:
+    - configuration: Debug
+      image: Visual Studio 2019
+
 # cmake will autodetect the compiler, but we set the arch
 before_build:
-  - cmake -H. -BBuild -A%PLATFORM% -DCMAKE_INSTALL_PREFIX=installdir
+  - cmd: cmake -H. -BBuild -A%PLATFORM% -DCMAKE_INSTALL_PREFIX=installdir
 
 build_script:
   - cmd: cmake --build Build --target ALL_BUILD --config %CONFIGURATION% -- /nologo /verbosity:minimal /maxcpucount
   - cmd: cmake --build Build --target INSTALL --config %CONFIGURATION% -- /nologo /verbosity:minimal /maxcpucount
 
 after_build:
-  - cd Build
-  - set BUILD_ARCHIVE=%APPVEYOR_PROJECT_NAME%-%CONFIGURATION%.zip
+  - cmd: cd %APPVEYOR_BUILD_FOLDER%
+  - cmd: set BUILD_ARCHIVE=%APPVEYOR_PROJECT_NAME%-%CONFIGURATION%.zip
   - cmd: 7z a %BUILD_ARCHIVE% installdir
 
 test_script:
-  - cd Build
-  - ctest -V -j 2 -C %CONFIGURATION%
+  - cmd: cd %APPVEYOR_BUILD_FOLDER% Build
+  - cmd: ctest -V -j 2 -C %CONFIGURATION%
 
 artifacts:
   - path: '*.zip'
-
-
-for:
--
-  matrix:
-    only:
-      - image: Visual Studio 2019
-  configuration: Debug
--
-  matrix:
-    only:
-      - image: Ubuntu
-  configuration: Release
-  before_build:
-    - cmake -H. -BBuild -DCMAKE_INSTALL_PREFIX=installdir
-  after_build:
-  test_script:
-  artifacts:
