@@ -24,11 +24,13 @@ for:
 -
   matrix:
     only:
+      - image: Visual Studio 2019
+  configuration: Debug
+-
+  matrix:
+    only:
       - image: Ubuntu
-  environment:
-    CC: clang
-    CXX: clang++
-    CXXFLAGS: -stdlib=libc++
+  configuration: Release
   before_build:
     - cmake -H. -BBuild -DCMAKE_INSTALL_PREFIX=installdir
 
