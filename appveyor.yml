@@ -20,20 +20,6 @@ configuration:
 before_build:
   - cmake -H. -BBuild -A%PLATFORM% -DCMAKE_INSTALL_PREFIX=installdir
 
-for:
--
-  matrix:
-    only:
-      - image: Visual Studio 2019
-  configuration: Debug
--
-  matrix:
-    only:
-      - image: Ubuntu
-  configuration: Release
-  before_build:
-    - cmake -H. -BBuild -DCMAKE_INSTALL_PREFIX=installdir
-
 build_script:
   - cmd: cmake --build Build --target ALL_BUILD --config %CONFIGURATION% -- /nologo /verbosity:minimal /maxcpucount
   - cmd: cmake --build Build --target INSTALL --config %CONFIGURATION% -- /nologo /verbosity:minimal /maxcpucount
@@ -50,12 +36,20 @@ test_script:
 artifacts:
   - path: '*.zip'
 
-# do nothing for Ubuntu
+
 for:
 -
   matrix:
     only:
+      - image: Visual Studio 2019
+  configuration: Debug
+-
+  matrix:
+    only:
       - image: Ubuntu
+  configuration: Release
+  before_build:
+    - cmake -H. -BBuild -DCMAKE_INSTALL_PREFIX=installdir
   after_build:
   test_script:
   artifacts:
