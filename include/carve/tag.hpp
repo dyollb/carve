@@ -38,7 +38,7 @@ protected:
 
 public:
 	tagable(const tagable&) : __tag(s_count - 1) {}
-	// TODO BL
+	// TODO BL what is the purpose of this?
 	tagable& operator=(const tagable&) { return *this; }
 
 	tagable() : __tag(s_count - 1) {}

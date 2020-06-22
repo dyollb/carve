@@ -673,7 +673,7 @@ struct TriangulationData
 	VertexInfo* init(edge_t* begin)
 	{
 		edge_t* e = begin;
-		VertexInfo *head = nullptr, *tail = nullptr, *v;
+		VertexInfo *head = nullptr, *tail = nullptr;
 		do
 		{
 			VertexInfo* v = new VertexInfo(e, proj(e->vert->v));
@@ -693,7 +693,7 @@ struct TriangulationData
 		tail->next = head;
 		head->prev = tail;
 
-		v = head;
+		VertexInfo *v = head;
 		do
 		{
 			v->recompute();
@@ -1076,7 +1076,7 @@ bool TriangulationData<ndim, proj_t>::doTriangulate(VertexInfo* begin,
 	{
 		remain -= removeDegeneracies(begin, out);
 	}
-
+	
 	if (remain > 3)
 	{
 		return splitAndResume(begin, out);
@@ -1203,7 +1203,7 @@ void splitEdgeLoop(Edge<ndim>* v1, Edge<ndim>* v2)
 template<unsigned ndim>
 Edge<ndim>* clipVertex(Edge<ndim>* edge)
 {
-	Edge<ndim>* prev = edge->prev;
+	//BL Edge<ndim>* prev = edge->prev;
 	Edge<ndim>* next = edge->next;
 	splitEdgeLoop(edge->prev, edge->next);
 	return next;

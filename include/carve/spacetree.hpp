@@ -221,9 +221,9 @@ public:
 			{
 				for (size_t i = 0; i < n_children; ++i)
 				{
-					const auto& aabb = children[i].aabb;
+					const auto& box = children[i].aabb;
 					typename std::vector<obj_t>::iterator mid = std::partition(
-							beg, end, [&aabb](const carve::poly::Vertex<3>* v){ return intersection_test(aabb, v); } );
+							beg, end, [&box](const carve::poly::Vertex<3>* v){ return intersection_test(box, v); } );
 					children[i].insertVector(beg, mid);
 				}
 			}
@@ -264,8 +264,9 @@ public:
 
 	SpatialSubdivTree(const vector_t& _min, const vector_t& _max)
 			: root(new Node(nullptr, _min, _max)) {}
-
 	~SpatialSubdivTree() { delete root; }
+	SpatialSubdivTree(const SpatialSubdivTree&) = delete;
+	SpatialSubdivTree& operator=(const SpatialSubdivTree&) = delete;
 
 	struct no_filter
 	{

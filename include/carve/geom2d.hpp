@@ -31,6 +31,7 @@
 #include <carve/geom.hpp>
 
 #include <algorithm>
+#include <array>
 #include <cmath>
 #include <vector>
 

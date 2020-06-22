@@ -382,13 +382,13 @@ struct RTreeNode
 	static node_t* construct_STR(const iter_t& begin, const iter_t& end,
 			size_t leaf_size, size_t internal_size)
 	{
-		std::vector<data_aabb_t> data;
-		data.reserve(std::distance(begin, end));
+		std::vector<data_aabb_t> data_vec;
+		data_vec.reserve(std::distance(begin, end));
 		for (iter_t i = begin; i != end; ++i)
 		{
-			data.push_back(*i);
+			data_vec.push_back(*i);
 		}
-		return construct_STR(data, leaf_size, internal_size);
+		return construct_STR(data_vec, leaf_size, internal_size);
 	}
 
 	template<typename iter_t>
@@ -396,17 +396,17 @@ struct RTreeNode
 			const iter_t& begin2, const iter_t& end2,
 			size_t leaf_size, size_t internal_size)
 	{
-		std::vector<data_aabb_t> data;
-		data.reserve(std::distance(begin1, end1) + std::distance(begin2, end2));
+		std::vector<data_aabb_t> data_vec;
+		data_vec.reserve(std::distance(begin1, end1) + std::distance(begin2, end2));
 		for (iter_t i = begin1; i != end1; ++i)
 		{
-			data.push_back(*i);
+			data_vec.push_back(*i);
 		}
 		for (iter_t i = begin2; i != end2; ++i)
 		{
-			data.push_back(*i);
+			data_vec.push_back(*i);
 		}
-		return construct_STR(data, leaf_size, internal_size);
+		return construct_STR(data_vec, leaf_size, internal_size);
 	}
 
 	struct partition_info
@@ -614,13 +614,13 @@ struct RTreeNode
 	static node_t* construct_TGS(const iter_t& begin, const iter_t& end,
 			size_t leaf_size, size_t internal_size)
 	{
-		std::vector<data_aabb_t> data;
-		data.reserve(std::distance(begin, end));
+		std::vector<data_aabb_t> data_vec;
+		data_vec.reserve(std::distance(begin, end));
 		for (iter_t i = begin; i != end; ++i)
 		{
-			data.push_back(*i);
+			data_vec.push_back(*i);
 		}
-		return construct_TGS(data.begin(), data.end(), leaf_size, internal_size);
+		return construct_TGS(data_vec.begin(), data_vec.end(), leaf_size, internal_size);
 	}
 
 	template<typename iter_t>
@@ -628,17 +628,17 @@ struct RTreeNode
 			const iter_t& begin2, const iter_t& end2,
 			size_t leaf_size, size_t internal_size)
 	{
-		std::vector<data_aabb_t> data;
-		data.reserve(std::distance(begin1, end1) + std::distance(begin2, end2));
+		std::vector<data_aabb_t> data_vec;
+		data_vec.reserve(std::distance(begin1, end1) + std::distance(begin2, end2));
 		for (iter_t i = begin1; i != end1; ++i)
 		{
-			data.push_back(*i);
+			data_vec.push_back(*i);
 		}
 		for (iter_t i = begin2; i != end2; ++i)
 		{
-			data.push_back(*i);
+			data_vec.push_back(*i);
 		}
-		return construct_TGS(data.begin(), data.end(), leaf_size, internal_size);
+		return construct_TGS(data_vec.begin(), data_vec.end(), leaf_size, internal_size);
 	}
 };
 }

@@ -27,6 +27,7 @@
 
 #include <carve/carve.hpp>
 
+#include <carve/csg.hpp>
 #include <carve/mesh.hpp>
 #include <carve/matrix.hpp>
 #include <carve/rescale.hpp>

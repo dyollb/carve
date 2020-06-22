@@ -1948,9 +1948,9 @@ void generateOneFaceLoop(
 
 		std::vector<carve::geom2d::P2> projected;
 		projected.reserve(face_loops.back().size());
-		for (size_t i = 0; i < face_loops.back().size(); ++i)
+		for (size_t k = 0; k < face_loops.back().size(); ++k)
 		{
-			projected.push_back(face->project(face_loops.back()[i]->v));
+			projected.push_back(face->project(face_loops.back()[k]->v));
 		}
 
 		if (carve::geom2d::signedArea(projected) > 0.0)
@@ -1983,7 +1983,6 @@ size_t carve::csg::CSG::generateFaceLoops(carve::mesh::MeshSet<3>* poly,
 	static carve::TimingName FUNC_NAME("CSG::generateFaceLoops()");
 	carve::TimingBlock block(FUNC_NAME);
 	size_t generated_edges = 0;
-	std::vector<carve::mesh::MeshSet<3>::vertex_t*> base_loop;
 	std::list<std::vector<carve::mesh::MeshSet<3>::vertex_t*>> face_loops;
 
 	for (carve::mesh::MeshSet<3>::face_iter i = poly->faceBegin();
@@ -1995,8 +1994,9 @@ size_t carve::csg::CSG::generateFaceLoops(carve::mesh::MeshSet<3>* poly,
 		double in_area = 0.0, out_area = 0.0;
 
 		{
+			carve::csg::CSG::Hooks no_hooks; // BL
 			std::vector<carve::mesh::MeshSet<3>::vertex_t*> base_loop;
-			assembleBaseLoop(face, data, base_loop);
+			assembleBaseLoop(face, data, base_loop, no_hooks);
 
 			{
 				std::vector<carve::geom2d::P2> projected;
@@ -2018,8 +2018,9 @@ size_t carve::csg::CSG::generateFaceLoops(carve::mesh::MeshSet<3>* poly,
 		{
 			V2Set face_edges;
 
+			carve::csg::CSG::Hooks no_hooks; // BL
 			std::vector<carve::mesh::MeshSet<3>::vertex_t*> base_loop;
-			assembleBaseLoop(face, data, base_loop);
+			assembleBaseLoop(face, data, base_loop, no_hooks);
 
 			for (size_t j = 0, je = base_loop.size() - 1; j < je; ++j)
 			{
@@ -2089,9 +2090,9 @@ size_t carve::csg::CSG::generateFaceLoops(carve::mesh::MeshSet<3>* poly,
 		{
 #if defined(CARVE_DEBUG)
 			std::cerr << "### loop:";
-			for (size_t i = 0; i < (*f).size(); ++i)
+			for (size_t k = 0; k < (*f).size(); ++k)
 			{
-				std::cerr << " " << (*f)[i];
+				std::cerr << " " << (*f)[k];
 			}
 			std::cerr << std::endl;
 #endif

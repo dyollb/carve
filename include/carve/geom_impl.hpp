@@ -26,6 +26,7 @@
 
 #include <carve/carve.hpp>
 
+#include <carve/geom.hpp>
 #include <carve/math.hpp>
 
 #include <iomanip>

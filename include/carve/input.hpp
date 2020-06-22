@@ -195,13 +195,13 @@ struct PolyhedronData : public VertexData
 	carve::mesh::MeshSet<3>* createMesh(const Options& options) const
 	{
 		Options::const_iterator i;
-		carve::mesh::MeshOptions opts;
+		carve::mesh::MeshOptions mopts;
 		i = options.find("avoid_cavities");
 		if (i != options.end())
 		{
-			opts.avoid_cavities(_bool((*i).second));
+			mopts.avoid_cavities(_bool((*i).second));
 		}
-		return new carve::mesh::MeshSet<3>(points, faceCount, faceIndices, opts);
+		return new carve::mesh::MeshSet<3>(points, faceCount, faceIndices, mopts);
 	}
 };
 

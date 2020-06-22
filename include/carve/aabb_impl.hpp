@@ -26,6 +26,7 @@
 
 #include <carve/carve.hpp>
 
+#include <carve/aabb.hpp>
 #include <carve/geom.hpp>
 #include <carve/geom3d.hpp>
 #include <carve/vector.hpp>
@@ -110,7 +111,7 @@ void aabb<ndim>::_fit(iter_t begin, iter_t end, aabb_t)
 	max = a.max();
 	while (begin != end)
 	{
-		aabb<ndim> a = *begin;
+		a = *begin;
 		++begin;
 		assign_op(min, min, a.min(), carve::util::min_functor());
 		assign_op(max, max, a.max(), carve::util::max_functor());

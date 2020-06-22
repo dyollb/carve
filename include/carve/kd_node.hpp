@@ -216,8 +216,9 @@ public:
 
 		if (splitpos.pos == std::numeric_limits<double>::max())
 		{
-			carve::geom::vector<ndim> min = aabb.min();
-			carve::geom::vector<ndim> max = aabb.max();
+			// BL not used
+			//carve::geom::vector<ndim> min = aabb.min();
+			//carve::geom::vector<ndim> max = aabb.max();
 			splitpos.pos = aabb.pos.v[splitpos.axis];
 		}
 
@@ -291,12 +292,12 @@ public:
 	{
 		if (!c_neg)
 		{
-			axis_pos splitpos(-1, std::numeric_limits<double>::max());
+			axis_pos split_pos(-1, std::numeric_limits<double>::max());
 			if (!pred(this, depth, splitpos))
 			{
 				return;
 			}
-			split(splitpos, inserter);
+			split(split_pos, inserter);
 		}
 		if (c_pos)
 		{

@@ -40,9 +40,8 @@ class order_h_loops_2d
 	int axis;
 
 public:
-	order_h_loops_2d(const std::vector<std::vector<carve::geom2d::P2>>& _poly,
-			int _axis)
-			: poly(_poly), axis(_axis) {}
+	order_h_loops_2d(const std::vector<std::vector<carve::geom2d::P2>>& _poly, int _axis)
+		: poly(_poly), axis(_axis) {}
 
 	bool operator()(const std::pair<size_t, size_t>& a,
 			const std::pair<size_t, size_t>& b) const
@@ -873,11 +872,10 @@ bool testCandidateAttachment(
 	size_t v2 = 0;
 	double v1_side = carve::geom2d::orient2d(test.v1, test.v2,
 			pvert(poly, current_f_loop[v1]));
-	double v2_side = 0;
 
 	while (v2 != current_f_loop.size())
 	{
-		v2_side = carve::geom2d::orient2d(test.v1, test.v2,
+		double v2_side = carve::geom2d::orient2d(test.v1, test.v2,
 				pvert(poly, current_f_loop[v2]));
 
 		if (v1_side != v2_side)

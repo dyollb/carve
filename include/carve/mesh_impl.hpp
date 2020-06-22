@@ -26,6 +26,7 @@
 
 #include <carve/carve.hpp>
 
+#include <carve/mesh.hpp>
 #include <carve/djset.hpp>
 #include <carve/geom2d.hpp>
 #include <carve/geom3d.hpp>
@@ -741,16 +742,17 @@ inline int Mesh<3>::orientationAtVertex(edge_t* e_base)
 	vertex_t::vector_t v_base = e->v1()->v;
 	std::vector<vertex_t::vector_t> v_edge;
 
-	if (v_edge.size() < 3)
-	{
-		return 0;
-	}
-
 	do
 	{
 		v_edge.push_back(e->v2()->v);
 		e = e->rev->next;
 	} while (e != e_base);
+
+	// TODO BL previously this was above the do-while loop, i.e. always true
+	if (v_edge.size() < 3)
+	{
+		return 0;
+	}
 
 	const size_t N = v_edge.size();
 
@@ -763,8 +765,7 @@ inline int Mesh<3>::orientationAtVertex(edge_t* e_base)
 
 		for (size_t k = (j + 1) % N; k != i; k = (k + 1) % N)
 		{
-			double o =
-					carve::geom3d::orient3d(v_edge[i], v_base, v_edge[j], v_edge[k]);
+			double o = carve::geom3d::orient3d(v_edge[i], v_base, v_edge[j], v_edge[k]);
 			o_hi = std::max(o_hi, o);
 			o_lo = std::max(o_lo, o);
 		}

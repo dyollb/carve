@@ -670,14 +670,11 @@ static bool testCandidateAttachment(const project_t& project,
 
 	size_t v1 = current_f_loop.size() - 1;
 	size_t v2 = 0;
-	double v1_side =
-			carve::geom2d::orient2d(test.v1, test.v2, project(current_f_loop[v1]));
-	double v2_side = 0;
+	double v1_side = carve::geom2d::orient2d(test.v1, test.v2, project(current_f_loop[v1]));
 
 	while (v2 != current_f_loop.size())
 	{
-		v2_side =
-				carve::geom2d::orient2d(test.v1, test.v2, project(current_f_loop[v2]));
+		double v2_side = carve::geom2d::orient2d(test.v1, test.v2, project(current_f_loop[v2]));
 
 		if (v1_side != v2_side)
 		{
