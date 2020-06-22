@@ -31,7 +31,7 @@
 #include <cstdlib>
 #include <iostream>
 
-typedef carve::geom::vector<3> vec3;
+using vec3 = carve::geom::vector<3>;
 using vec2 = carve::geom::vector<2>;
 
 namespace {

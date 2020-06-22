@@ -169,8 +169,7 @@ struct GraphEdges
 
 struct Graph
 {
-	typedef std::unordered_map<carve::mesh::MeshSet<3>::vertex_t*, GraphEdges>
-			graph_t;
+	using graph_t = std::unordered_map<carve::mesh::MeshSet<3>::vertex_t*, GraphEdges>;
 
 	graph_t graph;
 

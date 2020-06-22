@@ -110,7 +110,7 @@ public:
 #	endif
 	}
 };
-typedef FaceMaker<0> FaceMaker0;
+using FaceMaker0 = FaceMaker<0>;
 using FaceMaker1 = FaceMaker<1>;
 #endif
 class ClassifyFaceGroups

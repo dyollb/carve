@@ -122,10 +122,9 @@ void orderVertices(iter_t beg, const iter_t end,
 		const carve::mesh::MeshSet<3>::vertex_t::vector_t& base,
 		std::vector<carve::mesh::MeshSet<3>::vertex_t*>& out)
 {
-	typedef std::vector<std::pair<double, carve::mesh::MeshSet<3>::vertex_t*>>
-			DVVector;
-	std::vector<std::pair<double, carve::mesh::MeshSet<3>::vertex_t*>>
-			ordered_vertices;
+	using DVVector = std::vector<std::pair<double, carve::mesh::MeshSet<3>::vertex_t*>>;
+
+	DVVector ordered_vertices;
 
 	ordered_vertices.reserve(std::distance(beg, end));
 
@@ -140,9 +139,7 @@ void orderVertices(iter_t beg, const iter_t end,
 
 	out.clear();
 	out.reserve(ordered_vertices.size());
-	for (DVVector::const_iterator i = ordered_vertices.begin(),
-																e = ordered_vertices.end();
-			 i != e; ++i)
+	for (DVVector::const_iterator i = ordered_vertices.begin(), e = ordered_vertices.end();  i != e; ++i)
 	{
 		out.push_back((*i).second);
 	}

@@ -64,8 +64,7 @@ struct EdgeSurface
 	EdgeSurface() = default;
 };
 
-typedef std::map<const carve::mesh::MeshSet<3>::mesh_t*, EdgeSurface>
-		GrpEdgeSurfMap;
+using GrpEdgeSurfMap = std::map<const carve::mesh::MeshSet<3>::mesh_t*, EdgeSurface>;
 
 using ClassificationKey = std::pair<FaceLoopGroup*, const carve::mesh::MeshSet<3>::mesh_t*>;
 

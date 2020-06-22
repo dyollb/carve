@@ -39,7 +39,7 @@ class edge_graph_t :
                        std::pair<int, std::set<const Vector *> >,
                        hash_vector_ptr> {
 public:
-  typedef mapped_type data_type;
+  using data_type = mapped_type;
 };
 
 #	if defined(CARVE_DEBUG)

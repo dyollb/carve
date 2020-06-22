@@ -909,7 +909,7 @@ void carve::triangulate::incorporateHolesIntoPolygon(
 		std::vector<std::pair<size_t, size_t>>& result, size_t poly_loop,
 		const std::vector<size_t>& hole_loops)
 {
-	typedef std::vector<carve::geom2d::P2> loop_t;
+	using loop_t = std::vector<carve::geom2d::P2>;
 
 	size_t N = poly[poly_loop].size();
 
@@ -1074,7 +1074,7 @@ std::vector<std::pair<size_t, size_t>>
 	return result;
 
 #else
-	typedef std::vector<carve::geom2d::P2> loop_t;
+	using loop_t = std::vector<carve::geom2d::P2>;
 	size_t N = poly[0].size();
 	//
 	// work out how much space to reserve for the patched in holes.
