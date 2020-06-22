@@ -159,16 +159,16 @@ bool pointIntersectsTriangle(const P2& p, const P2vec& tri)
 template<typename P2vec>
 bool lineIntersectsTriangle(const P2& p1, const P2& p2, const P2vec& tri)
 {
-	double s[3];
+	std::array<double, 3> s;
 	// does tri lie on one side or the other of p1-p2?
 	s[0] = orient2d(p1, p2, tri[0]);
 	s[1] = orient2d(p1, p2, tri[1]);
 	s[2] = orient2d(p1, p2, tri[2]);
-	if (*std::max_element(s, s + 3) < 0)
+	if (*std::max_element(s.begin(), s.end()) < 0)
 	{
 		return false;
 	}
-	if (*std::min_element(s, s + 3) > 0)
+	if (*std::min_element(s.begin(), s.end()) > 0)
 	{
 		return false;
 	}

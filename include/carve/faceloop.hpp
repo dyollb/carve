@@ -52,7 +52,8 @@ struct FaceLoop
 
 struct FaceLoopList
 {
-	FaceLoop *head{nullptr}, *tail{nullptr};
+	FaceLoop *head{nullptr};
+	FaceLoop *tail{nullptr};
 	unsigned count{0};
 
 	FaceLoopList() = default;

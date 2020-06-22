@@ -100,12 +100,12 @@ public:
 	using edge_iter_t = typename std::vector<const edge_t*>::iterator;
 	using const_edge_iter_t = typename std::vector<const edge_t*>::const_iterator;
 
-	obj_t* owner = nullptr;
+	obj_t* owner{nullptr};
 
 	aabb_t aabb;
 	plane_t plane_eqn;
-	int manifold_id;
-	int group_id;
+	int manifold_id{-1};
+	int group_id{-1};
 
 	project_t project;
 	unproject_t unproject;

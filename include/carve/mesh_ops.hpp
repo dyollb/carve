@@ -1130,7 +1130,7 @@ void flipTriEdge(Edge<ndim>* edge)
 	using edge_t = Edge<ndim>;
 	using face_t = Face<ndim>;
 
-	edge_t *t1[3], *t2[3];
+	std::array<edge_t*, 3> t1, t2;
 	face_t *f1, *f2;
 
 	t1[1] = edge;

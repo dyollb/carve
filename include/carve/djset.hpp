@@ -36,9 +36,10 @@ class djset
 protected:
 	struct elem
 	{
-		size_t parent, rank;
+		size_t parent;
+		size_t rank;
 		elem(size_t p, size_t r) : parent(p), rank(r) {}
-		elem() = default;
+		elem() = delete;
 	};
 
 	std::vector<elem> set;
