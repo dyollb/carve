@@ -24,6 +24,7 @@
 
 
 #include <carve/vector.hpp>
+
 #include <iostream>
 
 double triangularPrismVolume(const carve::geom3d::Vector& a,
@@ -45,11 +46,9 @@ double triangularPrismVolume(const carve::geom3d::Vector& a,
 
 int main(int argc, char** argv)
 {
-	std::cerr << "result: " << triangularPrismVolume(carve::geom::VECTOR(1, 0, 1), carve::geom::VECTOR(0, 1, 1), carve::geom::VECTOR(0, 0, 3), 0)
-						<< std::endl;
-	std::cerr << "result: "
-						<< triangularPrismVolume(carve::geom::VECTOR(11, 10, 1),
+	double V0 = triangularPrismVolume(carve::geom::VECTOR(1, 0, 1), carve::geom::VECTOR(0, 1, 1), carve::geom::VECTOR(0, 0, 3), 0);
+	double V1 = triangularPrismVolume(carve::geom::VECTOR(11, 10, 1),
 									 carve::geom::VECTOR(10, 11, 1),
-									 carve::geom::VECTOR(10, 10, 3), 0)
-						<< std::endl;
+									 carve::geom::VECTOR(10, 10, 3), 0);
+	return fabs(V0 - V1)<1e-6 ? EXIT_SUCCESS : EXIT_FAILURE;
 }

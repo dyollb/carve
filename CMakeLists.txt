@@ -61,9 +61,14 @@ configure_file (
   "${carve_BINARY_DIR}/include/carve/config.h"
 )
 
+include(CTest)
+if(BUILD_TESTING)
+  enable_testing()
+endif(BUILD_TESTING)
+
 include_directories(${carve_BINARY_DIR}/include)
 add_subdirectory(lib) 
-add_subdirectory(common) 
+add_subdirectory(common)
 
 add_subdirectory(src) 
 add_subdirectory(examples) 
@@ -111,9 +116,3 @@ add_subdirectory(external/GLOOP)
 if (CARVE_GTEST_TESTS)
   add_subdirectory(external/googletest)
 endif(CARVE_GTEST_TESTS)
-
-include(CTest)
-
-if(BUILD_TESTING)
-  enable_testing()
-endif(BUILD_TESTING)

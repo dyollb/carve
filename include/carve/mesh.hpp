@@ -190,6 +190,7 @@ private:
 		do
 		{
 			++c;
+			// TODO BL e->rev, e->face and f are nullptr in some of the 'mesh_triangulate_unittest' tests
 			CARVE_ASSERT(e->rev->rev == e);
 			CARVE_ASSERT(e->next->prev == e);
 			CARVE_ASSERT(e->face == f);

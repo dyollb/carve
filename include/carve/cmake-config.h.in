@@ -7,6 +7,7 @@
 
 #cmakedefine CARVE_STATIC
 #cmakedefine CARVE_USE_TIMINGS
+#cmakedefine CARVE_NODEBUG
 #cmakedefine CARVE_DEBUG
 #cmakedefine CARVE_DEBUG_WRITE_PLY_DATA
 

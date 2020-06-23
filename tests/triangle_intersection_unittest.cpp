@@ -53,6 +53,7 @@ std::ostream& operator<<(std::ostream& out, const vec2& vec)
 
 TEST(TriangleIntersectionTest, Test3D)
 {
+	using vec3 = carve::geom::vector<3>;
 	vec3 tri_a[3], tri_b[3];
 	tri_a[0] = carve::geom::VECTOR(0, 1, 0);
 	tri_a[1] = carve::geom::VECTOR(1, 0.5, 0);
@@ -61,6 +62,9 @@ TEST(TriangleIntersectionTest, Test3D)
 	tri_b[0] = carve::geom::VECTOR(2, 1, 1);
 	tri_b[1] = carve::geom::VECTOR(1, 0.5, 1);
 	tri_b[2] = carve::geom::VECTOR(1.5, 0.75, 0);
+
+	// TODO BL, check what result should be
+	ASSERT_EQ(carve::geom::triangle_intersection(tri_a, tri_b), carve::geom::TR_INT_NONE);
 }
 
 TEST(TriangleIntersectionTest, Test2D)

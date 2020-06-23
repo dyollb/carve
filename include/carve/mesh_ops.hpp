@@ -998,7 +998,7 @@ bool TriangulationData<ndim, proj_t>::doTriangulate(VertexInfo* begin,
 	while (remain > 3 && vq.size())
 	{
 		{
-			static int __c = 0;
+			static int __c = 0; // TODO BL, ugly static counter
 			if (++__c % 50 == 0)
 			{
 				break;

@@ -42,7 +42,6 @@ struct _uninitialized
 template<unsigned ndim>
 struct base
 {
-	double v[ndim];
 };
 
 template<>
@@ -85,7 +84,7 @@ struct vector : public base<ndim>
 	enum { __ndim = ndim };
 
 	vector() { setZero(); }
-	explicit vector(noinit_t) {}
+	explicit vector(const noinit_t&) {}
 
 	double& operator[](unsigned i);
 	const double& operator[](unsigned i) const;

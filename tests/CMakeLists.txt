@@ -15,24 +15,31 @@ link_directories("${carve_BINARY_DIR}/common")
 
 add_executable       (test_carve_polyhedrons_2          test_carve_polyhedrons_2.cpp)
 target_link_libraries(test_carve_polyhedrons_2          carve carve_fileformats gloop_model)
+add_test(test_carve_polyhedrons_2 ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/test_carve_polyhedrons_2)
 
 add_executable       (test_geom          test_geom.cpp)
 target_link_libraries(test_geom          carve)
+add_test(test_geom ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/test_geom)
 
 add_executable       (test_eigen         test_eigen.cpp)
 target_link_libraries(test_eigen         carve)
+#TODO BL add_test(test_eigen ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/test_eigen)
 
 add_executable       (test_spacetree     test_spacetree.cpp)
 target_link_libraries(test_spacetree     carve)
+add_test(test_spacetree ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/test_spacetree)
 
 add_executable       (test_aabb          test_aabb.cpp)
 target_link_libraries(test_aabb          carve)
+add_test(test_aabb ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/test_aabb)
 
 add_executable       (test_rescale       test_rescale.cpp)
 target_link_libraries(test_rescale       carve)
+add_test(test_rescale ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/test_rescale)
 
 add_executable       (tetrahedron        tetrahedron.cpp)
 target_link_libraries(tetrahedron        carve)
+add_test(tetrahedron ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/tetrahedron)
 
 if(CARVE_WITH_GUI)
   add_executable       (test_intersect     test_intersect.cpp)
@@ -79,7 +86,7 @@ if (CARVE_GTEST_TESTS)
     foreach (lib "${libs}")
       target_link_libraries(${name} ${lib})
     endforeach()
-    add_test(${name} ${name})
+    add_test(${name} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${name})
   endfunction()
   
   # cxx_test(name libs srcs...)
@@ -121,8 +128,9 @@ if (CARVE_GTEST_TESTS)
   cxx_test(exact_unittest gtest_main)
   target_link_libraries(exact_unittest carve)
   
-  cxx_test(shewchuk_unittest gtest_main)
-  target_link_libraries(shewchuk_unittest carve)
+  # TODO BL
+  # cxx_test(shewchuk_unittest gtest_main)
+  # target_link_libraries(shewchuk_unittest carve)
 endif(CARVE_GTEST_TESTS)
 
 endif(BUILD_TESTING)
