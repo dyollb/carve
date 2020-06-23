@@ -64,10 +64,8 @@ bool fitPlane(iter_t begin, iter_t end, adapt_t adapt, Plane& plane)
 		return false;
 	}
 
-	Vector C;
+	Vector C, n;
 	carve::geom::centroid(p.begin(), p.end(), C);
-
-	Vector n;
 
 	if (p.size() == 3)
 	{
