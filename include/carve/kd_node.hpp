@@ -53,8 +53,8 @@ public:
 
 	container_t data;
 
-	explicit kd_node(kd_node* _parent = NULL)
-			: c_neg(NULL), c_pos(NULL), parent(_parent), splitpos(0, 0.0) {}
+	explicit kd_node(kd_node* _parent = nullptr)
+			: c_neg(nullptr), c_pos(nullptr), parent(_parent), splitpos(0, 0.0) {}
 
 	~kd_node()
 	{
@@ -380,7 +380,7 @@ public:
 
 				if (!node->parent)
 				{
-					return NULL;
+					return nullptr;
 				}
 
 				if (node->parent->c_neg == node)

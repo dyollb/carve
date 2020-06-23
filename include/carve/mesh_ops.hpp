@@ -37,7 +37,7 @@ namespace detail {
 // make a triangle out of three edges.
 template<unsigned ndim>
 void link(Edge<ndim>* e1, Edge<ndim>* e2, Edge<ndim>* e3,
-		Face<ndim>* f = NULL)
+		Face<ndim>* f = nullptr)
 {
 	e1->next = e2;
 	e2->next = e3;
@@ -470,7 +470,7 @@ struct TriangulationData
 		}
 
 		// couldn't find a diagonal that was ok.
-		return diag_t(NULL, NULL);
+		return diag_t(nullptr, nullptr);
 	}
 
 	void splitEdgeLoop(VertexInfo* v1, VertexInfo* v2)
@@ -927,7 +927,7 @@ struct TriangulationData
 		out << "\" />" << std::endl;
 	}
 
-	void dumpPoly(const edge_t* edge, const edge_t* edge2 = NULL,
+	void dumpPoly(const edge_t* edge, const edge_t* edge2 = nullptr,
 			const char* pfx = "poly_")
 	{
 		static int step = 0;
@@ -979,7 +979,7 @@ bool TriangulationData<ndim, proj_t>::doTriangulate(VertexInfo* begin,
 	EarQueue vq(*this);
 
 #if defined(CARVE_DEBUG)
-	dumpPoly(begin->edge, NULL, "input_");
+	dumpPoly(begin->edge, nullptr, "input_");
 	CARVE_ASSERT(!checkSelfIntersection(begin));
 #endif
 
@@ -1020,7 +1020,7 @@ bool TriangulationData<ndim, proj_t>::doTriangulate(VertexInfo* begin,
 			break;
 		}
 		// if (checkSelfIntersection(begin)) {
-		//   dumpPoly(begin->edge, NULL, "badclip_");
+		//   dumpPoly(begin->edge, nullptr, "badclip_");
 		//   CARVE_ASSERT(!!!"clip created self intersection");
 		// }
 
@@ -1048,7 +1048,7 @@ bool TriangulationData<ndim, proj_t>::doTriangulate(VertexInfo* begin,
 	bool ret = false;
 
 #if defined(CARVE_DEBUG)
-	dumpPoly(begin->edge, NULL, "remainder_");
+	dumpPoly(begin->edge, nullptr, "remainder_");
 #endif
 
 	if (remain > 3)
@@ -1181,8 +1181,8 @@ template<unsigned ndim>
 void splitEdgeLoop(Edge<ndim>* v1, Edge<ndim>* v2)
 {
 	// v1 and v2 end up on different sides of the split.
-	Edge<ndim>* v1_copy = new Edge<ndim>(v1->vert, NULL);
-	Edge<ndim>* v2_copy = new Edge<ndim>(v2->vert, NULL);
+	Edge<ndim>* v1_copy = new Edge<ndim>(v1->vert, nullptr);
+	Edge<ndim>* v2_copy = new Edge<ndim>(v2->vert, nullptr);
 
 	v1_copy->rev = v2_copy;
 	v2_copy->rev = v1_copy;

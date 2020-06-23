@@ -155,7 +155,7 @@ void patchHoleIntoPolygon(
 	// join the vertex curr of the polygon loop to the hole at
 	// h_loop_connect
 	f_loop.insert(f_loop.begin() + f_loop_attach + 1,
-			hole_attach.first->size() + 2, NULL);
+			hole_attach.first->size() + 2, nullptr);
 	typename std::vector<vert_t>::iterator f = f_loop.begin() + f_loop_attach;
 
 	typename std::vector<vert_t>::const_iterator h = hole_attach.second;

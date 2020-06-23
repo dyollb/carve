@@ -122,10 +122,9 @@ namespace carve {
 namespace mesh {
 
 template<unsigned ndim>
-typename Face<ndim>::project_t Face<ndim>::getProjector(bool positive_facing,
-		int axis) const
+typename Face<ndim>::project_t Face<ndim>::getProjector(bool positive_facing, int axis) const
 {
-	return NULL;
+	return nullptr;
 }
 
 template<>
@@ -135,10 +134,9 @@ Face<3>::project_t Face<3>::getProjector(bool positive_facing, int axis) const
 }
 
 template<unsigned ndim>
-typename Face<ndim>::unproject_t Face<ndim>::getUnprojector(
-		bool positive_facing, int axis) const
+typename Face<ndim>::unproject_t Face<ndim>::getUnprojector(bool positive_facing, int axis) const
 {
-	return NULL;
+	return nullptr;
 }
 
 template<>
@@ -158,8 +156,7 @@ bool Face<ndim>::containsPoint(const vector_t& p) const
 	// return pointInPolySimple(vertices, projector(), (this->*project)(p));
 	std::vector<carve::geom::vector<2>> verts;
 	getProjectedVertices(verts);
-	return carve::geom2d::pointInPoly(verts, project(p)).iclass !=
-				 carve::POINT_OUT;
+	return carve::geom2d::pointInPoly(verts, project(p)).iclass != carve::POINT_OUT;
 }
 
 template<unsigned ndim>
@@ -167,8 +164,7 @@ bool Face<ndim>::containsPointInProjection(const vector_t& p) const
 {
 	std::vector<carve::geom::vector<2>> verts;
 	getProjectedVertices(verts);
-	return carve::geom2d::pointInPoly(verts, project(p)).iclass !=
-				 carve::POINT_OUT;
+	return carve::geom2d::pointInPoly(verts, project(p)).iclass != carve::POINT_OUT;
 }
 
 template<unsigned ndim>
@@ -181,10 +177,8 @@ bool Face<ndim>::simpleLineSegmentIntersection(
 	}
 
 	carve::mesh::MeshSet<3>::vertex_t::vector_t p;
-	carve::IntersectionClass intersects =
-			carve::geom3d::lineSegmentPlaneIntersection(plane, line, p);
-	if (intersects == carve::INTERSECT_NONE ||
-			intersects == carve::INTERSECT_BAD)
+	carve::IntersectionClass intersects = carve::geom3d::lineSegmentPlaneIntersection(plane, line, p);
+	if (intersects == carve::INTERSECT_NONE || intersects == carve::INTERSECT_BAD)
 	{
 		return false;
 	}
@@ -209,8 +203,7 @@ IntersectionClass Face<ndim>::lineSegmentIntersection(
 	}
 
 	vector_t p;
-	IntersectionClass intersects =
-			carve::geom3d::lineSegmentPlaneIntersection(plane, line, p);
+	IntersectionClass intersects = carve::geom3d::lineSegmentPlaneIntersection(plane, line, p);
 	if (intersects == INTERSECT_NONE || intersects == INTERSECT_BAD)
 	{
 		return intersects;
@@ -218,8 +211,7 @@ IntersectionClass Face<ndim>::lineSegmentIntersection(
 
 	std::vector<carve::geom::vector<2>> verts;
 	getProjectedVertices(verts);
-	carve::geom2d::PolyInclusionInfo pi =
-			carve::geom2d::pointInPoly(verts, project(p));
+	carve::geom2d::PolyInclusionInfo pi = carve::geom2d::pointInPoly(verts, project(p));
 	switch (pi.iclass)
 	{
 	case POINT_VERTEX:
@@ -281,8 +273,7 @@ namespace detail {
 bool FaceStitcher::EdgeOrderData::Cmp::operator()(
 		const EdgeOrderData& a, const EdgeOrderData& b) const
 {
-	int v =
-			carve::geom3d::compareAngles(edge_dir, base_dir, a.face_dir, b.face_dir);
+	int v = carve::geom3d::compareAngles(edge_dir, base_dir, a.face_dir, b.face_dir);
 
 #if defined(CARVE_DEBUG)
 	{
@@ -1051,9 +1042,8 @@ mesh::MeshSet<3>* meshFromPolyhedron(const poly::Polyhedron* poly, int manifold_
 
 static void copyMeshFaces(
 		const mesh::Mesh<3>* mesh, size_t manifold_id, const mesh::Vertex<3>* Vbase,
-		poly::Polyhedron* poly,
-		std::unordered_map<std::pair<size_t, size_t>, std::list<mesh::Edge<3>*>,
-				carve::hash_pair>& edges,
+		poly::Polyhedron* polyhedron,
+		std::unordered_map<std::pair<size_t, size_t>, std::list<mesh::Edge<3>*>, carve::hash_pair>& edges,
 		std::unordered_map<const mesh::Face<3>*, size_t>& face_map)
 {
 	std::vector<const poly::Polyhedron::vertex_t*> vert_ptr;
@@ -1065,130 +1055,120 @@ static void copyMeshFaces(
 		mesh::Edge<3>* e = src->edge;
 		do
 		{
-			vert_ptr.push_back(&poly->vertices[e->vert - Vbase]);
+			vert_ptr.push_back(&polyhedron->vertices[e->vert - Vbase]);
 			edges[std::make_pair(e->v1() - Vbase, e->v2() - Vbase)].push_back(e);
 			e = e->next;
 		} while (e != src->edge);
 
-		face_map[src] = poly->faces.size();
-		;
+		face_map[src] = polyhedron->faces.size();
 
-		poly->faces.push_back(poly::Polyhedron::face_t(vert_ptr));
-		poly->faces.back().manifold_id = manifold_id;
-		poly->faces.back().owner = poly;
+		polyhedron->faces.push_back(poly::Polyhedron::face_t(vert_ptr));
+		polyhedron->faces.back().manifold_id = manifold_id;
+		polyhedron->faces.back().owner = polyhedron;
 	}
 }
 
 // construct a Polyhedron from a MeshSet
-poly::Polyhedron* polyhedronFromMesh(const mesh::MeshSet<3>* mesh,
-		int manifold_id)
+poly::Polyhedron* polyhedronFromMesh(const mesh::MeshSet<3>* mesh, int manifold_id)
 {
 	using vertex_t = poly::Polyhedron::vertex_t;
 	using edge_t = poly::Polyhedron::edge_t;
 	using face_t = poly::Polyhedron::face_t;
 
-	poly::Polyhedron* poly = new poly::Polyhedron();
+	poly::Polyhedron* polyhedron = new poly::Polyhedron();
 	const mesh::Vertex<3>* Vbase = &mesh->vertex_storage[0];
 
-	poly->vertices.reserve(mesh->vertex_storage.size());
+	polyhedron->vertices.reserve(mesh->vertex_storage.size());
 	for (size_t i = 0; i < mesh->vertex_storage.size(); ++i)
 	{
-		poly->vertices.push_back(vertex_t(mesh->vertex_storage[i].v));
-		poly->vertices.back().owner = poly;
+		polyhedron->vertices.push_back(vertex_t(mesh->vertex_storage[i].v));
+		polyhedron->vertices.back().owner = polyhedron;
 	}
 
 	size_t n_faces = 0;
 	if (manifold_id == -1)
 	{
-		poly->manifold_is_closed.resize(mesh->meshes.size());
-		poly->manifold_is_negative.resize(mesh->meshes.size());
+		polyhedron->manifold_is_closed.resize(mesh->meshes.size());
+		polyhedron->manifold_is_negative.resize(mesh->meshes.size());
 		for (size_t m = 0; m < mesh->meshes.size(); ++m)
 		{
 			n_faces += mesh->meshes[m]->faces.size();
-			poly->manifold_is_closed[m] = mesh->meshes[m]->isClosed();
-			poly->manifold_is_negative[m] = mesh->meshes[m]->isNegative();
+			polyhedron->manifold_is_closed[m] = mesh->meshes[m]->isClosed();
+			polyhedron->manifold_is_negative[m] = mesh->meshes[m]->isNegative();
 		}
 	}
 	else
 	{
-		poly->manifold_is_closed.resize(1);
-		poly->manifold_is_negative.resize(1);
+		polyhedron->manifold_is_closed.resize(1);
+		polyhedron->manifold_is_negative.resize(1);
 		n_faces = mesh->meshes[manifold_id]->faces.size();
-		poly->manifold_is_closed[manifold_id] =
-				mesh->meshes[manifold_id]->isClosed();
-		poly->manifold_is_negative[manifold_id] =
-				mesh->meshes[manifold_id]->isNegative();
+		polyhedron->manifold_is_closed[manifold_id] = mesh->meshes[manifold_id]->isClosed();
+		polyhedron->manifold_is_negative[manifold_id] = mesh->meshes[manifold_id]->isNegative();
 	}
 
-	std::unordered_map<std::pair<size_t, size_t>, std::list<mesh::Edge<3>*>,
-			carve::hash_pair>
-			edges;
+	std::unordered_map<std::pair<size_t, size_t>, std::list<mesh::Edge<3>*>, carve::hash_pair> edges;
 	std::unordered_map<const mesh::Face<3>*, size_t> face_map;
-	poly->faces.reserve(n_faces);
+	polyhedron->faces.reserve(n_faces);
 
 	if (manifold_id == -1)
 	{
 		for (size_t m = 0; m < mesh->meshes.size(); ++m)
 		{
-			copyMeshFaces(mesh->meshes[m], m, Vbase, poly, edges, face_map);
+			copyMeshFaces(mesh->meshes[m], m, Vbase, polyhedron, edges, face_map);
 		}
 	}
 	else
 	{
-		copyMeshFaces(mesh->meshes[manifold_id], 0, Vbase, poly, edges, face_map);
+		copyMeshFaces(mesh->meshes[manifold_id], 0, Vbase, polyhedron, edges, face_map);
 	}
 
 	size_t n_edges = 0;
 	for (auto& i : edges)
 	{
-		if (i.first.first < i.first.second ||
-				edges.find(std::make_pair(i.first.second, i.first.first)) ==
-						edges.end())
+		if (i.first.first < i.first.second || edges.find(std::make_pair(i.first.second, i.first.first)) == edges.end())
 		{
 			n_edges++;
 		}
 	}
 
-	poly->edges.reserve(n_edges);
+	polyhedron->edges.reserve(n_edges);
 	for (auto& i : edges)
 	{
-		if (i.first.first < i.first.second ||
-				edges.find(std::make_pair(i.first.second, i.first.first)) ==
-						edges.end())
+		if (i.first.first < i.first.second || edges.find(std::make_pair(i.first.second, i.first.first)) == edges.end())
 		{
-			poly->edges.push_back(edge_t(&poly->vertices[i.first.first],
-					&poly->vertices[i.first.second], poly));
+			polyhedron->edges.push_back(edge_t(&polyhedron->vertices[i.first.first], 
+				&polyhedron->vertices[i.first.second], polyhedron));
 		}
 	}
 
-	poly->initVertexConnectivity();
+	polyhedron->initVertexConnectivity();
 
 	// build edge entries for face.
-	for (size_t f = 0; f < poly->faces.size(); ++f)
+	for (size_t f = 0; f < polyhedron->faces.size(); ++f)
 	{
-		face_t& face = poly->faces[f];
+		face_t& face = polyhedron->faces[f];
 		size_t N = face.nVertices();
 		for (size_t v = 0; v < N; ++v)
 		{
-			size_t v1i = poly->vertexToIndex_fast(face.vertex(v));
-			size_t v2i = poly->vertexToIndex_fast(face.vertex((v + 1) % N));
+			size_t v1i = polyhedron->vertexToIndex_fast(face.vertex(v));
+			size_t v2i = polyhedron->vertexToIndex_fast(face.vertex((v + 1) % N));
 			std::vector<const edge_t*> found_edge;
-			std::set_intersection(poly->connectivity.vertex_to_edge[v1i].begin(),
-					poly->connectivity.vertex_to_edge[v1i].end(),
-					poly->connectivity.vertex_to_edge[v2i].begin(),
-					poly->connectivity.vertex_to_edge[v2i].end(),
+			std::set_intersection(polyhedron->connectivity.vertex_to_edge[v1i].begin(),
+					polyhedron->connectivity.vertex_to_edge[v1i].end(),
+					polyhedron->connectivity.vertex_to_edge[v2i].begin(),
+					polyhedron->connectivity.vertex_to_edge[v2i].end(),
 					std::back_inserter(found_edge));
 			CARVE_ASSERT(found_edge.size() == 1);
 			face.edge(v) = found_edge[0];
 		}
 	}
 
-	poly->connectivity.edge_to_face.resize(poly->edges.size());
+	polyhedron->connectivity.edge_to_face.resize(polyhedron->edges.size());
 
-	for (size_t i = 0; i < poly->edges.size(); ++i)
+	for (size_t i = 0; i < polyhedron->edges.size(); ++i)
 	{
-		size_t v1i = poly->vertexToIndex_fast(poly->edges[i].v1);
-		size_t v2i = poly->vertexToIndex_fast(poly->edges[i].v2);
+		size_t v1i = polyhedron->vertexToIndex_fast(polyhedron->edges[i].v1);
+		size_t v2i = polyhedron->vertexToIndex_fast(polyhedron->edges[i].v2);
 		std::list<mesh::Edge<3>*>& efwd = edges[std::make_pair(v1i, v2i)];
 		std::list<mesh::Edge<3>*>& erev = edges[std::make_pair(v1i, v2i)];
 
@@ -1198,41 +1178,37 @@ poly::Polyhedron* polyhedronFromMesh(const mesh::MeshSet<3>* mesh,
 			mesh::Edge<3>* edge = *j;
 			if (face_map.find(edge->face) != face_map.end())
 			{
-				poly->connectivity.edge_to_face[i].push_back(
-						&poly->faces[face_map[edge->face]]);
+				polyhedron->connectivity.edge_to_face[i].push_back(&polyhedron->faces[face_map[edge->face]]);
 				if (edge->rev == nullptr)
 				{
-					poly->connectivity.edge_to_face[i].push_back(nullptr);
+					polyhedron->connectivity.edge_to_face[i].push_back(nullptr);
 				}
 				else
 				{
-					poly->connectivity.edge_to_face[i].push_back(
-							&poly->faces[face_map[edge->rev->face]]);
+					polyhedron->connectivity.edge_to_face[i].push_back(&polyhedron->faces[face_map[edge->rev->face]]);
 				}
 			}
 		}
-		for (std::list<mesh::Edge<3>*>::iterator j = erev.begin(); j != erev.end();
-				 ++j)
+		for (std::list<mesh::Edge<3>*>::iterator j = erev.begin(); j != erev.end(); ++j)
 		{
 			mesh::Edge<3>* edge = *j;
 			if (face_map.find(edge->face) != face_map.end())
 			{
 				if (edge->rev == nullptr)
 				{
-					poly->connectivity.edge_to_face[i].push_back(nullptr);
-					poly->connectivity.edge_to_face[i].push_back(
-							&poly->faces[face_map[edge->face]]);
+					polyhedron->connectivity.edge_to_face[i].push_back(nullptr);
+					polyhedron->connectivity.edge_to_face[i].push_back(&polyhedron->faces[face_map[edge->face]]);
 				}
 			}
 		}
 	}
 
-	poly->initSpatialIndex();
+	polyhedron->initSpatialIndex();
 
 	// XXX: at this point, manifold_is_negative is not set up. This
 	// info should be computed/stored in Mesh instances.
 
-	return poly;
+	return polyhedron;
 }
 } // namespace carve
 

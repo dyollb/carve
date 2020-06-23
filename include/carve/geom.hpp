@@ -245,7 +245,7 @@ template<unsigned ndim, typename iter_t>
 void centroid(iter_t begin, iter_t end, vector<ndim>& c);
 
 template<unsigned ndim, typename iter_t, typename adapt_t>
-void centroid(iter_t begin, iter_t end, adapt_t adapt, vector<ndim>& c);
+void centroid(iter_t begin, iter_t end, const adapt_t& adapt, vector<ndim>& c);
 
 template<unsigned ndim, typename val_t>
 double dot(const vector<ndim>& a, const val_t& b);

@@ -43,7 +43,7 @@ namespace csg {
 // #define DEBUG_DRAW_GROUPS
 // #define DEBUG_PRINT_RESULT_FACES
 
-IntersectDebugHooks* g_debug = NULL;
+IntersectDebugHooks* g_debug = nullptr;
 
 IntersectDebugHooks* intersect_installDebugHooks(IntersectDebugHooks* hooks)
 {

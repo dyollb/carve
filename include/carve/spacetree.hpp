@@ -167,7 +167,7 @@ public:
 		void dealloc_children() { delete[] children; }
 
 	public:
-		inline bool isLeaf() const { return children == NULL; }
+		inline bool isLeaf() const { return children == nullptr; }
 
 		Node(Node* _parent, const vector_t& _min, const vector_t& _max)
 				: parent(_parent), children(nullptr), min(_min), max(_max)

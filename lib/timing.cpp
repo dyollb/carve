@@ -192,7 +192,7 @@ void initTime() {}
 void getTime(precise_time_t& t)
 {
 	struct timeval tv;
-	gettimeofday(&tv, NULL);
+	gettimeofday(&tv, nullptr);
 	t = tv.tv_sec + tv.tv_usec / 1000000.0;
 }
 
@@ -209,7 +209,7 @@ struct Entry
 	{
 		id = _id;
 		time = 0;
-		parent = NULL;
+		parent = nullptr;
 	}
 	int id;
 	double time;

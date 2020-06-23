@@ -656,7 +656,7 @@ public:
 } // namespace detail
 
 // A Mesh is a connected set of faces. It may be open (some edges
-// have NULL rev members), or closed. On destruction, a Mesh
+// have nullptr rev members), or closed. On destruction, a Mesh
 // should free its Faces (which will in turn free Edges, but not
 // Vertices).  A Mesh is edge-connected, which is to say that each
 // face in the mesh shares an edge with at least one other face in

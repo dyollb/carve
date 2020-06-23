@@ -91,8 +91,7 @@ double distance(const Vertex<ndim>& v1, const Vertex<ndim>& v2)
 struct vec_adapt_vertex_ref
 {
 	template<unsigned ndim>
-	const typename Vertex<ndim>::vector_t& operator()(
-			const Vertex<ndim>& v) const
+	const typename Vertex<ndim>::vector_t& operator()(const Vertex<ndim>& v) const
 	{
 		return v.v;
 	}
@@ -107,8 +106,7 @@ struct vec_adapt_vertex_ref
 struct vec_adapt_vertex_ptr
 {
 	template<unsigned ndim>
-	const typename Vertex<ndim>::vector_t& operator()(
-			const Vertex<ndim>* v) const
+	const typename Vertex<ndim>::vector_t& operator()(const Vertex<ndim>* v) const
 	{
 		return v->v;
 	}

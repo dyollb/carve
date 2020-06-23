@@ -51,12 +51,12 @@ using LineSegment = carve::geom::linesegment<3>;
 using Vector = carve::geom::vector<3>;
 
 template<typename iter_t, typename adapt_t>
-bool fitPlane(iter_t begin, iter_t end, adapt_t adapt, Plane& plane)
+bool fitPlane(iter_t begin, iter_t end, const adapt_t& adapt, Plane& plane)
 {
 	std::vector<Vector> p;
-	for (; begin != end; ++begin)
+	for (auto it=begin; it != end; ++it)
 	{
-		p.push_back(adapt(*begin));
+		p.push_back(adapt(*it));
 	}
 
 	if (p.size() < 3)

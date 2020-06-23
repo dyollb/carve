@@ -120,7 +120,7 @@ template<unsigned ndim>
 typename Face<ndim>::project_t Face<ndim>::getProjector(bool positive_facing,
 		int axis)
 {
-	return NULL;
+	return nullptr;
 }
 
 template<>
@@ -207,10 +207,9 @@ void Face<ndim>::invert()
 template<unsigned ndim>
 bool Face<ndim>::recalc()
 {
-	aabb.fit(vertices.begin(), vertices.end(), vec_adapt_vertex_ptr());
+	aabb.fit(vertices.begin(), vertices.end(), carve::poly::vec_adapt_vertex_ptr());
 
-	if (!carve::geom3d::fitPlane(vertices.begin(), vertices.end(),
-					vec_adapt_vertex_ptr(), plane_eqn))
+	if (!carve::geom3d::fitPlane(vertices.begin(), vertices.end(), carve::poly::vec_adapt_vertex_ptr(), plane_eqn))
 	{
 		return false;
 	}

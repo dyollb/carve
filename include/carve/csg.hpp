@@ -427,7 +427,7 @@ public:
    * @param b Polyhedron b
    * @param collector The collector (determines the CSG operation performed)
    * @param shared_edges A pointer to a set that will be populated with shared
-   * edges (if not NULL).
+   * edges (if not nullptr).
    * @param classify_type The type of classifier to use.
    *
    * @return
@@ -443,7 +443,7 @@ public:
    * @param b Polyhedron b
    * @param op The CSG operation (A collector is created automatically).
    * @param shared_edges A pointer to a set that will be populated with shared
-   * edges (if not NULL).
+   * edges (if not nullptr).
    * @param classify_type The type of classifier to use.
    *
    * @return

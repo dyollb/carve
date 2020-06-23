@@ -865,25 +865,21 @@ Mesh<ndim>::~Mesh()
 
 template<unsigned ndim>
 template<typename iter_t>
-void Mesh<ndim>::create(iter_t begin, iter_t end,
-		std::vector<Mesh<ndim>*>& meshes,
-		const MeshOptions& opts)
+void Mesh<ndim>::create(iter_t begin, iter_t end, std::vector<Mesh<ndim>*>& meshes, const MeshOptions& opts)
 {
 	meshes.clear();
 }
 
 template<>
 template<typename iter_t>
-void Mesh<3>::create(iter_t begin, iter_t end, std::vector<Mesh<3>*>& meshes,
-		const MeshOptions& opts)
+void Mesh<3>::create(iter_t begin, iter_t end, std::vector<Mesh<3>*>& meshes, const MeshOptions& opts)
 {
 	detail::FaceStitcher(opts).create(begin, end, meshes);
 }
 
 template<unsigned ndim>
 template<typename iter_t>
-void MeshSet<ndim>::_init_from_faces(iter_t begin, iter_t end,
-		const MeshOptions& opts)
+void MeshSet<ndim>::_init_from_faces(iter_t begin, iter_t end, const MeshOptions& opts)
 {
 	using map_t = std::unordered_map<const vertex_t*, size_t>;
 	map_t vmap;
@@ -980,8 +976,7 @@ MeshSet<ndim>::MeshSet(std::list<face_t*>& faces, const MeshOptions& opts)
 }
 
 template<unsigned ndim>
-MeshSet<ndim>::MeshSet(std::vector<vertex_t>& _vertex_storage,
-		std::vector<mesh_t*>& _meshes)
+MeshSet<ndim>::MeshSet(std::vector<vertex_t>& _vertex_storage, std::vector<mesh_t*>& _meshes)
 {
 	vertex_storage.swap(_vertex_storage);
 	meshes.swap(_meshes);

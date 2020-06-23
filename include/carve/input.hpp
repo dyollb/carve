@@ -281,7 +281,7 @@ public:
 	template<typename T>
 	static inline T* create(Data* d, const Options& options = Options())
 	{
-		return NULL;
+		return nullptr;
 	}
 };
 
