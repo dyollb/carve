@@ -513,8 +513,7 @@ void carve::csg::CSG::Hooks::unregisterHook(Hook* hook)
 {
 	for (unsigned i = 0; i < HOOK_MAX; ++i)
 	{
-		hooks[i].erase(std::remove(hooks[i].begin(), hooks[i].end(), hook),
-				hooks[i].end());
+		hooks[i].erase(std::remove(hooks[i].begin(), hooks[i].end(), hook), hooks[i].end());
 	}
 }
 
@@ -523,15 +522,13 @@ void carve::csg::CSG::Hooks::reset()
 	std::set<Hook*> to_delete;
 	for (unsigned i = 0; i < HOOK_MAX; ++i)
 	{
-		for (std::list<Hook*>::iterator j = hooks[i].begin(); j != hooks[i].end();
-				 ++j)
+		for (std::list<Hook*>::iterator j = hooks[i].begin(); j != hooks[i].end(); ++j)
 		{
 			to_delete.insert(*j);
 		}
 		hooks[i].clear();
 	}
-	for (std::set<Hook*>::iterator i = to_delete.begin(); i != to_delete.end();
-			 ++i)
+	for (std::set<Hook*>::iterator i = to_delete.begin(); i != to_delete.end(); ++i)
 	{
 		delete *i;
 	}
@@ -552,15 +549,11 @@ void carve::csg::CSG::makeVertexIntersections()
 	static carve::TimingName FUNC_NAME("CSG::makeVertexIntersections()");
 	carve::TimingBlock block(FUNC_NAME);
 	vertex_intersections.clear();
-	for (Intersections::const_iterator i = intersections.begin(),
-																		 ie = intersections.end();
-			 i != ie; ++i)
+	for (Intersections::const_iterator i = intersections.begin(), ie = intersections.end(); i != ie; ++i)
 	{
 		const IObj& i_src = ((*i).first);
 
-		for (Intersections::mapped_type::const_iterator j = (*i).second.begin(),
-																										je = (*i).second.end();
-				 j != je; ++j)
+		for (Intersections::mapped_type::const_iterator j = (*i).second.begin(), je = (*i).second.end(); j != je; ++j)
 		{
 			const IObj& i_tgt = ((*j).first);
 			meshset_t::vertex_t* i_pt = ((*j).second);
@@ -580,9 +573,7 @@ static carve::mesh::MeshSet<3>::vertex_t* chooseWeldPoint(
 		return nullptr;
 	}
 
-	for (carve::csg::detail::VSet::const_iterator i = equivalent.begin(),
-																								e = equivalent.end();
-			 i != e; ++i)
+	for (carve::csg::detail::VSet::const_iterator i = equivalent.begin(), e = equivalent.end(); i != e; ++i)
 	{
 		if (!vertex_pool.inPool((*i)))
 		{

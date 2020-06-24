@@ -26,6 +26,7 @@
 
 #include <carve/carve.hpp>
 
+#include <cmath>
 #include <numeric>
 #include <vector>
 

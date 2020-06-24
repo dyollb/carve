@@ -51,8 +51,7 @@ static carve::mesh::MeshSet<3>* makeCube(const carve::math::Matrix& transform)
 	data.addFace(2, 6, 7, 3);
 	data.addFace(3, 7, 4, 0);
 
-	return new carve::mesh::MeshSet<3>(data.points, data.getFaceCount(),
-			data.faceIndices);
+	return new carve::mesh::MeshSet<3>(data.points, data.getFaceCount(), data.faceIndices);
 }
 
 struct ResultFaceHook : public carve::csg::CSG::Hook
@@ -78,13 +77,10 @@ TEST(HookTest, ResultFace)
 	carve::csg::CSG csg;
 
 	carve::mesh::MeshSet<3>* a = makeCube(carve::math::Matrix::SCALE(+5, +5, .5));
-	carve::mesh::MeshSet<3>* b =
-			makeCube(carve::math::Matrix::ROT(.5, +1, +1, +1));
+	carve::mesh::MeshSet<3>* b = makeCube(carve::math::Matrix::ROT(.5, +1, +1, +1));
 
-	csg.hooks.registerHook(new ResultFaceHook(counter),
-			carve::csg::CSG::Hooks::RESULT_FACE_BIT);
-	csg.compute(a, b, carve::csg::CSG::UNION, nullptr,
-			carve::csg::CSG::CLASSIFY_EDGE);
+	csg.hooks.registerHook(new ResultFaceHook(counter), carve::csg::CSG::Hooks::RESULT_FACE_BIT);
+	carve::mesh::MeshSet<3>* a_union_b = csg.compute(a, b, carve::csg::CSG::UNION, nullptr, carve::csg::CSG::CLASSIFY_EDGE);
 
 	ASSERT_EQ(counter.size(), 2);
 	ASSERT_TRUE(counter.find(a) != counter.end());
@@ -92,4 +88,8 @@ TEST(HookTest, ResultFace)
 
 	ASSERT_EQ(counter[a], 6);
 	ASSERT_EQ(counter[b], 10);
+
+	delete a;
+	delete b;
+	delete a_union_b;
 }

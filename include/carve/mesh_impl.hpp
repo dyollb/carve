@@ -623,9 +623,7 @@ void FaceStitcher::initEdges(iter_t begin, iter_t end)
 	for (iter_t i = begin; i != end; ++i)
 	{
 		face_t* face = *i;
-		CARVE_ASSERT(
-				face->mesh ==
-				nullptr); // for the moment, can only insert a face into a mesh once.
+		CARVE_ASSERT(face->mesh == nullptr); // for the moment, can only insert a face into a mesh once.
 
 		face->id = c++;
 		edge_t* e = face->edge;

@@ -35,13 +35,14 @@
 
 void dumpMeshes(carve::mesh::MeshSet<3>* meshes)
 {
-	std::cout << "*** meshes->meshes.size()=" << meshes->meshes.size()
-						<< std::endl;
+	std::cout << "*** meshes->meshes.size()=" << meshes->meshes.size() << "\n";
+
 	for (size_t i = 0; i < meshes->meshes.size(); ++i)
 	{
 		std::cout << "====mesh" << i << "====" << std::endl;
 		carve::poly::Polyhedron* poly = carve::polyhedronFromMesh(meshes, i);
 		writePLY(std::cout, poly, true);
+		delete poly;
 	}
 }
 
@@ -205,8 +206,7 @@ TEST(MeshTest, ComplexMesh)
 	std::vector<carve::mesh::Face<3>*> faces;
 	obj1(vertices, faces);
 	std::vector<carve::mesh::Mesh<3>*> meshes;
-	carve::mesh::Mesh<3>::create(faces.begin(), faces.end(), meshes,
-			carve::mesh::MeshOptions());
+	carve::mesh::Mesh<3>::create(faces.begin(), faces.end(), meshes, carve::mesh::MeshOptions());
 	ASSERT_EQ(meshes.size(), 1U);
 
 	carve::mesh::MeshSet<3>* mesh = new carve::mesh::MeshSet<3>(vertices, meshes);
@@ -290,8 +290,7 @@ TEST(MeshTest, MeshConstruction2)
 	carve::mesh::Mesh<3>::create(quadfaces.begin(), quadfaces.end(), quadmeshes,
 			carve::mesh::MeshOptions());
 	ASSERT_EQ(quadmeshes.size(), 1U);
-	carve::mesh::MeshSet<3>* mesh =
-			new carve::mesh::MeshSet<3>(vertices, quadmeshes);
+	carve::mesh::MeshSet<3>* mesh = new carve::mesh::MeshSet<3>(vertices, quadmeshes);
 	dumpMeshes(mesh);
 	delete mesh;
 }
@@ -348,11 +347,9 @@ TEST(MeshTest, MeshConstruction1)
 			new carve::mesh::Face<3>(&vertices[4], &vertices[7], &vertices[5]));
 
 	std::vector<carve::mesh::Mesh<3>*> trimeshes;
-	carve::mesh::Mesh<3>::create(trifaces.begin(), trifaces.end(), trimeshes,
-			carve::mesh::MeshOptions());
+	carve::mesh::Mesh<3>::create(trifaces.begin(), trifaces.end(), trimeshes, carve::mesh::MeshOptions());
 	ASSERT_EQ(trimeshes.size(), 1U);
-	carve::mesh::MeshSet<3>* mesh =
-			new carve::mesh::MeshSet<3>(vertices, trimeshes);
+	carve::mesh::MeshSet<3>* mesh = new carve::mesh::MeshSet<3>(vertices, trimeshes);
 	dumpMeshes(mesh);
 	delete mesh;
 }

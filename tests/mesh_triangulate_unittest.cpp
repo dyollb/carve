@@ -32,9 +32,10 @@
 
 #include "write_ply.hpp"
 
-#include <vector>
-
 #include "coords.h"
+
+#include <memory>
+#include <vector>
 
 template<typename proj_t>
 double area(carve::mesh::Edge<3>* edge, proj_t proj)
@@ -62,14 +63,19 @@ void triangulate(std::vector<carve::mesh::Vertex<3>>& vertices)
 		vptr.push_back(&vertices[i]);
 	}
 	faces[0] = new carve::mesh::Face<3>(vptr.begin(), vptr.end());
+	//carve::mesh::MeshSet<3> mesh(faces);
 
 	double a0 = area(faces[0]->edge, faces[0]->project);
 
 	std::cerr << "AREA(LOOP): " << a0 << std::endl;
 
 	std::vector<carve::mesh::Edge<3>*> triangles;
-	carve::mesh::triangulate(faces[0]->edge, faces[0]->project,
-			std::back_inserter(triangles));
+	//std::shared_ptr<int> triangles_guard(new int, [&triangles](int*)
+	//{
+	//	for (auto t: triangles)
+	//		delete t;
+	//});
+	carve::mesh::triangulate(faces[0]->edge, faces[0]->project, std::back_inserter(triangles));
 	ASSERT_EQ(triangles.size(), vertices.size() - 2);
 
 	double a1 = 0.0;

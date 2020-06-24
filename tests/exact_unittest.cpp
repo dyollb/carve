@@ -65,7 +65,7 @@ void code(double* a, double* b, double* r)
 
 TEST(ExactTest, ExactTest)
 {
-	double a, b, c, d;
+	double a, b, c;
 
 	a = 4;
 	b = 3;
@@ -77,8 +77,7 @@ TEST(ExactTest, ExactTest)
 	EXPECT_EQ((detail::sub<1, 1>(&a, &b)), exact_t(0.0, 1.0));
 	EXPECT_EQ((detail::sub<1, 1>(&c, &a)), exact_t(-4.0, 1e60));
 
-	EXPECT_EQ((detail::sub<2, 1>(detail::sub<1, 1>(&c, &a), &a)),
-			exact_t(0.0, -8.0, 1e60));
+	EXPECT_EQ((detail::sub<2, 1>(detail::sub<1, 1>(&c, &a), &a)), exact_t(0.0, -8.0, 1e60));
 
 	double s1 = 4;
 	double s2 = 3 * exp2(60);
@@ -87,24 +86,19 @@ TEST(ExactTest, ExactTest)
 
 	exact_t s;
 
-	s = detail::add<2, 2>(detail::add<1, 1>(&s1, &s2),
-			detail::add<1, 1>(&s3, &s4));
+	s = detail::add<2, 2>(detail::add<1, 1>(&s1, &s2), detail::add<1, 1>(&s3, &s4));
 	EXPECT_EQ(s, exact_t(s1, s2, s3, s4));
 
-	s = detail::add<2, 2>(detail::add<1, 1>(&s4, &s3),
-			detail::add<1, 1>(&s2, &s1));
+	s = detail::add<2, 2>(detail::add<1, 1>(&s4, &s3), detail::add<1, 1>(&s2, &s1));
 	EXPECT_EQ(s, exact_t(s1, s2, s3, s4));
 
 	double add1 = 3;
-	EXPECT_EQ((detail::add<4, 1>(s, &add1)).compressed(),
-			exact_t(0, 7, s2, s3, s4).compressed());
+	EXPECT_EQ((detail::add<4, 1>(s, &add1)).compressed(), exact_t(0, 7, s2, s3, s4).compressed());
 
 	// (c-a) - (b-c) == (c+c) - (a+b)
 	EXPECT_EQ(
-			(detail::sub<2, 2>(detail::sub<1, 1>(&c, &a), detail::sub<1, 1>(&b, &c)))
-					.compressed(),
-			(detail::sub<2, 2>(detail::add<1, 1>(&c, &c), detail::add<1, 1>(&a, &b)))
-					.compressed());
+			(detail::sub<2, 2>(detail::sub<1, 1>(&c, &a), detail::sub<1, 1>(&b, &c))).compressed(),
+			(detail::sub<2, 2>(detail::add<1, 1>(&c, &c), detail::add<1, 1>(&a, &b))).compressed());
 
 	//   EXPECT_EQ(detail::prod(a, b), detail::mkdbl(12.0, 0.0));
 	//   EXPECT_EQ(detail::square(a),  detail::mkdbl(16.0, 0.0));

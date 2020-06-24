@@ -92,8 +92,7 @@ int main()
 	corners.push_back(&tri_verts[0]);
 	corners.push_back(&tri_verts[2]);
 	corners.push_back(&tri_verts[1]);
-	tri_faces.push_back(
-			new carve::mesh::MeshSet<3>::face_t(corners.begin(), corners.end()));
+	tri_faces.push_back(new carve::mesh::MeshSet<3>::face_t(corners.begin(), corners.end()));
 
 	//  corners.clear();
 	//  corners.push_back(&tri_verts[0]);
@@ -104,15 +103,15 @@ int main()
 	carve::mesh::MeshSet<3> triangle(tri_faces);
 
 	// cut triangle with tetrahedron.
-	carve::mesh::MeshSet<3>* is_poly = carve::csg::CSG().compute(
-			&tetrahedron, &triangle, carve::csg::CSG::INTERSECTION);
+	carve::mesh::MeshSet<3>* is_poly = carve::csg::CSG().compute(&tetrahedron, &triangle, carve::csg::CSG::INTERSECTION);
 
 	// std::cout << "Tetrahedron is ... \n" << tetrahedron;
 	// std::cout << "Triangle is ... \n" << triangle;
 	if (is_poly)
 	{
 		// BL, add proper checks
-		std::cout << "Intersection is ... \n" << is_poly->isClosed();
+		std::cout << "Intersection is closed (" << is_poly->isClosed() << ")\n";
+		delete is_poly;
 	}
 
 	return 0;

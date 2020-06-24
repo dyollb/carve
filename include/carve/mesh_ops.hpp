@@ -1107,8 +1107,7 @@ template<unsigned ndim, typename proj_t, typename out_iter_t>
 void triangulate(Edge<ndim>* edge, proj_t proj, out_iter_t out)
 {
 	detail::TriangulationData<ndim, proj_t> triangulator(proj);
-	typename detail::TriangulationData<ndim, proj_t>::VertexInfo* v =
-			triangulator.init(edge);
+	typename detail::TriangulationData<ndim, proj_t>::VertexInfo* v = triangulator.init(edge);
 	triangulator.removeDegeneracies(v, out);
 	triangulator.doTriangulate(v, out);
 }
