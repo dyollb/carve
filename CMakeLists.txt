@@ -25,6 +25,7 @@ option(BUILD_SHARED_LIBS                 "Compile libcarve as shared library/dll
 option(BUILD_TESTING                     "Compile tests"                                     ON)
 option(CARVE_WITH_GUI                    "Compile gui code"                                  OFF)
 option(CARVE_APPS                        "Compile apps"                                      ON)
+option(CARVE_NODEBUG                     "Disable CARVE_ASSERT"                              OFF)
 option(CARVE_DEBUG                       "Compile in debug code"                             OFF)
 option(CARVE_DEBUG_WRITE_PLY_DATA        "Write geometry output during debug"                OFF)
 option(CARVE_USE_EXACT_PREDICATES        "Use Shewchuk's exact predicates, where possible"   ON)

@@ -1102,8 +1102,10 @@ poly::Polyhedron* polyhedronFromMesh(const mesh::MeshSet<3>* mesh, int manifold_
 		polyhedron->manifold_is_closed.resize(1);
 		polyhedron->manifold_is_negative.resize(1);
 		n_faces = mesh->meshes[manifold_id]->faces.size();
-		polyhedron->manifold_is_closed[manifold_id] = mesh->meshes[manifold_id]->isClosed();
-		polyhedron->manifold_is_negative[manifold_id] = mesh->meshes[manifold_id]->isNegative();
+		//BL polyhedron->manifold_is_closed[manifold_id] = mesh->meshes[manifold_id]->isClosed();
+		//BL polyhedron->manifold_is_negative[manifold_id] = mesh->meshes[manifold_id]->isNegative();
+		polyhedron->manifold_is_closed[0] = mesh->meshes[manifold_id]->isClosed();
+		polyhedron->manifold_is_negative[0] = mesh->meshes[manifold_id]->isNegative();
 	}
 
 	std::unordered_map<std::pair<size_t, size_t>, std::list<mesh::Edge<3>*>, carve::hash_pair> edges;

@@ -53,19 +53,24 @@ using Vector = carve::geom::vector<3>;
 template<typename iter_t, typename adapt_t>
 bool fitPlane(iter_t begin, iter_t end, const adapt_t& adapt, Plane& plane)
 {
+	auto C = carve::geom::VECTOR(0,0,0);
 	std::vector<Vector> p;
 	for (auto it=begin; it != end; ++it)
 	{
 		p.push_back(adapt(*it));
+		C += p.back();
 	}
+	C /= double(p.size());
 
 	if (p.size() < 3)
 	{
 		return false;
 	}
 
-	Vector C, n;
-	carve::geom::centroid(p.begin(), p.end(), C);
+	//TODO BL this was causing a crash in Release build VS 2015, Update 3
+	//carve::geom::centroid(p.begin(), p.end(), C);
+
+	Vector n;
 
 	if (p.size() == 3)
 	{

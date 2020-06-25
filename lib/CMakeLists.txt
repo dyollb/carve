@@ -1,6 +1,7 @@
 include_directories("${carve_SOURCE_DIR}/include")
 
 file(GLOB carve_HEADERS *.hpp ${carve_SOURCE_DIR}/include/carve/*.hpp)
+list(APPEND carve_HEADERS "${carve_BINARY_DIR}/include/carve/config.h")
 
 add_library(carve ${carve_HEADERS}
     aabb.cpp
