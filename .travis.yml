@@ -16,9 +16,9 @@ before_script:
   - cd ${TRAVIS_BUILD_DIR}
   - |
     if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
-      cmake -H. -BCIBuild -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DUSE_SANITIZER=${SANITIZER} -DCMAKE_INSTALL_PREFIX=install -Wdev
+      cmake -H. -BCIBuild -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCARVE_APPS=OFF -DCARVE_GTEST_TESTS=ON -DUSE_SANITIZER=${SANITIZER} -DCMAKE_INSTALL_PREFIX=install -Wdev
     elif [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
-      cmake -H. -BCIBuild -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=install -Wdev
+      cmake -H. -BCIBuild -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCARVE_APPS=OFF -DCARVE_GTEST_TESTS=ON -DCMAKE_INSTALL_PREFIX=install -Wdev
     fi
   - cd CIBuild
 
