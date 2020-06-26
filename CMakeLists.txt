@@ -30,7 +30,7 @@ option(CARVE_DEBUG                       "Compile in debug code"                
 option(CARVE_DEBUG_WRITE_PLY_DATA        "Write geometry output during debug"                OFF)
 option(CARVE_USE_EXACT_PREDICATES        "Use Shewchuk's exact predicates, where possible"   ON)
 option(CARVE_INTERSECT_GLU_TRIANGULATOR  "Include support for GLU triangulator in intersect" OFF)
-option(CARVE_GTEST_TESTS                 "Complie gtest, and dependent tests"                OFF)
+option(CARVE_GTEST_TESTS                 "Compile gtest, and dependent tests"                OFF)
 
 if(MSVC)
   add_compile_options(/W3 /D_SCL_SECURE_NO_WARNINGS)# /WX)
