@@ -1,0 +1,28 @@
+language: cpp
+
+matrix:
+  include:
+    - os: linux
+      dist: bionic
+      compiler: gcc
+      env: COMPILER='g++' BUILD_TYPE='Release'
+    - os: linux
+      dist: bionic
+      compiler: clang
+      env: COMPILER='clang++' BUILD_TYPE='Debug' SANITIZER='Address;Undefined'
+
+before_script:
+  - export CXX=${COMPILER}
+  - cd ${TRAVIS_BUILD_DIR}
+  - |
+    if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
+      cmake -H. -BCIBuild -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DUSE_SANITIZER=${SANITIZER} -DCMAKE_INSTALL_PREFIX=install -Wdev
+    elif [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
+      cmake -H. -BCIBuild -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=install -Wdev
+    fi
+  - cd CIBuild
+
+script:
+  - make -j 2
+  - make install
+  - ctest -V
