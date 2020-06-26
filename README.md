@@ -1,6 +1,6 @@
 # Carve CSG Library
 
-[![Build status](https://ci.appveyor.com/api/projects/status/4081gholvpi1lkqd?svg=true)](https://ci.appveyor.com/project/dyollb/carve)
+[![Build status](https://ci.appveyor.com/api/projects/status/4081gholvpi1lkqd?svg=true)](https://ci.appveyor.com/project/dyollb/carve) [![Build Status](https://travis-ci.com/dyollb/carve.svg?branch=master)](https://travis-ci.com/dyollb/carve)
 
 Carve is a fast, robust constructive solid geometry library
 
